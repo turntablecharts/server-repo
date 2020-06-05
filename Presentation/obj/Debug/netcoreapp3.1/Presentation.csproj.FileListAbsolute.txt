@@ -158,3 +158,5 @@
 /Users/macbook1/Documents/repos/work/ttc/server/Presentation/bin/Debug/netcoreapp3.1/runtimes/win-arm64/native/e_sqlite3.dll
 /Users/macbook1/Documents/repos/work/ttc/server/Presentation/bin/Debug/netcoreapp3.1/runtimes/win-x64/native/e_sqlite3.dll
 /Users/macbook1/Documents/repos/work/ttc/server/Presentation/bin/Debug/netcoreapp3.1/runtimes/win-x86/native/e_sqlite3.dll
+/Users/macbook1/Documents/repos/work/ttc/server/Presentation/bin/Debug/netcoreapp3.1/Core.dll
+/Users/macbook1/Documents/repos/work/ttc/server/Presentation/bin/Debug/netcoreapp3.1/Core.pdb

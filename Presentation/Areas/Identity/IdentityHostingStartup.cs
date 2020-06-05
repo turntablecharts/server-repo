@@ -19,7 +19,8 @@ namespace Presentation.Areas.Identity
                     options.UseSqlite(
                         context.Configuration.GetConnectionString("AppConectionString")));
 
-                services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+                services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = false)
+                    .AddRoles<IdentityRole>()
                     .AddEntityFrameworkStores<PresentationIdentityDbContext>();
             });
         }
