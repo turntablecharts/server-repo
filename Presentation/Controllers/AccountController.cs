@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Core.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -16,14 +17,17 @@ namespace Presentation.Controllers
     {
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly UserManager<IdentityUser> _userManager;
+        private readonly ITtcUserRepo _ttcUserRepo;
 
     
         public AccountController(
             UserManager<IdentityUser> userManager,
-            SignInManager<IdentityUser> signInManager)
+            SignInManager<IdentityUser> signInManager, 
+             ITtcUserRepo ttcUserRepo)
         {
             _signInManager = signInManager;
             _userManager = userManager;
+            _ttcUserRepo = ttcUserRepo;
         }
 
         [HttpPost("create")]
@@ -40,6 +44,8 @@ namespace Presentation.Controllers
                     {
                         await _userManager.AddToRoleAsync(user, input.Role);
                     }  
+
+                    await _ttcUserRepo.Add(new TtcUserVM{Email = input.Email});
                     //later send a link for email confirmation 
                     //now just return an OKobjectResult after which we return a token
                     return Ok("User Successfully created");
@@ -78,7 +84,7 @@ namespace Presentation.Controllers
         }
 
         [HttpPost("logout")]
-        [Authorize]
+        
         public async Task<ActionResult> Logout()
         {
             await _signInManager.SignOutAsync();

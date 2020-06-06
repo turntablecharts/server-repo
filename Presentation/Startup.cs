@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Infrastructure;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -11,6 +12,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.EntityFrameworkCore;
+using Core.Interfaces;
+using Infrastructure.DAL;
 
 namespace Presentation
 {
@@ -26,8 +30,23 @@ namespace Presentation
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContext<TtcDbContext>(options => {
+               options.UseSqlite(Configuration.GetConnectionString("AppConectionString"), 
+                    optionsBuilder => 
+                        optionsBuilder.MigrationsAssembly("Presentation"));
+           });
             services.AddControllers();
             services.AddRazorPages();
+
+
+            //custom services 
+            services.AddSingleton<ITtcUserRepo, TtcUserRepo>();
+            services.AddSingleton<IChartRepo, ChartRepo>();
+            services.AddSingleton<ILogRepo, LogRepo>();
+            services.AddSingleton<IMediaRepo, MediaRepo>();
+            services.AddSingleton<INewsRepo, NewsRepo>();
+            services.AddSingleton<IPhotoRepo, PhotoRepo>();
+            services.AddSingleton<IVideoRepo, VideoRepo>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
