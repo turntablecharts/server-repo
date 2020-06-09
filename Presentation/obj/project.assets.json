@@ -2,6 +2,18 @@
   "version": 3,
   "targets": {
     ".NETCoreApp,Version=v3.1": {
+      "CsvHelper/15.0.5": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.CSharp": "4.5.0"
+        },
+        "compile": {
+          "lib/netstandard2.1/CsvHelper.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.1/CsvHelper.dll": {}
+        }
+      },
       "Microsoft.AspNetCore.Cryptography.Internal/3.1.4": {
         "type": "package",
         "compile": {
@@ -2332,6 +2344,26 @@
     }
   },
   "libraries": {
+    "CsvHelper/15.0.5": {
+      "sha512": "HPoE5nASoFXqoXKSi5yEBam7TzDrtC8WESA4xq53JtPKV8Mm+IKRuN+FJyMoJg1Whv/NG4JiCUs9yUcaSY/ziQ==",
+      "type": "package",
+      "path": "csvhelper/15.0.5",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "Icon.png",
+        "csvhelper.15.0.5.nupkg.sha512",
+        "csvhelper.nuspec",
+        "lib/net45/CsvHelper.dll",
+        "lib/net45/CsvHelper.xml",
+        "lib/net47/CsvHelper.dll",
+        "lib/net47/CsvHelper.xml",
+        "lib/netstandard2.0/CsvHelper.dll",
+        "lib/netstandard2.0/CsvHelper.xml",
+        "lib/netstandard2.1/CsvHelper.dll",
+        "lib/netstandard2.1/CsvHelper.xml"
+      ]
+    },
     "Microsoft.AspNetCore.Cryptography.Internal/3.1.4": {
       "sha512": "P6o80rVMEDv7zQQmIDoeoXHAXfS+bj2iwh5iURfd1EKrojxqVJW3zTYld2nleryT7BBlL7J0aT54tyLZyj8YRg==",
       "type": "package",
@@ -7456,6 +7488,7 @@
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v3.1": [
       "Core >= 1.0.0",
+      "CsvHelper >= 15.0.5",
       "Infrastructure >= 1.0.0",
       "Microsoft.AspNetCore.Identity.EntityFrameworkCore >= 3.1.4",
       "Microsoft.AspNetCore.Identity.UI >= 3.1.4",
@@ -7471,11 +7504,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/macbook1/Documents/repos/work/ttc/server/Presentation/Presentation.csproj",
+      "projectUniqueName": "/Users/macbook1/Documents/repos/work/ttc-app/ttc/server/Presentation/Presentation.csproj",
       "projectName": "Presentation",
-      "projectPath": "/Users/macbook1/Documents/repos/work/ttc/server/Presentation/Presentation.csproj",
+      "projectPath": "/Users/macbook1/Documents/repos/work/ttc-app/ttc/server/Presentation/Presentation.csproj",
       "packagesPath": "/Users/macbook1/.nuget/packages/",
-      "outputPath": "/Users/macbook1/Documents/repos/work/ttc/server/Presentation/obj/",
+      "outputPath": "/Users/macbook1/Documents/repos/work/ttc-app/ttc/server/Presentation/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/Users/macbook1/.nuget/NuGet/NuGet.Config"
@@ -7489,11 +7522,11 @@
       "frameworks": {
         "netcoreapp3.1": {
           "projectReferences": {
-            "/Users/macbook1/Documents/repos/work/ttc/server/Core/Core.csproj": {
-              "projectPath": "/Users/macbook1/Documents/repos/work/ttc/server/Core/Core.csproj"
+            "/Users/macbook1/Documents/repos/work/ttc-app/ttc/server/Core/Core.csproj": {
+              "projectPath": "/Users/macbook1/Documents/repos/work/ttc-app/ttc/server/Core/Core.csproj"
             },
-            "/Users/macbook1/Documents/repos/work/ttc/server/Infrastructure/Infrastructure.csproj": {
-              "projectPath": "/Users/macbook1/Documents/repos/work/ttc/server/Infrastructure/Infrastructure.csproj"
+            "/Users/macbook1/Documents/repos/work/ttc-app/ttc/server/Infrastructure/Infrastructure.csproj": {
+              "projectPath": "/Users/macbook1/Documents/repos/work/ttc-app/ttc/server/Infrastructure/Infrastructure.csproj"
             }
           }
         }
@@ -7507,6 +7540,10 @@
     "frameworks": {
       "netcoreapp3.1": {
         "dependencies": {
+          "CsvHelper": {
+            "target": "Package",
+            "version": "[15.0.5, )"
+          },
           "Microsoft.AspNetCore.Identity.EntityFrameworkCore": {
             "target": "Package",
             "version": "[3.1.4, )"

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Core.Entities;
 using Core.Interfaces;
@@ -23,7 +24,7 @@ namespace Infrastructure.DAL
 
         public async void DeleteChart(int id)
         {
-             var chart = await _db.Charts.FirstOrDefaultAsync(m=> m.Id == id);
+            var chart = await _db.Charts.Include(m => m.ChartItems).FirstOrDefaultAsync(m=> m.Id == id);
             _db.Charts.Remove(chart);
             await _db.SaveChangesAsync();
         }
@@ -35,7 +36,7 @@ namespace Infrastructure.DAL
 
         public async Task<Chart> GetOne(int id)
         {
-            return await _db.Charts.FirstOrDefaultAsync(m => m.Id == id);
+            return await _db.Charts.Include(m => m.ChartItems).FirstOrDefaultAsync(m => m.Id == id);
         }
     }
 }

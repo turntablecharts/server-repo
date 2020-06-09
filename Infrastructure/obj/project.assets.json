@@ -1059,11 +1059,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/macbook1/Documents/repos/work/ttc/server/Infrastructure/Infrastructure.csproj",
+      "projectUniqueName": "/Users/macbook1/Documents/repos/work/ttc-app/ttc/server/Infrastructure/Infrastructure.csproj",
       "projectName": "Infrastructure",
-      "projectPath": "/Users/macbook1/Documents/repos/work/ttc/server/Infrastructure/Infrastructure.csproj",
+      "projectPath": "/Users/macbook1/Documents/repos/work/ttc-app/ttc/server/Infrastructure/Infrastructure.csproj",
       "packagesPath": "/Users/macbook1/.nuget/packages/",
-      "outputPath": "/Users/macbook1/Documents/repos/work/ttc/server/Infrastructure/obj/",
+      "outputPath": "/Users/macbook1/Documents/repos/work/ttc-app/ttc/server/Infrastructure/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/Users/macbook1/.nuget/NuGet/NuGet.Config"
@@ -1077,8 +1077,8 @@
       "frameworks": {
         "netstandard2.0": {
           "projectReferences": {
-            "/Users/macbook1/Documents/repos/work/ttc/server/Core/Core.csproj": {
-              "projectPath": "/Users/macbook1/Documents/repos/work/ttc/server/Core/Core.csproj"
+            "/Users/macbook1/Documents/repos/work/ttc-app/ttc/server/Core/Core.csproj": {
+              "projectPath": "/Users/macbook1/Documents/repos/work/ttc-app/ttc/server/Core/Core.csproj"
             }
           }
         }

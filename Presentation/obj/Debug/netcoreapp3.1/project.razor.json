@@ -1,5 +1,5 @@
 {
-  "FilePath": "/Users/macbook1/Documents/repos/work/ttc/server/Presentation/Presentation.csproj",
+  "FilePath": "/Users/macbook1/Documents/repos/work/ttc-app/ttc/server/Presentation/Presentation.csproj",
   "Configuration": {
     "ConfigurationName": "MVC-3.0",
     "LanguageVersion": "3.0",
@@ -20521,33 +20521,33 @@
   "RootNamespace": "Presentation",
   "Documents": [
     {
-      "FilePath": "/Users/macbook1/Documents/repos/work/ttc/server/Presentation/Pages/Shared/_LoginPartial.cshtml",
-      "TargetPath": "Pages\\Shared\\_LoginPartial.cshtml",
+      "FilePath": "/Users/macbook1/Documents/repos/work/ttc-app/ttc/server/Presentation/Pages/_ViewImports.cshtml",
+      "TargetPath": "Pages\\_ViewImports.cshtml",
       "FileKind": "mvc"
     },
     {
-      "FilePath": "/Users/macbook1/Documents/repos/work/ttc/server/Presentation/Pages/Shared/_ValidationScriptsPartial.cshtml",
-      "TargetPath": "Pages\\Shared\\_ValidationScriptsPartial.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "/Users/macbook1/Documents/repos/work/ttc/server/Presentation/Areas/Identity/Pages/_ViewStart.cshtml",
-      "TargetPath": "Areas\\Identity\\Pages\\_ViewStart.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "/Users/macbook1/Documents/repos/work/ttc/server/Presentation/Pages/_ViewStart.cshtml",
-      "TargetPath": "Pages\\_ViewStart.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "/Users/macbook1/Documents/repos/work/ttc/server/Presentation/Pages/Shared/_Layout.cshtml",
+      "FilePath": "/Users/macbook1/Documents/repos/work/ttc-app/ttc/server/Presentation/Pages/Shared/_Layout.cshtml",
       "TargetPath": "Pages\\Shared\\_Layout.cshtml",
       "FileKind": "mvc"
     },
     {
-      "FilePath": "/Users/macbook1/Documents/repos/work/ttc/server/Presentation/Pages/_ViewImports.cshtml",
-      "TargetPath": "Pages\\_ViewImports.cshtml",
+      "FilePath": "/Users/macbook1/Documents/repos/work/ttc-app/ttc/server/Presentation/Pages/Shared/_LoginPartial.cshtml",
+      "TargetPath": "Pages\\Shared\\_LoginPartial.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "/Users/macbook1/Documents/repos/work/ttc-app/ttc/server/Presentation/Pages/Shared/_ValidationScriptsPartial.cshtml",
+      "TargetPath": "Pages\\Shared\\_ValidationScriptsPartial.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "/Users/macbook1/Documents/repos/work/ttc-app/ttc/server/Presentation/Pages/_ViewStart.cshtml",
+      "TargetPath": "Pages\\_ViewStart.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "/Users/macbook1/Documents/repos/work/ttc-app/ttc/server/Presentation/Areas/Identity/Pages/_ViewStart.cshtml",
+      "TargetPath": "Areas\\Identity\\Pages\\_ViewStart.cshtml",
       "FileKind": "mvc"
     }
   ],

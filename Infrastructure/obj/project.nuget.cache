@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "pzw6DTQNwWcpmb1VrABvD9QnixtGw5sb7Jo9SkpzNKxhIxhIWlmvqpICEc39LuhUKu76QrP0Swg1E8ISR/kL1A==",
+  "dgSpecHash": "dwYqatvVt+CdaAQjtPHMlaOQJeYYvhFNFsSucF/Z5CqLY/E9YmNlrR5eV78D30rDSJ62Kck7Z/gCOfwqI/G0Wg==",
   "success": true,
-  "projectFilePath": "/Users/macbook1/Documents/repos/work/ttc/server/Infrastructure/Infrastructure.csproj",
+  "projectFilePath": "/Users/macbook1/Documents/repos/work/ttc-app/ttc/server/Infrastructure/Infrastructure.csproj",
   "expectedPackageFiles": [
     "/Users/macbook1/.nuget/packages/microsoft.bcl.asyncinterfaces/1.1.1/microsoft.bcl.asyncinterfaces.1.1.1.nupkg.sha512",
     "/Users/macbook1/.nuget/packages/microsoft.bcl.hashcode/1.1.0/microsoft.bcl.hashcode.1.1.0.nupkg.sha512",

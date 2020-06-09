@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Presentation.Migrations.TtcDb
 {
-    public partial class initialMigrations : Migration
+    public partial class initialmigrations : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -14,7 +14,9 @@ namespace Presentation.Migrations.TtcDb
                     Id = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     Week = table.Column<string>(nullable: true),
-                    DateCreated = table.Column<DateTime>(nullable: false)
+                    DateCreated = table.Column<DateTime>(nullable: false),
+                    Category = table.Column<int>(nullable: false),
+                    Genre = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -91,8 +93,7 @@ namespace Presentation.Migrations.TtcDb
                     Rank = table.Column<int>(nullable: false),
                     LastPosition = table.Column<int>(nullable: false),
                     ImageUri = table.Column<string>(nullable: true),
-                    Category = table.Column<int>(nullable: false),
-                    Genre = table.Column<int>(nullable: false),
+                    HighestPosition = table.Column<int>(nullable: false),
                     ChartId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>

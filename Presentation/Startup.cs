@@ -40,13 +40,13 @@ namespace Presentation
 
 
             //custom services 
-            services.AddSingleton<ITtcUserRepo, TtcUserRepo>();
-            services.AddSingleton<IChartRepo, ChartRepo>();
-            services.AddSingleton<ILogRepo, LogRepo>();
-            services.AddSingleton<IMediaRepo, MediaRepo>();
-            services.AddSingleton<INewsRepo, NewsRepo>();
-            services.AddSingleton<IPhotoRepo, PhotoRepo>();
-            services.AddSingleton<IVideoRepo, VideoRepo>();
+            services.AddScoped<ITtcUserRepo, TtcUserRepo>();
+            services.AddScoped<IChartRepo, ChartRepo>();
+            services.AddScoped<ILogRepo, LogRepo>();
+            services.AddScoped<IMediaRepo, MediaRepo>();
+            services.AddScoped<INewsRepo, NewsRepo>();
+            services.AddScoped<IPhotoRepo, PhotoRepo>();
+            services.AddScoped<IVideoRepo, VideoRepo>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

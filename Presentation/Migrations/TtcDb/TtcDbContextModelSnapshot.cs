@@ -22,8 +22,14 @@ namespace Presentation.Migrations.TtcDb
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
+                    b.Property<int>("Category")
+                        .HasColumnType("INTEGER");
+
                     b.Property<DateTime>("DateCreated")
                         .HasColumnType("TEXT");
+
+                    b.Property<int>("Genre")
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Week")
                         .HasColumnType("TEXT");
@@ -42,13 +48,10 @@ namespace Presentation.Migrations.TtcDb
                     b.Property<string>("Artiste")
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("Category")
-                        .HasColumnType("INTEGER");
-
                     b.Property<int?>("ChartId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("Genre")
+                    b.Property<int>("HighestPosition")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("ImageUri")

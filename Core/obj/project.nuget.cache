@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "zGkVNwkzsdgqPCyuJhCvp/oRgtgzlY1tsvJXiXstQdhHTt2oE2ZbXYMlCb8tUhhA8XLEJSNrFijMhEO9bIpI7Q==",
+  "dgSpecHash": "DCR64sLHGQbIp313N0T3EmrdF1Vu2l4kTYAUEaxHfhbptKz7ZtlfffcWp1vJHvdfqA8SrLjjGKv3hYMH4i8/bg==",
   "success": true,
-  "projectFilePath": "/Users/macbook1/Documents/repos/work/ttc/server/Core/Core.csproj",
+  "projectFilePath": "/Users/macbook1/Documents/repos/work/ttc-app/ttc/server/Core/Core.csproj",
   "expectedPackageFiles": [
     "/Users/macbook1/.nuget/packages/microsoft.netcore.platforms/1.1.0/microsoft.netcore.platforms.1.1.0.nupkg.sha512",
     "/Users/macbook1/.nuget/packages/netstandard.library/2.0.3/netstandard.library.2.0.3.nupkg.sha512"
