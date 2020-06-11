@@ -117,5 +117,57 @@ namespace Presentation.Controllers
         }
         #endregion
 
+        #region news
+        [HttpPost("news/add")]
+        public async Task<ActionResult> AddNews([FromBody]NewsItem news)
+        {
+            if(!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            await  _newsRepo.AddNews(news);
+            return Ok(news);
+        } 
+
+        [HttpGet("news/all")]
+        public async Task<ActionResult> GetAllNews()
+        {
+            return Ok(await _newsRepo.GetAllNews());
+        }
+
+        [HttpGet("news/{id}")]
+        public async Task<IActionResult> GetOneNews(int id)
+        {
+            var news = await _newsRepo.GetOne(id);
+            if (news == null) { return NotFound(); }
+            return Ok(news);
+        }
+
+        [HttpPut("news/edit/{id}")]
+        public IActionResult EditNews([FromRoute] int id, [FromBody] NewsItem news)
+        {
+            if (!ModelState.IsValid) { return BadRequest(ModelState); }
+
+            var updatedNews = _newsRepo.EditNews(news, id);
+
+            if (updatedNews == null) { return NotFound(); }
+
+            return Ok(updatedNews);
+        }
+
+        [HttpDelete("news/delete/{id}")]
+        public IActionResult DeleteNews([FromRoute] int id)
+        {
+            try
+            {
+                _newsRepo.DeleteNews(id);
+                return Ok("Successfully deleted");
+            }
+            catch (NullReferenceException)
+            {
+                return NotFound();
+            }
+        }
+        #endregion
     }
 }

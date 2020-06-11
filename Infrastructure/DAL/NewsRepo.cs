@@ -32,6 +32,7 @@ namespace Infrastructure.DAL
         public NewsItem EditNews(NewsItem news, int id)
         {
             var item = _db.NewsItems.AsNoTracking().FirstOrDefault(m => m.Id == id);
+            if (item == null) { return null; }
             item = news;
             item.Id = id; 
 
