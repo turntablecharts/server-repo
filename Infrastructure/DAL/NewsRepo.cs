@@ -50,7 +50,7 @@ namespace Infrastructure.DAL
 
         public async Task<NewsItem> GetOne(int id)
         {
-           return await _db.NewsItems.FirstOrDefaultAsync(m => m.Id == id);
+           return await _db.NewsItems.Include(m => m.ttcUser).FirstOrDefaultAsync(m => m.Id == id);
         }
     }
 }

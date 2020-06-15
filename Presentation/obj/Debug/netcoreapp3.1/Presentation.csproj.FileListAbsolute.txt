@@ -327,3 +327,6 @@
 /Users/macbook1/Documents/repos/work/ttc-app/ttc/server/Presentation/obj/Debug/netcoreapp3.1/Presentation.dll
 /Users/macbook1/Documents/repos/work/ttc-app/ttc/server/Presentation/obj/Debug/netcoreapp3.1/Presentation.pdb
 /Users/macbook1/Documents/repos/work/ttc-app/ttc/server/Presentation/obj/Debug/netcoreapp3.1/Presentation.genruntimeconfig.cache
+/Users/macbook1/Documents/repos/work/ttc-app/ttc/server/Presentation/bin/Debug/netcoreapp3.1/Microsoft.AspNetCore.JsonPatch.dll
+/Users/macbook1/Documents/repos/work/ttc-app/ttc/server/Presentation/bin/Debug/netcoreapp3.1/Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll
+/Users/macbook1/Documents/repos/work/ttc-app/ttc/server/Presentation/bin/Debug/netcoreapp3.1/Newtonsoft.Json.Bson.dll

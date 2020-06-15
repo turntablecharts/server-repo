@@ -45,7 +45,9 @@ namespace Presentation.Controllers
                         await _userManager.AddToRoleAsync(user, input.Role);
                     }  
 
-                    await _ttcUserRepo.Add(new TtcUserVM{Email = input.Email});
+                    await _ttcUserRepo.Add(new TtcUserVM{Email = input.Email, 
+                        FirstName = input.FirstName, 
+                        LastName = input.LastName});
                     //later send a link for email confirmation 
                     //now just return an OKobjectResult after which we return a token
                     return Ok("User Successfully created");

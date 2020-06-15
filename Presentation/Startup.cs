@@ -15,6 +15,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using Core.Interfaces;
 using Infrastructure.DAL;
+using Microsoft.AspNetCore.Mvc.NewtonsoftJson;
 
 namespace Presentation
 {
@@ -35,7 +36,9 @@ namespace Presentation
                     optionsBuilder => 
                         optionsBuilder.MigrationsAssembly("Presentation"));
            });
-            services.AddControllers();
+            services.AddControllers().AddNewtonsoftJson(options =>
+                options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+            );
             services.AddRazorPages();
 
 
