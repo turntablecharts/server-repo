@@ -74,13 +74,19 @@ namespace Presentation.Controllers {
             return Ok (chartToAdd);
         }
 
-        [HttpDelete ("chart/delete/{id}")]
-        public IActionResult DeleteChart ([FromRoute] int id) {
+        [HttpDelete ("chart/delete/{id}/{userEmail}")]
+        public IActionResult DeleteChart ([FromRoute] int id, [FromRoute] string userEmail) {
             try {
                 _chartRepo.DeleteChart (id);
+
+                _logRepo.AddToLog (new Log {
+                    Name = userEmail,
+                        Event = "Deleted chart with id: " + id,
+                        EventDate = DateTime.Now
+                });
                 return Ok ("Successfully deleted");
-            } catch (System.Exception) {
-                return BadRequest ("provide an Id");
+            } catch (NullReferenceException) {
+                return NotFound ();
             }
         }
 
@@ -124,21 +130,33 @@ namespace Presentation.Controllers {
             return Ok (news);
         }
 
-        [HttpPut ("news/edit/{id}")]
-        public IActionResult EditNews ([FromRoute] int id, [FromBody] NewsItem news) {
+        [HttpPut ("news/edit/{id}/{userEmail}")]
+        public IActionResult EditNews ([FromRoute] int id, [FromBody] NewsItem news, [FromRoute] string userEmail) {
             if (!ModelState.IsValid) { return BadRequest (ModelState); }
 
             var updatedNews = _newsRepo.EditNews (news, id);
 
             if (updatedNews == null) { return NotFound (); }
 
+            _logRepo.AddToLog (new Log {
+                Name = userEmail,
+                    Event = "Edited News, Title: " + updatedNews.Title,
+                    EventDate = DateTime.Now
+            });
             return Ok (updatedNews);
         }
 
-        [HttpDelete ("news/delete/{id}")]
-        public IActionResult DeleteNews ([FromRoute] int id) {
+        [HttpDelete ("news/delete/{id}/{userEmail}")]
+        public IActionResult DeleteNews ([FromRoute] int id, [FromRoute] string userEmail) {
             try {
                 _newsRepo.DeleteNews (id);
+
+                _logRepo.AddToLog (new Log {
+                    Name = userEmail,
+                        Event = "Deleted News, id: " + id,
+                        EventDate = DateTime.Now
+                });
+
                 return Ok ("Successfully deleted");
             } catch (NullReferenceException) {
                 return NotFound ();
@@ -173,8 +191,8 @@ namespace Presentation.Controllers {
             return Ok (video);
         }
 
-        [HttpPut ("videos/edit/{id}")]
-        public IActionResult EditVideo ([FromRoute] int id, [FromBody] VideoItem item) {
+        [HttpPut ("videos/edit/{id}/{userEmail}")]
+        public IActionResult EditVideo ([FromRoute] int id, [FromBody] VideoItem item, [FromRoute] string userEmail) {
             if (!ModelState.IsValid) {
                 return BadRequest (ModelState);
             }
@@ -185,20 +203,132 @@ namespace Presentation.Controllers {
                 return NotFound ();
             }
 
+            _logRepo.AddToLog (new Log {
+                Name = userEmail,
+                    Event = "Edited Video, title" + updatedVideo.Title,
+                    EventDate = DateTime.Now
+            });
+
             return Ok (updatedVideo);
         }
 
-        [HttpDelete("videos/delete/{id}")]
-        public IActionResult DeleteVideo([FromRoute] int id)
-        {
-            try
-            {
-                _videoRepo.DeleteVideo(id);
-                return Ok("Successfully deleted");
+        [HttpDelete ("videos/delete/{id}/{userEmail}")]
+        public IActionResult DeleteVideo ([FromRoute] int id, [FromRoute] string userEmail) {
+            try {
+                _videoRepo.DeleteVideo (id);
+
+                _logRepo.AddToLog (new Log {
+                    Name = userEmail,
+                        Event = "Deleted Video, id: " + id,
+                        EventDate = DateTime.Now
+                });
+                return Ok ("Successfully deleted");
+            } catch (NullReferenceException) {
+                return NotFound ();
             }
-            catch (NullReferenceException)
-            {
-                return NotFound();
+        }
+        #endregion
+
+        #region mediaItem
+        [HttpPost ("media/add")]
+        public async Task<IActionResult> AddMedia ([FromBody] MediaItem item) {
+            if (!ModelState.IsValid) {
+                return BadRequest (ModelState);
+            }
+            var media = await _mediaRepo.Add (item);
+
+            return Ok (media);
+        }
+
+        [HttpGet ("media/all")]
+        public async Task<IActionResult> GetAllMedia () {
+            return Ok (await _mediaRepo.GetAllMedia ());
+        }
+
+        [HttpGet ("media/{id}")]
+        public async Task<IActionResult> GetOneMedia ([FromRoute] int id) {
+            var media = await _mediaRepo.GetOne (id);
+            if (media == null) {
+                return NotFound ();
+            }
+
+            return Ok (media);
+        }
+
+        [HttpDelete ("media/delete/{id}/{userEmail}")]
+        public IActionResult DeleteMedia ([FromRoute] int id, [FromRoute] string userEmail) {
+            try {
+                _mediaRepo.DeleteMedia (id);
+                _logRepo.AddToLog (new Log {
+                    Name = userEmail,
+                        Event = "Deleted Media, Id: " + id,
+                        EventDate = DateTime.Now
+                });
+                return Ok ("Successfully deleted");
+            } catch (NullReferenceException) {
+                return NotFound ();
+            }
+        }
+        #endregion
+
+        #region photo
+        [HttpPost ("photo/add")]
+        public async Task<IActionResult> AddPhoto ([FromBody] PhotoItem item) {
+            if (!ModelState.IsValid) {
+                BadRequest (ModelState);
+            }
+
+            var photo = await _photoRepo.AddPhoto (item);
+
+            return Ok (photo);
+        }
+
+        [HttpGet ("photo/all")]
+        public async Task<IActionResult> GetAllPhoto () {
+            return Ok (await _photoRepo.GetAllPhotos ());
+        }
+
+        [HttpGet ("photo/{id}")]
+        public async Task<IActionResult> GetOnePhoto ([FromRoute] int id) {
+            var photo = await _photoRepo.GetOnePhoto (id);
+            if (photo == null) {
+                return NotFound ();
+            }
+            return Ok (photo);
+        }
+
+        [HttpPut ("photo/edit/{id}/{userEmail}")]
+        public IActionResult EditPhoto ([FromRoute] int id, [FromBody] PhotoItem item, [FromRoute] string userEmail) {
+            if (!ModelState.IsValid) {
+                return BadRequest (ModelState);
+            }
+
+            var editedPhoto = _photoRepo.EditPhoto (item, id);
+
+            if (editedPhoto == null) {
+                return NotFound ();
+            }
+            _logRepo.AddToLog (new Log {
+                Name = userEmail,
+                    EventDate = DateTime.Now,
+                    Event = "Edited Video, title: " + editedPhoto.Title
+            });
+            return Ok (editedPhoto);
+        }
+
+        [HttpDelete ("photo/delete/{id}/{userEmail}")]
+        public IActionResult DeletePhoto ([FromRoute] int id, [FromRoute] string userEmail) {
+            try {
+                _photoRepo.DeletePhoto (id);
+
+                _logRepo.AddToLog (new Log {
+                    Name = userEmail,
+                        Event = "Deleted Photo, Id: " + id,
+                        EventDate = DateTime.Now
+                });
+                return Ok ("Successfully deleted");
+            } catch (NullReferenceException) {
+                return NotFound ();
             }
         }
         #endregion
