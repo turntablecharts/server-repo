@@ -8,6 +8,7 @@ using Core.Entities;
 using Core.Interfaces;
 using CsvHelper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using Presentation.ViewModels;
 
 namespace Presentation.Controllers {
@@ -20,6 +21,7 @@ namespace Presentation.Controllers {
         private readonly IPhotoRepo _photoRepo;
         private readonly ILogRepo _logRepo;
         private readonly IVideoRepo _videoRepo;
+        private IConfiguration _config;
 
         public AuthorController (
             IChartRepo chartRepo,
@@ -27,7 +29,8 @@ namespace Presentation.Controllers {
             IMediaRepo mediaRepo,
             IPhotoRepo photoRepo,
             ILogRepo logRepo,
-            IVideoRepo videoRepo
+            IVideoRepo videoRepo,
+            IConfiguration config
         ) {
             _chartRepo = chartRepo;
             _newsRepo = newsRepo;
@@ -35,6 +38,7 @@ namespace Presentation.Controllers {
             _photoRepo = photoRepo;
             _logRepo = logRepo;
             _videoRepo = videoRepo;
+            _config = config;
         }
 
         #region charts
@@ -231,11 +235,17 @@ namespace Presentation.Controllers {
 
         #region mediaItem
         [HttpPost ("media/add")]
-        public async Task<IActionResult> AddMedia ([FromBody] MediaItem item) {
+        public async Task<IActionResult> AddMedia ([FromForm] MediaItemVM item) {
             if (!ModelState.IsValid) {
                 return BadRequest (ModelState);
             }
-            var media = await _mediaRepo.Add (item);
+
+            var blobKey = _config.GetSection ("BlobSettings").GetValue<String> ("AccessKey");
+
+            var mediaItem = new MediaItem {
+                Title = item.Title,
+            };
+            var media = await _mediaRepo.Add (mediaItem, item.Image, blobKey);
 
             return Ok (media);
         }
@@ -277,6 +287,7 @@ namespace Presentation.Controllers {
             if (!ModelState.IsValid) {
                 BadRequest (ModelState);
             }
+            item.DateCreated = DateTime.Now;
 
             var photo = await _photoRepo.AddPhoto (item);
 
