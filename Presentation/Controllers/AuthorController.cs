@@ -7,11 +7,13 @@ using System.Threading.Tasks;
 using Core.Entities;
 using Core.Interfaces;
 using CsvHelper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Presentation.ViewModels;
 
 namespace Presentation.Controllers {
+
     [ApiController]
     [Route ("api/[controller]")]
     public class AuthorController : ControllerBase {

@@ -1,12 +1,17 @@
 using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Security.Claims;
+using System.Text;
 using System.Threading.Tasks;
 using Core.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using Microsoft.IdentityModel.Tokens;
 using Presentation.ViewModels;
 
 namespace Presentation.Controllers
@@ -18,16 +23,19 @@ namespace Presentation.Controllers
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly UserManager<IdentityUser> _userManager;
         private readonly ITtcUserRepo _ttcUserRepo;
+        private IConfiguration _config;
 
-    
+
         public AccountController(
             UserManager<IdentityUser> userManager,
             SignInManager<IdentityUser> signInManager, 
-             ITtcUserRepo ttcUserRepo)
+             ITtcUserRepo ttcUserRepo,
+             IConfiguration config)
         {
             _signInManager = signInManager;
             _userManager = userManager;
             _ttcUserRepo = ttcUserRepo;
+            _config = config;
         }
 
         [HttpPost("create")]
@@ -70,8 +78,7 @@ namespace Presentation.Controllers
                 var result = await _signInManager.PasswordSignInAsync(loginDetails.Email, loginDetails.Password, true, false);
                 if(result.Succeeded)
                 {
-                    // return a jwt token later 
-                    return Ok("User logged in");
+                    return Ok("user loggd in");
                 }
                 if(result.IsLockedOut)
                 {
@@ -92,5 +99,7 @@ namespace Presentation.Controllers
             await _signInManager.SignOutAsync();
             return Ok();
         }
+
+        
     }
 }

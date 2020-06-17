@@ -1,21 +1,18 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using Core.Interfaces;
 using Infrastructure;
 using Infrastructure.DAL;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.NewtonsoftJson;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
+using Microsoft.IdentityModel.Tokens;
 
 namespace Presentation {
     public class Startup {
@@ -27,11 +24,16 @@ namespace Presentation {
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices (IServiceCollection services) {
+            
+
             services.AddDbContext<TtcDbContext> (options => {
                 options.UseSqlite (Configuration.GetConnectionString ("AppConectionString"),
                     optionsBuilder =>
                     optionsBuilder.MigrationsAssembly ("Presentation"));
             });
+
+            
+
             services.AddControllers ().AddNewtonsoftJson (options =>
                 options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
             );
@@ -60,7 +62,7 @@ namespace Presentation {
             app.UseRouting ();
 
             app.UseAuthorization ();
-            app.UseAuthentication ();
+            //app.UseAuthentication ();
 
             app.UseEndpoints (endpoints => {
                 endpoints.MapRazorPages ();
