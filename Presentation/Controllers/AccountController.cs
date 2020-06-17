@@ -78,7 +78,9 @@ namespace Presentation.Controllers
                 var result = await _signInManager.PasswordSignInAsync(loginDetails.Email, loginDetails.Password, true, false);
                 if(result.Succeeded)
                 {
-                    return Ok("user loggd in");
+                    var key = _config.GetSection("AppSettings:Token").Value;
+                    string token = CreateToken(loginDetails.Email, key);
+                    return Ok(new {token});
                 }
                 if(result.IsLockedOut)
                 {
@@ -99,6 +101,32 @@ namespace Presentation.Controllers
             await _signInManager.SignOutAsync();
             return Ok();
         }
+
+        private string CreateToken(string email, string blobKey)
+        {
+            List<Claim> claims = new List<Claim>
+            {
+                new Claim(ClaimTypes.Name, email)
+            };
+
+            SymmetricSecurityKey key = new SymmetricSecurityKey(Encoding.ASCII
+                .GetBytes(blobKey));
+
+            SigningCredentials creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
+
+            SecurityTokenDescriptor tokenDescriptor = new SecurityTokenDescriptor
+            {
+                Subject = new ClaimsIdentity(claims),
+                Expires = DateTime.Now.AddDays(1),
+                SigningCredentials = creds
+            };
+
+            JwtSecurityTokenHandler tokenHandler = new JwtSecurityTokenHandler();
+            SecurityToken token = tokenHandler.CreateToken(tokenDescriptor);
+
+            return tokenHandler.WriteToken(token);
+        }
+
 
         
     }

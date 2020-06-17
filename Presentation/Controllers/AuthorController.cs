@@ -14,6 +14,7 @@ using Presentation.ViewModels;
 
 namespace Presentation.Controllers {
 
+    [Authorize(Roles="Author")]
     [ApiController]
     [Route ("api/[controller]")]
     public class AuthorController : ControllerBase {

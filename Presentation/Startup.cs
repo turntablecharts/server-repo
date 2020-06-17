@@ -24,7 +24,19 @@ namespace Presentation {
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices (IServiceCollection services) {
-            
+
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            .AddJwtBearer( options => {
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(
+                        Configuration.GetSection("AppSettings:Token").Value
+                    )),
+                    ValidateIssuer = false,
+                    ValidateAudience = false
+                };
+            });
 
             services.AddDbContext<TtcDbContext> (options => {
                 options.UseSqlite (Configuration.GetConnectionString ("AppConectionString"),
@@ -61,11 +73,12 @@ namespace Presentation {
 
             app.UseRouting ();
 
+            app.UseAuthentication ();
             app.UseAuthorization ();
-            //app.UseAuthentication ();
+            
 
             app.UseEndpoints (endpoints => {
-                endpoints.MapRazorPages ();
+              //  endpoints.MapRazorPages ();
                 endpoints.MapControllers ();
             });
             CreateRoles (service).Wait ();
