@@ -15,29 +15,14 @@ namespace Infrastructure.DAL {
             _db = db;
             _blob = blob;
         }
-        public async Task<MediaItem> Add (MediaItem item, IFormFile file, string blobKey) 
-        {
+        public async Task<MediaItem> Add (MediaItem item, IFormFile file, string blobKey) {
             string imageUri = GetFileUploadBlobReturnsLink (file, blobKey);
             item.ImageLink = imageUri;
-            
+
             await _db.MediaItems.AddAsync (item);
             await _db.SaveChangesAsync ();
 
             return item;
-        }
-
-        public async void DeleteMedia (int id) {
-            var media = await _db.MediaItems.FirstOrDefaultAsync (m => m.Id == id);
-            _db.MediaItems.Remove (media);
-            await _db.SaveChangesAsync ();
-        }
-
-        public async Task<IList<MediaItem>> GetAllMedia () {
-            return await _db.MediaItems.ToListAsync ();
-        }
-
-        public async Task<MediaItem> GetOne (int id) {
-            return await _db.MediaItems.FirstOrDefaultAsync (m => m.Id == id);
         }
 
         public string GetFileUploadBlobReturnsLink (IFormFile file, string blobKey) {

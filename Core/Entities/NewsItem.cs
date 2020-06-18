@@ -5,7 +5,7 @@ namespace Core.Entities {
         public int Id { get; set; }
         public DateTime DateCreated { get; set; }
         public int TtcUserId { get; set; }
-        public TtcUser ttcUser { get; set; }
+        public virtual TtcUser ttcUser { get; set; }
         public string HeaderImageUri { get; set; }
         public string NewsContent { get; set; }
 

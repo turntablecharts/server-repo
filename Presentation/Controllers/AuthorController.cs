@@ -14,34 +14,43 @@ using Presentation.ViewModels;
 
 namespace Presentation.Controllers {
 
-    [Authorize(Roles="Author")]
+    [Authorize]
     [ApiController]
     [Route ("api/[controller]")]
     public class AuthorController : ControllerBase {
-        private readonly IChartRepo _chartRepo;
-        private readonly INewsRepo _newsRepo;
-        private readonly IMediaRepo _mediaRepo;
-        private readonly IPhotoRepo _photoRepo;
-        private readonly ILogRepo _logRepo;
-        private readonly IVideoRepo _videoRepo;
+
+        private readonly IMediaRepo _mediaUpload;
         private IConfiguration _config;
 
+        private readonly IGenericRepository<Chart> _chartRepository;
+        private readonly IGenericRepository<NewsItem> _newsRepository;
+        private readonly IGenericRepository<Log> _logRepository;
+        private readonly IGenericRepository<VideoItem> _videoRepository;
+        private readonly IGenericRepository<PhotoItem> _photoRepository;
+        private readonly IGenericRepository<MediaItem> _mediaRepository;
+
         public AuthorController (
-            IChartRepo chartRepo,
-            INewsRepo newsRepo,
-            IMediaRepo mediaRepo,
-            IPhotoRepo photoRepo,
-            ILogRepo logRepo,
-            IVideoRepo videoRepo,
-            IConfiguration config
+
+            IMediaRepo mediaUpload,
+
+            IConfiguration config,
+            IGenericRepository<Chart> chartRepository,
+            IGenericRepository<NewsItem> newsRepository,
+            IGenericRepository<Log> logRepository,
+            IGenericRepository<VideoItem> videoRepository,
+            IGenericRepository<PhotoItem> photoRepository,
+            IGenericRepository<MediaItem> mediaRepository
         ) {
-            _chartRepo = chartRepo;
-            _newsRepo = newsRepo;
-            _mediaRepo = mediaRepo;
-            _photoRepo = photoRepo;
-            _logRepo = logRepo;
-            _videoRepo = videoRepo;
+
+            _mediaRepository = mediaRepository;
+            _mediaUpload = mediaUpload;
+
             _config = config;
+            _chartRepository = chartRepository;
+            _newsRepository = newsRepository;
+            _logRepository = logRepository;
+            _videoRepository = videoRepository;
+            _photoRepository = photoRepository;
         }
 
         #region charts
@@ -76,7 +85,8 @@ namespace Presentation.Controllers {
                 Genre = input.ChartGenre
             };
 
-            await _chartRepo.AddChart (chartToAdd);
+            await _chartRepository.AddAsync (chartToAdd);
+            //await _chartRepo.AddChart (chartToAdd);
 
             return Ok (chartToAdd);
         }
@@ -84,9 +94,10 @@ namespace Presentation.Controllers {
         [HttpDelete ("chart/delete/{id}/{userEmail}")]
         public IActionResult DeleteChart ([FromRoute] int id, [FromRoute] string userEmail) {
             try {
-                _chartRepo.DeleteChart (id);
+                var chartToDelete = _chartRepository.GetWithInclude (m => m.Id == id, "ChartItems").FirstOrDefault ();
+                _chartRepository.Delete (chartToDelete);
 
-                _logRepo.AddToLog (new Log {
+                _logRepository.AddAsync (new Log {
                     Name = userEmail,
                         Event = "Deleted chart with id: " + id,
                         EventDate = DateTime.Now
@@ -98,8 +109,8 @@ namespace Presentation.Controllers {
         }
 
         [HttpGet ("chart/{id}")]
-        public async Task<IActionResult> GetOnechart ([FromRoute] int id) {
-            var result = await _chartRepo.GetOne (id);
+        public IActionResult GetOnechart ([FromRoute] int id) {
+            var result = _chartRepository.GetWithInclude (m => m.Id == id, "ChartItems").FirstOrDefault ();
             if (result != null) {
                 return Ok (result);
             } else {
@@ -108,8 +119,8 @@ namespace Presentation.Controllers {
         }
 
         [HttpGet ("chart/all")]
-        public async Task<IActionResult> GetCharts () {
-            return Ok (await _chartRepo.GetAllCharts ());
+        public IActionResult GetCharts () {
+            return Ok (_chartRepository.GetAll ());
         }
         #endregion
 
@@ -121,18 +132,18 @@ namespace Presentation.Controllers {
             }
             news.DateCreated = DateTime.Now;
 
-            await _newsRepo.AddNews (news);
+            await _newsRepository.AddAsync (news);
             return Ok (news);
         }
 
         [HttpGet ("news/all")]
-        public async Task<ActionResult> GetAllNews () {
-            return Ok (await _newsRepo.GetAllNews ());
+        public ActionResult GetAllNews () {
+            return Ok (_newsRepository.GetAll ());
         }
 
         [HttpGet ("news/{id}")]
-        public async Task<IActionResult> GetOneNews (int id) {
-            var news = await _newsRepo.GetOne (id);
+        public IActionResult GetOneNews (int id) {
+            var news = _newsRepository.GetById (id);
             if (news == null) { return NotFound (); }
             return Ok (news);
         }
@@ -141,11 +152,12 @@ namespace Presentation.Controllers {
         public IActionResult EditNews ([FromRoute] int id, [FromBody] NewsItem news, [FromRoute] string userEmail) {
             if (!ModelState.IsValid) { return BadRequest (ModelState); }
 
-            var updatedNews = _newsRepo.EditNews (news, id);
+            news.Id = id;
+            var updatedNews = _newsRepository.UpdateAsync (news);
 
             if (updatedNews == null) { return NotFound (); }
 
-            _logRepo.AddToLog (new Log {
+            _logRepository.AddAsync (new Log {
                 Name = userEmail,
                     Event = "Edited News, Title: " + updatedNews.Title,
                     EventDate = DateTime.Now
@@ -156,9 +168,9 @@ namespace Presentation.Controllers {
         [HttpDelete ("news/delete/{id}/{userEmail}")]
         public IActionResult DeleteNews ([FromRoute] int id, [FromRoute] string userEmail) {
             try {
-                _newsRepo.DeleteNews (id);
+                _newsRepository.Delete (_newsRepository.GetById (id));
 
-                _logRepo.AddToLog (new Log {
+                _logRepository.AddAsync (new Log {
                     Name = userEmail,
                         Event = "Deleted News, id: " + id,
                         EventDate = DateTime.Now
@@ -178,19 +190,18 @@ namespace Presentation.Controllers {
                 return BadRequest (ModelState);
             }
 
-            await _videoRepo.AddVideo (video);
-
-            return Ok (video);
+            var result = await _videoRepository.AddAsync (video);
+            return Ok (result);
         }
 
         [HttpGet ("videos/all")]
-        public async Task<IActionResult> GetAllVideos () {
-            return Ok (await _videoRepo.GetAllVideos ());
+        public IActionResult GetAllVideos () {
+            return Ok (_videoRepository.GetAll ());
         }
 
         [HttpGet ("videos/{id}")]
-        public async Task<IActionResult> GetOneVideo (int id) {
-            var video = await _videoRepo.GetOneVideo (id);
+        public IActionResult GetOneVideo (int id) {
+            var video = _videoRepository.GetById (id);
             if (video == null) {
                 return NotFound ();
             }
@@ -204,13 +215,14 @@ namespace Presentation.Controllers {
                 return BadRequest (ModelState);
             }
 
-            var updatedVideo = _videoRepo.EditVideo (item, id);
+            item.Id = id;
+            var updatedVideo = _videoRepository.UpdateAsync (item);
 
             if (updatedVideo == null) {
                 return NotFound ();
             }
 
-            _logRepo.AddToLog (new Log {
+            _logRepository.AddAsync (new Log {
                 Name = userEmail,
                     Event = "Edited Video, title" + updatedVideo.Title,
                     EventDate = DateTime.Now
@@ -222,9 +234,9 @@ namespace Presentation.Controllers {
         [HttpDelete ("videos/delete/{id}/{userEmail}")]
         public IActionResult DeleteVideo ([FromRoute] int id, [FromRoute] string userEmail) {
             try {
-                _videoRepo.DeleteVideo (id);
-
-                _logRepo.AddToLog (new Log {
+                var video = _videoRepository.GetById (id);
+                _videoRepository.Delete (video);
+                _logRepository.AddAsync (new Log {
                     Name = userEmail,
                         Event = "Deleted Video, id: " + id,
                         EventDate = DateTime.Now
@@ -248,19 +260,19 @@ namespace Presentation.Controllers {
             var mediaItem = new MediaItem {
                 Title = item.Title,
             };
-            var media = await _mediaRepo.Add (mediaItem, item.Image, blobKey);
+            var media = await _mediaUpload.Add (mediaItem, item.Image, blobKey);
 
             return Ok (media);
         }
 
         [HttpGet ("media/all")]
-        public async Task<IActionResult> GetAllMedia () {
-            return Ok (await _mediaRepo.GetAllMedia ());
+        public IActionResult GetAllMedia () {
+            return Ok (_mediaRepository.GetAll ());
         }
 
         [HttpGet ("media/{id}")]
-        public async Task<IActionResult> GetOneMedia ([FromRoute] int id) {
-            var media = await _mediaRepo.GetOne (id);
+        public IActionResult GetOneMedia ([FromRoute] int id) {
+            var media = _mediaRepository.GetById (id);
             if (media == null) {
                 return NotFound ();
             }
@@ -271,8 +283,8 @@ namespace Presentation.Controllers {
         [HttpDelete ("media/delete/{id}/{userEmail}")]
         public IActionResult DeleteMedia ([FromRoute] int id, [FromRoute] string userEmail) {
             try {
-                _mediaRepo.DeleteMedia (id);
-                _logRepo.AddToLog (new Log {
+                _mediaRepository.Delete (_mediaRepository.GetById (id));
+                _logRepository.AddAsync (new Log {
                     Name = userEmail,
                         Event = "Deleted Media, Id: " + id,
                         EventDate = DateTime.Now
@@ -292,19 +304,19 @@ namespace Presentation.Controllers {
             }
             item.DateCreated = DateTime.Now;
 
-            var photo = await _photoRepo.AddPhoto (item);
+            var photo = await _photoRepository.AddAsync (item);
 
             return Ok (photo);
         }
 
         [HttpGet ("photo/all")]
-        public async Task<IActionResult> GetAllPhoto () {
-            return Ok (await _photoRepo.GetAllPhotos ());
+        public IActionResult GetAllPhoto () {
+            return Ok (_photoRepository.GetAll ());
         }
 
         [HttpGet ("photo/{id}")]
-        public async Task<IActionResult> GetOnePhoto ([FromRoute] int id) {
-            var photo = await _photoRepo.GetOnePhoto (id);
+        public IActionResult GetOnePhoto ([FromRoute] int id) {
+            var photo = _photoRepository.GetById (id);
             if (photo == null) {
                 return NotFound ();
             }
@@ -316,13 +328,12 @@ namespace Presentation.Controllers {
             if (!ModelState.IsValid) {
                 return BadRequest (ModelState);
             }
-
-            var editedPhoto = _photoRepo.EditPhoto (item, id);
-
+            item.Id = id;
+            var editedPhoto = _photoRepository.UpdateAsync (item);
             if (editedPhoto == null) {
                 return NotFound ();
             }
-            _logRepo.AddToLog (new Log {
+            _logRepository.AddAsync (new Log {
                 Name = userEmail,
                     EventDate = DateTime.Now,
                     Event = "Edited Video, title: " + editedPhoto.Title
@@ -333,9 +344,10 @@ namespace Presentation.Controllers {
         [HttpDelete ("photo/delete/{id}/{userEmail}")]
         public IActionResult DeletePhoto ([FromRoute] int id, [FromRoute] string userEmail) {
             try {
-                _photoRepo.DeletePhoto (id);
 
-                _logRepo.AddToLog (new Log {
+                _photoRepository.Delete (_photoRepository.GetById (id));
+
+                _logRepository.AddAsync (new Log {
                     Name = userEmail,
                         Event = "Deleted Photo, Id: " + id,
                         EventDate = DateTime.Now

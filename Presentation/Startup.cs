@@ -52,14 +52,9 @@ namespace Presentation {
             services.AddRazorPages ();
 
             //custom services 
-            services.AddScoped<ITtcUserRepo, TtcUserRepo> ();
-            services.AddScoped<IChartRepo, ChartRepo> ();
-            services.AddScoped<ILogRepo, LogRepo> ();
             services.AddScoped<IMediaRepo, MediaRepo> ();
-            services.AddScoped<INewsRepo, NewsRepo> ();
-            services.AddScoped<IPhotoRepo, PhotoRepo> ();
-            services.AddScoped<IVideoRepo, VideoRepo> ();
             services.AddScoped<IBlobRepo, BlobRepo> ();
+            services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -72,6 +67,12 @@ namespace Presentation {
             app.UseStaticFiles ();
 
             app.UseRouting ();
+
+            // global cors policy
+            app.UseCors(x => x
+                .AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader());
 
             app.UseAuthentication ();
             app.UseAuthorization ();

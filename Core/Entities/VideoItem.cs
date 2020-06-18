@@ -1,7 +1,5 @@
-namespace Core.Entities
-{
-    public class VideoItem
-    {
+namespace Core.Entities {
+    public class VideoItem {
         public int Id { get; set; }
         public string Title { get; set; }
         public string VideoUri { get; set; }

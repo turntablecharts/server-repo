@@ -1,9 +1,7 @@
 using System;
 
-namespace Core.Entities
-{
-    public class Log
-    {
+namespace Core.Entities {
+    public class Log {
         public int Id { get; set; }
         public string Name { get; set; }
         public string Event { get; set; }

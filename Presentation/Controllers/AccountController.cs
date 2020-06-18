@@ -5,6 +5,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using Core.Entities;
 using Core.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -14,120 +15,101 @@ using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Presentation.ViewModels;
 
-namespace Presentation.Controllers
-{
+namespace Presentation.Controllers {
     [ApiController]
-    [Route("api/[controller]")]
-    public class AccountController : ControllerBase
-    {
+    [Route ("api/[controller]")]
+    public class AccountController : ControllerBase {
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly UserManager<IdentityUser> _userManager;
-        private readonly ITtcUserRepo _ttcUserRepo;
+        private IGenericRepository<TtcUser> _userGenericRepo;
         private IConfiguration _config;
 
-
-        public AccountController(
+        public AccountController (
             UserManager<IdentityUser> userManager,
-            SignInManager<IdentityUser> signInManager, 
-             ITtcUserRepo ttcUserRepo,
-             IConfiguration config)
-        {
+            SignInManager<IdentityUser> signInManager,
+            IGenericRepository<TtcUser> userGenericRepo,
+            IConfiguration config) {
             _signInManager = signInManager;
             _userManager = userManager;
-            _ttcUserRepo = ttcUserRepo;
+            _userGenericRepo = userGenericRepo;
             _config = config;
         }
 
-        [HttpPost("create")]
+        [HttpPost ("create")]
         [AllowAnonymous]
-        public async Task<ActionResult> Register([FromBody]TtcUserVM input)
-        {
-            if(ModelState.IsValid)
-            {
-                var user = new IdentityUser {UserName = input.Email, Email = input.Email };
-                var result = await _userManager.CreateAsync(user, input.Password);
-                if(result.Succeeded)
-                {
-                    if(input.Role != null)
-                    {
-                        await _userManager.AddToRoleAsync(user, input.Role);
-                    }  
+        public async Task<ActionResult> Register ([FromBody] TtcUserVM input) {
+            if (ModelState.IsValid) {
+                var user = new IdentityUser { UserName = input.Email, Email = input.Email };
+                var result = await _userManager.CreateAsync (user, input.Password);
+                if (result.Succeeded) {
+                    if (input.Role != null) {
+                        await _userManager.AddToRoleAsync (user, input.Role);
+                    }
 
-                    await _ttcUserRepo.Add(new TtcUserVM{Email = input.Email, 
-                        FirstName = input.FirstName, 
-                        LastName = input.LastName});
+                    await _userGenericRepo.AddAsync (new TtcUserVM {
+                        Email = input.Email,
+                            FirstName = input.FirstName,
+                            LastName = input.LastName
+                    });
                     //later send a link for email confirmation 
                     //now just return an OKobjectResult after which we return a token
-                    return Ok("User Successfully created");
-                }
-                else 
-                {
-                    return BadRequest(result.Errors);
+                    return Ok ("User Successfully created");
+                } else {
+                    return BadRequest (result.Errors);
                 }
             }
 
-            return BadRequest(ModelState);
+            return BadRequest (ModelState);
         }
 
-        [HttpPost("login")]
+        [HttpPost ("login")]
         [AllowAnonymous]
-        public async Task<ActionResult> Login([FromBody]LoginModel loginDetails)
-        {
-            if(ModelState.IsValid)
-            {
-                var result = await _signInManager.PasswordSignInAsync(loginDetails.Email, loginDetails.Password, true, false);
-                if(result.Succeeded)
-                {
-                    var key = _config.GetSection("AppSettings:Token").Value;
-                    string token = CreateToken(loginDetails.Email, key);
-                    return Ok(new {token});
+        public async Task<ActionResult> Login ([FromBody] LoginModel loginDetails) {
+            if (ModelState.IsValid) {
+                var result = await _signInManager.PasswordSignInAsync (loginDetails.Email, loginDetails.Password, true, false);
+                if (result.Succeeded) {
+                    var key = _config.GetSection ("AppSettings:Token").Value;
+                    string token = CreateToken (loginDetails.Email, key);
+                    return Ok (new { token });
                 }
-                if(result.IsLockedOut)
-                {
-                    return BadRequest("User account is locked out");
-                }
-                else{
-                    ModelState.AddModelError(string.Empty, "Invalid login attempt");
-                    return BadRequest(ModelState);
+                if (result.IsLockedOut) {
+                    return BadRequest ("User account is locked out");
+                } else {
+                    ModelState.AddModelError (string.Empty, "Invalid login attempt");
+                    return BadRequest (ModelState);
                 }
             }
-            return BadRequest(ModelState);
+            return BadRequest (ModelState);
         }
 
-        [HttpPost("logout")]
-        
-        public async Task<ActionResult> Logout()
-        {
-            await _signInManager.SignOutAsync();
-            return Ok();
+        [HttpPost ("logout")]
+
+        public async Task<ActionResult> Logout () {
+            await _signInManager.SignOutAsync ();
+            return Ok ();
         }
 
-        private string CreateToken(string email, string blobKey)
-        {
-            List<Claim> claims = new List<Claim>
-            {
-                new Claim(ClaimTypes.Name, email)
+        private string CreateToken (string email, string blobKey) {
+            List<Claim> claims = new List<Claim> {
+                new Claim (ClaimTypes.Name, email)
             };
 
-            SymmetricSecurityKey key = new SymmetricSecurityKey(Encoding.ASCII
-                .GetBytes(blobKey));
+            SymmetricSecurityKey key = new SymmetricSecurityKey (Encoding.ASCII
+                .GetBytes (blobKey));
 
-            SigningCredentials creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
+            SigningCredentials creds = new SigningCredentials (key, SecurityAlgorithms.HmacSha512Signature);
 
-            SecurityTokenDescriptor tokenDescriptor = new SecurityTokenDescriptor
-            {
-                Subject = new ClaimsIdentity(claims),
-                Expires = DateTime.Now.AddDays(1),
+            SecurityTokenDescriptor tokenDescriptor = new SecurityTokenDescriptor {
+                Subject = new ClaimsIdentity (claims),
+                Expires = DateTime.Now.AddDays (1),
                 SigningCredentials = creds
             };
 
-            JwtSecurityTokenHandler tokenHandler = new JwtSecurityTokenHandler();
-            SecurityToken token = tokenHandler.CreateToken(tokenDescriptor);
+            JwtSecurityTokenHandler tokenHandler = new JwtSecurityTokenHandler ();
+            SecurityToken token = tokenHandler.CreateToken (tokenDescriptor);
 
-            return tokenHandler.WriteToken(token);
+            return tokenHandler.WriteToken (token);
         }
 
-
-        
     }
 }
