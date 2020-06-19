@@ -1390,6 +1390,9 @@
           "lib/netstandard2.0/SQLitePCLRaw.provider.dynamic_cdecl.dll": {}
         }
       },
+      "Swashbuckle/6.0.0-rc1-final": {
+        "type": "package"
+      },
       "System.AppContext/4.3.0": {
         "type": "package",
         "dependencies": {
@@ -4592,6 +4595,17 @@
         "lib/netstandard2.0/SQLitePCLRaw.provider.dynamic_cdecl.dll",
         "sqlitepclraw.provider.dynamic_cdecl.2.0.2.nupkg.sha512",
         "sqlitepclraw.provider.dynamic_cdecl.nuspec"
+      ]
+    },
+    "Swashbuckle/6.0.0-rc1-final": {
+      "sha512": "m8xTit1yy8eFavvrVPBaNWvWKMTnKnjHcULVku5DwiUFuqg6iVJ6DUuw2zId2UjljVlZlMQpuIde9DprvcFcXg==",
+      "type": "package",
+      "path": "swashbuckle/6.0.0-rc1-final",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "swashbuckle.6.0.0-rc1-final.nupkg.sha512",
+        "swashbuckle.nuspec"
       ]
     },
     "System.AppContext/4.3.0": {
@@ -8044,7 +8058,8 @@
       "Microsoft.EntityFrameworkCore.Design >= 3.1.4",
       "Microsoft.EntityFrameworkCore.Sqlite >= 3.1.4",
       "Microsoft.EntityFrameworkCore.Tools >= 3.1.4",
-      "Microsoft.VisualStudio.Web.CodeGeneration.Design >= 3.1.3"
+      "Microsoft.VisualStudio.Web.CodeGeneration.Design >= 3.1.3",
+      "Swashbuckle >= 6.0.0-rc1-final"
     ]
   },
   "packageFolders": {
@@ -8128,6 +8143,10 @@
           "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
             "target": "Package",
             "version": "[3.1.3, )"
+          },
+          "Swashbuckle": {
+            "target": "Package",
+            "version": "[6.0.0-rc1-final, )"
           }
         },
         "imports": [

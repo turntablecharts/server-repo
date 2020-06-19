@@ -14,6 +14,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 
+
+
 namespace Presentation {
     public class Startup {
         public Startup (IConfiguration configuration) {
@@ -55,6 +57,8 @@ namespace Presentation {
             services.AddScoped<IMediaRepo, MediaRepo> ();
             services.AddScoped<IBlobRepo, BlobRepo> ();
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+
+            //services.AddSwaggerGen();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

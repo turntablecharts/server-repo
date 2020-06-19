@@ -108,7 +108,9 @@ namespace Presentation.Controllers {
             }
         }
 
+        [AllowAnonymous]
         [HttpGet ("chart/{id}")]
+       
         public IActionResult GetOnechart ([FromRoute] int id) {
             var result = _chartRepository.GetWithInclude (m => m.Id == id, "ChartItems").FirstOrDefault ();
             if (result != null) {
@@ -117,6 +119,7 @@ namespace Presentation.Controllers {
                 return NotFound ();
             }
         }
+
 
         [HttpGet ("chart/all")]
         public IActionResult GetCharts () {
@@ -136,11 +139,13 @@ namespace Presentation.Controllers {
             return Ok (news);
         }
 
+         [AllowAnonymous]
         [HttpGet ("news/all")]
         public ActionResult GetAllNews () {
-            return Ok (_newsRepository.GetAll ());
+            return Ok (_newsRepository.GetAll ().OrderByDescending(m => m.DateCreated));
         }
 
+         [AllowAnonymous]
         [HttpGet ("news/{id}")]
         public IActionResult GetOneNews (int id) {
             var news = _newsRepository.GetById (id);
@@ -194,11 +199,13 @@ namespace Presentation.Controllers {
             return Ok (result);
         }
 
+        [AllowAnonymous]
         [HttpGet ("videos/all")]
         public IActionResult GetAllVideos () {
-            return Ok (_videoRepository.GetAll ());
+            return Ok (_videoRepository.GetAll ().OrderByDescending(m=> m.Id));
         }
 
+        [AllowAnonymous]
         [HttpGet ("videos/{id}")]
         public IActionResult GetOneVideo (int id) {
             var video = _videoRepository.GetById (id);
@@ -309,11 +316,13 @@ namespace Presentation.Controllers {
             return Ok (photo);
         }
 
+        [AllowAnonymous]
         [HttpGet ("photo/all")]
         public IActionResult GetAllPhoto () {
-            return Ok (_photoRepository.GetAll ());
+            return Ok (_photoRepository.GetAll ().OrderByDescending(m => m.DateCreated));
         }
 
+        [AllowAnonymous]
         [HttpGet ("photo/{id}")]
         public IActionResult GetOnePhoto ([FromRoute] int id) {
             var photo = _photoRepository.GetById (id);

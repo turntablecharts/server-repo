@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "12BGHyLCf4/VUa63dAYFmu3AJRjp+ITNqbhSqktOBCO2r9R6fKvp1m1Y4K10HSrcKeUADHHdUxNH2NquOuWMtQ==",
+  "dgSpecHash": "sCmKpctKhNJI7HFnIW6liIQ1cUfgJ/8pjECorT5YbSsuNld0nZDTQROKbI8hBVGlII9Zz39V8WlcxqvQWCE6ow==",
   "success": true,
   "projectFilePath": "/Users/macbook1/Documents/repos/work/ttc-app/ttc/server/Presentation/Presentation.csproj",
   "expectedPackageFiles": [
@@ -97,6 +97,7 @@
     "/Users/macbook1/.nuget/packages/sqlitepclraw.core/2.0.2/sqlitepclraw.core.2.0.2.nupkg.sha512",
     "/Users/macbook1/.nuget/packages/sqlitepclraw.lib.e_sqlite3/2.0.2/sqlitepclraw.lib.e_sqlite3.2.0.2.nupkg.sha512",
     "/Users/macbook1/.nuget/packages/sqlitepclraw.provider.dynamic_cdecl/2.0.2/sqlitepclraw.provider.dynamic_cdecl.2.0.2.nupkg.sha512",
+    "/Users/macbook1/.nuget/packages/swashbuckle/6.0.0-rc1-final/swashbuckle.6.0.0-rc1-final.nupkg.sha512",
     "/Users/macbook1/.nuget/packages/system.appcontext/4.3.0/system.appcontext.4.3.0.nupkg.sha512",
     "/Users/macbook1/.nuget/packages/system.buffers/4.5.0/system.buffers.4.5.0.nupkg.sha512",
     "/Users/macbook1/.nuget/packages/system.collections/4.3.0/system.collections.4.3.0.nupkg.sha512",

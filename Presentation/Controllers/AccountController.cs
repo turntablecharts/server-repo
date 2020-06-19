@@ -35,7 +35,7 @@ namespace Presentation.Controllers {
             _config = config;
         }
 
-        [HttpPost ("create")]
+        [HttpPost ("register")]
         [AllowAnonymous]
         public async Task<ActionResult> Register ([FromBody] TtcUserVM input) {
             if (ModelState.IsValid) {
@@ -75,7 +75,7 @@ namespace Presentation.Controllers {
                 if (result.IsLockedOut) {
                     return BadRequest ("User account is locked out");
                 } else {
-                    ModelState.AddModelError (string.Empty, "Invalid login attempt");
+                    ModelState.AddModelError ("description", "Invalid login attempt");
                     return BadRequest (ModelState);
                 }
             }
