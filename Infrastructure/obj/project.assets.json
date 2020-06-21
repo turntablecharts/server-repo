@@ -4235,7 +4235,8 @@
     ]
   },
   "packageFolders": {
-    "/Users/macbook1/.nuget/packages/": {}
+    "/Users/macbook1/.nuget/packages/": {},
+    "/usr/local/share/dotnet/sdk/NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
@@ -4246,6 +4247,9 @@
       "packagesPath": "/Users/macbook1/.nuget/packages/",
       "outputPath": "/Users/macbook1/Documents/repos/work/ttc-app/ttc/server/Infrastructure/obj/",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "/usr/local/share/dotnet/sdk/NuGetFallbackFolder"
+      ],
       "configFilePaths": [
         "/Users/macbook1/.nuget/NuGet/NuGet.Config"
       ],

@@ -13,6 +13,9 @@
         "packagesPath": "/Users/macbook1/.nuget/packages/",
         "outputPath": "/Users/macbook1/Documents/repos/work/ttc-app/ttc/server/Core/obj/",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "/usr/local/share/dotnet/sdk/NuGetFallbackFolder"
+        ],
         "configFilePaths": [
           "/Users/macbook1/.nuget/NuGet/NuGet.Config"
         ],

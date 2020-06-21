@@ -7,8 +7,10 @@ using Core.Interfaces;
 using Infrastructure;
 using Infrastructure.DAL;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Presentation.Areas.Identity.Data;
 
 namespace Presentation.Controllers {
     [Authorize]
@@ -18,11 +20,15 @@ namespace Presentation.Controllers {
 
         private IGenericRepository<Log> _logRepo;
         private IGenericRepository<TtcUser> _userGenericRepo;
-
+        private readonly UserManager<IdentityUser> _userManager;
+        private readonly PresentationIdentityDbContext _context;
         public AdminController (
-            IGenericRepository<Log> logRepo, IGenericRepository<TtcUser> userGenericRepo) {
+            IGenericRepository<Log> logRepo, IGenericRepository<TtcUser> userGenericRepo,
+            UserManager<IdentityUser> userManager,
+            PresentationIdentityDbContext context) {
             _logRepo = logRepo;
-
+            _context = context;
+            _userManager = userManager;
             _userGenericRepo = userGenericRepo;
         }
 
@@ -44,10 +50,20 @@ namespace Presentation.Controllers {
         }
 
         [HttpDelete ("users/delete/{id}")]
-        public IActionResult DeleteUser ([FromRoute] int id) {
+        public async Task<IActionResult> DeleteUser ([FromRoute] int id) {
             var user = _userGenericRepo.GetById (id);
             _userGenericRepo.Delete (user);
-            return Ok ("sucessfully deleted");
+
+            var login = await _userManager.FindByEmailAsync (user.Email);
+            var rolesForUser = await _userManager.GetRolesAsync (login);
+
+            var result = await _userManager.DeleteAsync(login);
+            if (result.Succeeded)
+            {
+                await _userManager.RemoveFromRolesAsync(login, rolesForUser);
+                return Ok("sucessfully deleted");
+            }
+            return Ok("deleted on ttc data but still present in database");
         }
 
         [HttpGet ("logs")]

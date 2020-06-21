@@ -120,7 +120,7 @@ namespace Presentation.Controllers {
             }
         }
 
-
+        [AllowAnonymous]
         [HttpGet ("chart/all")]
         public IActionResult GetCharts () {
             return Ok (_chartRepository.GetAll ());
