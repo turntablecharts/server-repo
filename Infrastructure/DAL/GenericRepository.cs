@@ -35,6 +35,8 @@ namespace Infrastructure.DAL {
             context.SaveChanges ();
         }
 
+        
+
         public IEnumerable<TEntity> GetAll () {
             IQueryable<TEntity> query = dbSet;
 
@@ -58,6 +60,8 @@ namespace Infrastructure.DAL {
 
             return query;
         }
+
+       
 
         public TEntity UpdateAsync (TEntity entityToUpdate) {
             if (entityToUpdate == null)

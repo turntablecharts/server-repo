@@ -3,16 +3,14 @@ using System;
 using Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace Presentation.Migrations.TtcDb
+namespace Presentation.Migrations
 {
     [DbContext(typeof(TtcDbContext))]
-    [Migration("20200609184713_initialmigrations")]
-    partial class initialmigrations
+    partial class TtcDbContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -24,13 +22,16 @@ namespace Presentation.Migrations.TtcDb
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("Category")
-                        .HasColumnType("INTEGER");
+                    b.Property<string>("Category")
+                        .HasColumnType("TEXT");
 
                     b.Property<DateTime>("DateCreated")
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("Genre")
+                    b.Property<string>("Genre")
+                        .HasColumnType("TEXT");
+
+                    b.Property<bool>("IsToDelete")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Week")
@@ -124,7 +125,13 @@ namespace Presentation.Migrations.TtcDb
                     b.Property<string>("HeaderImageUri")
                         .HasColumnType("TEXT");
 
+                    b.Property<bool>("IsToDelete")
+                        .HasColumnType("INTEGER");
+
                     b.Property<string>("NewsContent")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Title")
                         .HasColumnType("TEXT");
 
                     b.Property<int>("TtcUserId")
@@ -154,6 +161,9 @@ namespace Presentation.Migrations.TtcDb
 
                     b.Property<string>("HeaderImage")
                         .HasColumnType("TEXT");
+
+                    b.Property<bool>("IsToDelete")
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Title")
                         .HasColumnType("TEXT");
@@ -196,6 +206,9 @@ namespace Presentation.Migrations.TtcDb
 
                     b.Property<string>("Description")
                         .HasColumnType("TEXT");
+
+                    b.Property<bool>("IsToDelete")
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Title")
                         .HasColumnType("TEXT");

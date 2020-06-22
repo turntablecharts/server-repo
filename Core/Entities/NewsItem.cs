@@ -10,5 +10,6 @@ namespace Core.Entities {
         public string NewsContent { get; set; }
 
         public string Title { get; set; }
+        public bool IsToDelete{ get; set; }
     }
 }

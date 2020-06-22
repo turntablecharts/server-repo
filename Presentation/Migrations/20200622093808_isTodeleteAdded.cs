@@ -1,9 +1,9 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace Presentation.Migrations.TtcDb
+namespace Presentation.Migrations
 {
-    public partial class initialmigrations : Migration
+    public partial class isTodeleteAdded : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -15,8 +15,9 @@ namespace Presentation.Migrations.TtcDb
                         .Annotation("Sqlite:Autoincrement", true),
                     Week = table.Column<string>(nullable: true),
                     DateCreated = table.Column<DateTime>(nullable: false),
-                    Category = table.Column<int>(nullable: false),
-                    Genre = table.Column<int>(nullable: false)
+                    Category = table.Column<string>(nullable: true),
+                    Genre = table.Column<string>(nullable: true),
+                    IsToDelete = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -75,7 +76,8 @@ namespace Presentation.Migrations.TtcDb
                         .Annotation("Sqlite:Autoincrement", true),
                     Title = table.Column<string>(nullable: true),
                     VideoUri = table.Column<string>(nullable: true),
-                    Description = table.Column<string>(nullable: true)
+                    Description = table.Column<string>(nullable: true),
+                    IsToDelete = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -116,7 +118,9 @@ namespace Presentation.Migrations.TtcDb
                     DateCreated = table.Column<DateTime>(nullable: false),
                     TtcUserId = table.Column<int>(nullable: false),
                     HeaderImageUri = table.Column<string>(nullable: true),
-                    NewsContent = table.Column<string>(nullable: true)
+                    NewsContent = table.Column<string>(nullable: true),
+                    Title = table.Column<string>(nullable: true),
+                    IsToDelete = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -140,7 +144,8 @@ namespace Presentation.Migrations.TtcDb
                     Title = table.Column<string>(nullable: true),
                     Description = table.Column<string>(nullable: true),
                     Content = table.Column<string>(nullable: true),
-                    HeaderImage = table.Column<string>(nullable: true)
+                    HeaderImage = table.Column<string>(nullable: true),
+                    IsToDelete = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {

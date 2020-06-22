@@ -9,7 +9,7 @@ namespace Presentation.ViewModels
         public string Week { get; set; }
         public DateTime DateCreated { get; set; }
         public IFormFile DataCSVFile { get; set; }
-        public Category  ChartCategory { get; set; }
-        public Genre ChartGenre { get; set; }
+        public String  ChartCategory { get; set; }
+        public String ChartGenre { get; set; }
     }
 }

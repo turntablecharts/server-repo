@@ -91,6 +91,15 @@ namespace Presentation.Controllers {
             return Ok (chartToAdd);
         }
 
+        [HttpGet("chart/mark-to-delete/{id}")]
+        public IActionResult MarkToDelete([FromRoute]int id){
+            var chart = _chartRepository.GetById(id);
+            chart.IsToDelete = true;
+            _chartRepository.UpdateAsync(chart);
+
+            return Ok(chart);
+        }
+
         [HttpDelete ("chart/delete/{id}/{userEmail}")]
         public IActionResult DeleteChart ([FromRoute] int id, [FromRoute] string userEmail) {
             try {
@@ -170,6 +179,16 @@ namespace Presentation.Controllers {
             return Ok (updatedNews);
         }
 
+        [HttpGet("news/mark-to-delete/{id}")]
+        public IActionResult MarkToDeleteNews([FromRoute]int id)
+        {
+            var news = _newsRepository.GetById(id);
+            news.IsToDelete = true;
+            _newsRepository.UpdateAsync(news);
+
+            return Ok(news);
+        }
+
         [HttpDelete ("news/delete/{id}/{userEmail}")]
         public IActionResult DeleteNews ([FromRoute] int id, [FromRoute] string userEmail) {
             try {
@@ -236,6 +255,16 @@ namespace Presentation.Controllers {
             });
 
             return Ok (updatedVideo);
+        }
+
+        [HttpGet("video/mark-to-delete/{id}")]
+        public IActionResult MarkToDeleteVideo([FromRoute]int id)
+        {
+            var video = _videoRepository.GetById(id);
+            video.IsToDelete = true;
+            _videoRepository.UpdateAsync(video);
+
+            return Ok(video);
         }
 
         [HttpDelete ("videos/delete/{id}/{userEmail}")]
