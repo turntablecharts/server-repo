@@ -57,47 +57,55 @@ namespace Presentation.Controllers {
         [HttpPost ("chart/upload")]
         public async Task<IActionResult> UploadChart ([FromForm] ChartVM input) {
             if (!ModelState.IsValid) {
+                ModelState.AddModelError ("description", "invalid form format");
                 return BadRequest (ModelState);
             }
             var chartList = new List<ChartItem> ();
 
-            using (var reader = new StreamReader (input.DataCSVFile.OpenReadStream ())) {
-                while (!reader.EndOfStream) {
-                    var line = reader.ReadLine ();
-                    var values = line.Split (',');
+            try {
 
-                    chartList.Add (new ChartItem {
-                        Rank = int.Parse (values[0]),
-                            Title = values[1].Trim (),
-                            Artiste = values[2].Trim (),
-                            ImageUri = values[3].Trim (),
-                            LastPosition = int.Parse (values[4]),
-                            HighestPosition = int.Parse (values[5])
-                    });
+                using (var reader = new StreamReader (input.DataCSVFile.OpenReadStream ())) {
+                    while (!reader.EndOfStream) {
+                        var line = reader.ReadLine ();
+                        var values = line.Split (',');
+
+                        chartList.Add (new ChartItem {
+                            Rank = int.Parse (values[0]),
+                                Title = values[1].Trim (),
+                                Artiste = values[2].Trim (),
+                                ImageUri = values[3].Trim (),
+                                LastPosition = int.Parse (values[4]),
+                                HighestPosition = int.Parse (values[5])
+                        });
+                    }
                 }
+
+                var chartToAdd = new Chart {
+                    DateCreated = DateTime.Now,
+                    Week = input.Week,
+                    ChartItems = chartList,
+                    Category = input.ChartCategory,
+                    Genre = input.ChartGenre
+                };
+
+                await _chartRepository.AddAsync (chartToAdd);
+                //await _chartRepo.AddChart (chartToAdd);
+
+                return Ok (chartToAdd);
+            } catch (System.Exception) {
+                var description = "invalid file format";
+                return BadRequest (new { description });
             }
 
-            var chartToAdd = new Chart {
-                DateCreated = DateTime.Now,
-                Week = input.Week,
-                ChartItems = chartList,
-                Category = input.ChartCategory,
-                Genre = input.ChartGenre
-            };
-
-            await _chartRepository.AddAsync (chartToAdd);
-            //await _chartRepo.AddChart (chartToAdd);
-
-            return Ok (chartToAdd);
         }
 
-        [HttpGet("chart/mark-to-delete/{id}")]
-        public IActionResult MarkToDelete([FromRoute]int id){
-            var chart = _chartRepository.GetById(id);
+        [HttpGet ("chart/mark-to-delete/{id}")]
+        public IActionResult MarkToDelete ([FromRoute] int id) {
+            var chart = _chartRepository.GetById (id);
             chart.IsToDelete = true;
-            _chartRepository.UpdateAsync(chart);
+            _chartRepository.UpdateAsync (chart);
 
-            return Ok(chart);
+            return Ok (chart);
         }
 
         [HttpDelete ("chart/delete/{id}/{userEmail}")]
@@ -119,7 +127,7 @@ namespace Presentation.Controllers {
 
         [AllowAnonymous]
         [HttpGet ("chart/{id}")]
-       
+
         public IActionResult GetOnechart ([FromRoute] int id) {
             var result = _chartRepository.GetWithInclude (m => m.Id == id, "ChartItems").FirstOrDefault ();
             if (result != null) {
@@ -148,13 +156,13 @@ namespace Presentation.Controllers {
             return Ok (news);
         }
 
-         [AllowAnonymous]
+        [AllowAnonymous]
         [HttpGet ("news/all")]
         public ActionResult GetAllNews () {
-            return Ok (_newsRepository.GetAll ().OrderByDescending(m => m.DateCreated));
+            return Ok (_newsRepository.GetAll ().OrderByDescending (m => m.DateCreated));
         }
 
-         [AllowAnonymous]
+        [AllowAnonymous]
         [HttpGet ("news/{id}")]
         public IActionResult GetOneNews (int id) {
             var news = _newsRepository.GetById (id);
@@ -179,14 +187,13 @@ namespace Presentation.Controllers {
             return Ok (updatedNews);
         }
 
-        [HttpGet("news/mark-to-delete/{id}")]
-        public IActionResult MarkToDeleteNews([FromRoute]int id)
-        {
-            var news = _newsRepository.GetById(id);
+        [HttpGet ("news/mark-to-delete/{id}")]
+        public IActionResult MarkToDeleteNews ([FromRoute] int id) {
+            var news = _newsRepository.GetById (id);
             news.IsToDelete = true;
-            _newsRepository.UpdateAsync(news);
+            _newsRepository.UpdateAsync (news);
 
-            return Ok(news);
+            return Ok (news);
         }
 
         [HttpDelete ("news/delete/{id}/{userEmail}")]
@@ -221,7 +228,7 @@ namespace Presentation.Controllers {
         [AllowAnonymous]
         [HttpGet ("videos/all")]
         public IActionResult GetAllVideos () {
-            return Ok (_videoRepository.GetAll ().OrderByDescending(m=> m.Id));
+            return Ok (_videoRepository.GetAll ().OrderByDescending (m => m.Id));
         }
 
         [AllowAnonymous]
@@ -257,14 +264,13 @@ namespace Presentation.Controllers {
             return Ok (updatedVideo);
         }
 
-        [HttpGet("video/mark-to-delete/{id}")]
-        public IActionResult MarkToDeleteVideo([FromRoute]int id)
-        {
-            var video = _videoRepository.GetById(id);
+        [HttpGet ("video/mark-to-delete/{id}")]
+        public IActionResult MarkToDeleteVideo ([FromRoute] int id) {
+            var video = _videoRepository.GetById (id);
             video.IsToDelete = true;
-            _videoRepository.UpdateAsync(video);
+            _videoRepository.UpdateAsync (video);
 
-            return Ok(video);
+            return Ok (video);
         }
 
         [HttpDelete ("videos/delete/{id}/{userEmail}")]
@@ -348,7 +354,7 @@ namespace Presentation.Controllers {
         [AllowAnonymous]
         [HttpGet ("photo/all")]
         public IActionResult GetAllPhoto () {
-            return Ok (_photoRepository.GetAll ().OrderByDescending(m => m.DateCreated));
+            return Ok (_photoRepository.GetAll ().OrderByDescending (m => m.DateCreated));
         }
 
         [AllowAnonymous]
