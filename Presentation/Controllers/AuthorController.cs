@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Core.Entities;
 using Core.Interfaces;
 using CsvHelper;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Presentation.ViewModels;
@@ -28,6 +30,8 @@ namespace Presentation.Controllers {
         private readonly IGenericRepository<VideoItem> _videoRepository;
         private readonly IGenericRepository<PhotoItem> _photoRepository;
         private readonly IGenericRepository<MediaItem> _mediaRepository;
+         private IGenericRepository<TtcUser> _userGenericRepo;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
         public AuthorController (
 
@@ -39,13 +43,16 @@ namespace Presentation.Controllers {
             IGenericRepository<Log> logRepository,
             IGenericRepository<VideoItem> videoRepository,
             IGenericRepository<PhotoItem> photoRepository,
-            IGenericRepository<MediaItem> mediaRepository
+            IGenericRepository<MediaItem> mediaRepository,
+            IGenericRepository<TtcUser> userGenericRepo,
+            IHttpContextAccessor httpContextAccessor
         ) {
 
             _mediaRepository = mediaRepository;
             _mediaUpload = mediaUpload;
-
+            _userGenericRepo = userGenericRepo;
             _config = config;
+            _httpContextAccessor = httpContextAccessor;
             _chartRepository = chartRepository;
             _newsRepository = newsRepository;
             _logRepository = logRepository;
@@ -146,11 +153,15 @@ namespace Presentation.Controllers {
 
         #region news
         [HttpPost ("news/add")]
-        public async Task<ActionResult> AddNews ([FromBody] NewsItem news) {
+        public async Task<ActionResult> AddNews ([FromBody] NewsItemVM news) {
             if (!ModelState.IsValid) {
                 return BadRequest (ModelState);
             }
             news.DateCreated = DateTime.Now;
+
+            var user = _userGenericRepo.GetWithInclude(m => m.Email == news.Email, string.Empty).FirstOrDefault();
+
+           news.TtcUserId = user.Id;
 
             await _newsRepository.AddAsync (news);
             return Ok (news);
@@ -340,11 +351,15 @@ namespace Presentation.Controllers {
 
         #region photo
         [HttpPost ("photo/add")]
-        public async Task<IActionResult> AddPhoto ([FromBody] PhotoItem item) {
+        public async Task<IActionResult> AddPhoto ([FromBody] PhotoItemVM item) {
             if (!ModelState.IsValid) {
                 BadRequest (ModelState);
             }
             item.DateCreated = DateTime.Now;
+
+             var user = _userGenericRepo.GetWithInclude(m => m.Email == item.Email, string.Empty).FirstOrDefault();
+
+           item.TtcUserId = user.Id;
 
             var photo = await _photoRepository.AddAsync (item);
 
