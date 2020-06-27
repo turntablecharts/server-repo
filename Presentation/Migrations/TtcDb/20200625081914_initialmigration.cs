@@ -1,9 +1,9 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace Presentation.Migrations
+namespace Presentation.Migrations.TtcDb
 {
-    public partial class isTodeleteAdded : Migration
+    public partial class initialmigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -17,6 +17,7 @@ namespace Presentation.Migrations
                     DateCreated = table.Column<DateTime>(nullable: false),
                     Category = table.Column<string>(nullable: true),
                     Genre = table.Column<string>(nullable: true),
+                    HeaderVideoUrl = table.Column<string>(nullable: true),
                     IsToDelete = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>

@@ -2,17 +2,15 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Presentation.Areas.Identity.Data;
 
-namespace Presentation.Migrations.PresentationIdentityDb
+namespace Presentation.Migrations
 {
     [DbContext(typeof(PresentationIdentityDbContext))]
-    [Migration("20200622093920_initialmigrations")]
-    partial class initialmigrations
+    partial class PresentationIdentityDbContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

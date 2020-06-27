@@ -3,14 +3,16 @@ using System;
 using Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace Presentation.Migrations
+namespace Presentation.Migrations.TtcDb
 {
     [DbContext(typeof(TtcDbContext))]
-    partial class TtcDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200625081914_initialmigration")]
+    partial class initialmigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -29,6 +31,9 @@ namespace Presentation.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Genre")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("HeaderVideoUrl")
                         .HasColumnType("TEXT");
 
                     b.Property<bool>("IsToDelete")

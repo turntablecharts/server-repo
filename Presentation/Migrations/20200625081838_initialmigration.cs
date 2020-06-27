@@ -1,9 +1,9 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace Presentation.Migrations.PresentationIdentityDb
+namespace Presentation.Migrations
 {
-    public partial class initialmigrations : Migration
+    public partial class initialmigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

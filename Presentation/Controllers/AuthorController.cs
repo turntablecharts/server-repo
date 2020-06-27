@@ -82,7 +82,8 @@ namespace Presentation.Controllers {
                                 Artiste = values[2].Trim (),
                                 ImageUri = values[3].Trim (),
                                 LastPosition = int.Parse (values[4]),
-                                HighestPosition = int.Parse (values[5])
+                                HighestPosition = int.Parse (values[5]),
+                                MusicLink = values[6].Trim()
                         });
                     }
                 }
@@ -92,7 +93,8 @@ namespace Presentation.Controllers {
                     Week = input.Week,
                     ChartItems = chartList,
                     Category = input.ChartCategory,
-                    Genre = input.ChartGenre
+                    Genre = input.ChartGenre,
+                    HeaderVideoUrl = input.HeaderVideoUrl
                 };
 
                 await _chartRepository.AddAsync (chartToAdd);
@@ -147,7 +149,17 @@ namespace Presentation.Controllers {
         [AllowAnonymous]
         [HttpGet ("chart/all")]
         public IActionResult GetCharts () {
-            return Ok (_chartRepository.GetAll ());
+            return Ok (_chartRepository.GetAll ().OrderByDescending (m => m.DateCreated));
+        }
+
+        [AllowAnonymous]
+        [HttpGet("chart/latest")]
+        public IActionResult GetChartForWeek(){
+            var latest = _chartRepository.GetAll().OrderByDescending(m => m.DateCreated).FirstOrDefault();
+
+            var result = _chartRepository.GetWithInclude (m => m.Id == latest.Id, "ChartItems").FirstOrDefault ();
+
+            return Ok(result);
         }
         #endregion
 

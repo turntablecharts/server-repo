@@ -8,6 +8,7 @@ namespace Core.Entities {
         public string ImageUri { get; set; }
 
         public int HighestPosition { get; set; }
+        public string MusicLink { get; set; }
 
     }
 
