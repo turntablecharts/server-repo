@@ -18,5 +18,6 @@ namespace Infrastructure
         public DbSet<MediaItem> MediaItems {get; set;}
         public DbSet<Chart> Charts {get; set;}
         public DbSet<Log> Logs {get; set;}
+        public DbSet<SubscribersEmail> SubscribersEmails { get; set; }
     }
 }

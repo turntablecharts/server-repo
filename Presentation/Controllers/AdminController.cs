@@ -20,16 +20,19 @@ namespace Presentation.Controllers {
 
         private IGenericRepository<Log> _logRepo;
         private IGenericRepository<TtcUser> _userGenericRepo;
+        private IGenericRepository<SubscribersEmail> _subscribers;
         private readonly UserManager<IdentityUser> _userManager;
         private readonly PresentationIdentityDbContext _context;
         public AdminController (
             IGenericRepository<Log> logRepo, IGenericRepository<TtcUser> userGenericRepo,
             UserManager<IdentityUser> userManager,
+            IGenericRepository<SubscribersEmail> subscribers,
             PresentationIdentityDbContext context) {
             _logRepo = logRepo;
             _context = context;
             _userManager = userManager;
             _userGenericRepo = userGenericRepo;
+            _subscribers = subscribers;
         }
 
         [HttpGet ("users/all")]
@@ -71,6 +74,13 @@ namespace Presentation.Controllers {
             var log = _logRepo.GetAll ();
 
             return Ok (log);
+        }
+
+        [HttpGet("subscribers/email")]
+        public IActionResult GetSubscribersEmail()
+        {
+            var subscribers = _subscribers.GetAll();
+            return Ok(subscribers);
         }
     }
 }

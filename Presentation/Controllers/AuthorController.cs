@@ -31,7 +31,7 @@ namespace Presentation.Controllers {
         private readonly IGenericRepository<PhotoItem> _photoRepository;
         private readonly IGenericRepository<MediaItem> _mediaRepository;
          private IGenericRepository<TtcUser> _userGenericRepo;
-        private readonly IHttpContextAccessor _httpContextAccessor;
+        private IGenericRepository<SubscribersEmail> _subscribers;
 
         public AuthorController (
 
@@ -45,19 +45,19 @@ namespace Presentation.Controllers {
             IGenericRepository<PhotoItem> photoRepository,
             IGenericRepository<MediaItem> mediaRepository,
             IGenericRepository<TtcUser> userGenericRepo,
-            IHttpContextAccessor httpContextAccessor
+            IGenericRepository<SubscribersEmail> subscribers
         ) {
 
             _mediaRepository = mediaRepository;
             _mediaUpload = mediaUpload;
             _userGenericRepo = userGenericRepo;
             _config = config;
-            _httpContextAccessor = httpContextAccessor;
             _chartRepository = chartRepository;
             _newsRepository = newsRepository;
             _logRepository = logRepository;
             _videoRepository = videoRepository;
             _photoRepository = photoRepository;
+            _subscribers = subscribers;
         }
 
         #region charts
@@ -149,7 +149,7 @@ namespace Presentation.Controllers {
         [AllowAnonymous]
         [HttpGet ("chart/all")]
         public IActionResult GetCharts () {
-            return Ok (_chartRepository.GetAll ().OrderByDescending (m => m.DateCreated));
+            return Ok ( _chartRepository.GetWithInclude (null, "ChartItems").OrderByDescending (m => m.DateCreated));
         }
 
         [AllowAnonymous]
@@ -429,5 +429,15 @@ namespace Presentation.Controllers {
             }
         }
         #endregion
+
+
+        [AllowAnonymous]
+        [HttpPost("subscribe")]
+        public async Task<IActionResult> Subscribe([FromBody]SubscribersEmail subsciberInfo)
+        {
+           var subscriber = await  _subscribers.AddAsync(subsciberInfo);
+
+            return Ok(subscriber);
+        }
     }
 }
