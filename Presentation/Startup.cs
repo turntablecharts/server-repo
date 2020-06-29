@@ -40,9 +40,15 @@ namespace Presentation {
                     ValidateAudience = false
                 };
             });
+        
+            // services.AddDbContext<TtcDbContext> (options => {
+            //     options.UseSqlite (Configuration.GetConnectionString ("AppConectionString"),
+            //         optionsBuilder =>
+            //         optionsBuilder.MigrationsAssembly ("Presentation"));
+            // });
 
-            services.AddDbContext<TtcDbContext> (options => {
-                options.UseSqlite (Configuration.GetConnectionString ("AppConectionString"),
+             services.AddDbContext<TtcDbContext> (options => {
+                options.UseSqlServer (Configuration.GetConnectionString ("ProductionDbString"),
                     optionsBuilder =>
                     optionsBuilder.MigrationsAssembly ("Presentation"));
             });

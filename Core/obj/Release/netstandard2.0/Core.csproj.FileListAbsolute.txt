@@ -1,0 +1,8 @@
+/Users/macbook1/Documents/repos/work/ttc-app/ttc/server/Core/bin/Release/netstandard2.0/Core.deps.json
+/Users/macbook1/Documents/repos/work/ttc-app/ttc/server/Core/bin/Release/netstandard2.0/Core.dll
+/Users/macbook1/Documents/repos/work/ttc-app/ttc/server/Core/bin/Release/netstandard2.0/Core.pdb
+/Users/macbook1/Documents/repos/work/ttc-app/ttc/server/Core/obj/Release/netstandard2.0/Core.AssemblyInfoInputs.cache
+/Users/macbook1/Documents/repos/work/ttc-app/ttc/server/Core/obj/Release/netstandard2.0/Core.AssemblyInfo.cs
+/Users/macbook1/Documents/repos/work/ttc-app/ttc/server/Core/obj/Release/netstandard2.0/Core.csproj.CoreCompileInputs.cache
+/Users/macbook1/Documents/repos/work/ttc-app/ttc/server/Core/obj/Release/netstandard2.0/Core.dll
+/Users/macbook1/Documents/repos/work/ttc-app/ttc/server/Core/obj/Release/netstandard2.0/Core.pdb

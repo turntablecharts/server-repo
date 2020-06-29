@@ -15,9 +15,13 @@ namespace Presentation.Areas.Identity
         public void Configure(IWebHostBuilder builder)
         {
             builder.ConfigureServices((context, services) => {
-                services.AddDbContext<PresentationIdentityDbContext>(options =>
-                    options.UseSqlite(
-                        context.Configuration.GetConnectionString("AppConectionString")));
+                // services.AddDbContext<PresentationIdentityDbContext>(options =>
+                //     options.UseSqlite(
+                //         context.Configuration.GetConnectionString("AppConectionString")));
+
+                  services.AddDbContext<PresentationIdentityDbContext>(options =>
+                    options.UseSqlServer(
+                        context.Configuration.GetConnectionString("ProductionDbString")));
 
                 services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = false)
                     .AddRoles<IdentityRole>()

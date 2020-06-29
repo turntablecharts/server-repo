@@ -338,3 +338,17 @@
 /Users/macbook1/Documents/repos/work/ttc-app/ttc/server/Presentation/bin/Debug/netcoreapp3.1/Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
 /Users/macbook1/Documents/repos/work/ttc-app/ttc/server/Presentation/bin/Debug/netcoreapp3.1/Microsoft.IdentityModel.Tokens.dll
 /Users/macbook1/Documents/repos/work/ttc-app/ttc/server/Presentation/bin/Debug/netcoreapp3.1/System.IdentityModel.Tokens.Jwt.dll
+/Users/macbook1/Documents/repos/work/ttc-app/ttc/server/Presentation/bin/Debug/netcoreapp3.1/Microsoft.Data.SqlClient.dll
+/Users/macbook1/Documents/repos/work/ttc-app/ttc/server/Presentation/bin/Debug/netcoreapp3.1/Microsoft.EntityFrameworkCore.SqlServer.dll
+/Users/macbook1/Documents/repos/work/ttc-app/ttc/server/Presentation/bin/Debug/netcoreapp3.1/Microsoft.Identity.Client.dll
+/Users/macbook1/Documents/repos/work/ttc-app/ttc/server/Presentation/bin/Debug/netcoreapp3.1/System.Configuration.ConfigurationManager.dll
+/Users/macbook1/Documents/repos/work/ttc-app/ttc/server/Presentation/bin/Debug/netcoreapp3.1/System.Runtime.Caching.dll
+/Users/macbook1/Documents/repos/work/ttc-app/ttc/server/Presentation/bin/Debug/netcoreapp3.1/System.Security.Cryptography.ProtectedData.dll
+/Users/macbook1/Documents/repos/work/ttc-app/ttc/server/Presentation/bin/Debug/netcoreapp3.1/runtimes/unix/lib/netcoreapp2.1/Microsoft.Data.SqlClient.dll
+/Users/macbook1/Documents/repos/work/ttc-app/ttc/server/Presentation/bin/Debug/netcoreapp3.1/runtimes/win/lib/netcoreapp2.1/Microsoft.Data.SqlClient.dll
+/Users/macbook1/Documents/repos/work/ttc-app/ttc/server/Presentation/bin/Debug/netcoreapp3.1/runtimes/win-arm64/native/sni.dll
+/Users/macbook1/Documents/repos/work/ttc-app/ttc/server/Presentation/bin/Debug/netcoreapp3.1/runtimes/win-x64/native/sni.dll
+/Users/macbook1/Documents/repos/work/ttc-app/ttc/server/Presentation/bin/Debug/netcoreapp3.1/runtimes/win-x86/native/sni.dll
+/Users/macbook1/Documents/repos/work/ttc-app/ttc/server/Presentation/bin/Debug/netcoreapp3.1/runtimes/unix/lib/netcoreapp2.0/System.Runtime.Caching.dll
+/Users/macbook1/Documents/repos/work/ttc-app/ttc/server/Presentation/bin/Debug/netcoreapp3.1/runtimes/win/lib/netcoreapp2.0/System.Runtime.Caching.dll
+/Users/macbook1/Documents/repos/work/ttc-app/ttc/server/Presentation/bin/Debug/netcoreapp3.1/runtimes/win/lib/netstandard2.0/System.Security.Cryptography.ProtectedData.dll
