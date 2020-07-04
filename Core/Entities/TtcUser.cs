@@ -6,7 +6,5 @@ namespace Core.Entities {
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Email { get; set; }
-        public virtual ICollection<NewsItem> NewsItems { get; set; }
-        public virtual ICollection<PhotoItem> PhotoItems { get; set; }
     }
 }

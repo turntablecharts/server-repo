@@ -352,3 +352,8 @@
 /Users/macbook1/Documents/repos/work/ttc-app/ttc/server/Presentation/bin/Debug/netcoreapp3.1/runtimes/unix/lib/netcoreapp2.0/System.Runtime.Caching.dll
 /Users/macbook1/Documents/repos/work/ttc-app/ttc/server/Presentation/bin/Debug/netcoreapp3.1/runtimes/win/lib/netcoreapp2.0/System.Runtime.Caching.dll
 /Users/macbook1/Documents/repos/work/ttc-app/ttc/server/Presentation/bin/Debug/netcoreapp3.1/runtimes/win/lib/netstandard2.0/System.Security.Cryptography.ProtectedData.dll
+/Users/macbook1/Documents/repos/work/ttc-app/ttc/server/Presentation/bin/Debug/netcoreapp3.1/publish/web.config
+/Users/macbook1/Documents/repos/work/ttc-app/ttc/server/Presentation/bin/Debug/netcoreapp3.1/publish/appsettings.Development.json
+/Users/macbook1/Documents/repos/work/ttc-app/ttc/server/Presentation/bin/Debug/netcoreapp3.1/publish/appsettings.json
+/Users/macbook1/Documents/repos/work/ttc-app/ttc/server/Presentation/bin/Debug/netcoreapp3.1/publish/Presentation.deps.json
+/Users/macbook1/Documents/repos/work/ttc-app/ttc/server/Presentation/bin/Debug/netcoreapp3.1/publish/Presentation.runtimeconfig.json
