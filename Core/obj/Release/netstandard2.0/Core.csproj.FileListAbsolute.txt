@@ -6,3 +6,4 @@
 /Users/macbook1/Documents/repos/work/ttc-app/ttc/server/Core/obj/Release/netstandard2.0/Core.csproj.CoreCompileInputs.cache
 /Users/macbook1/Documents/repos/work/ttc-app/ttc/server/Core/obj/Release/netstandard2.0/Core.dll
 /Users/macbook1/Documents/repos/work/ttc-app/ttc/server/Core/obj/Release/netstandard2.0/Core.pdb
+/Users/macbook1/Documents/repos/work/ttc-app/ttc/server/Core/obj/Release/netstandard2.0/Core.csprojAssemblyReference.cache

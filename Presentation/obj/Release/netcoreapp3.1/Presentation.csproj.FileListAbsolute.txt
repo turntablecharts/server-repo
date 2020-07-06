@@ -188,3 +188,8 @@
 /Users/macbook1/Documents/repos/work/ttc-app/ttc/server/Presentation/obj/Release/netcoreapp3.1/Presentation.dll
 /Users/macbook1/Documents/repos/work/ttc-app/ttc/server/Presentation/obj/Release/netcoreapp3.1/Presentation.pdb
 /Users/macbook1/Documents/repos/work/ttc-app/ttc/server/Presentation/obj/Release/netcoreapp3.1/Presentation.genruntimeconfig.cache
+/Users/macbook1/Documents/repos/work/ttc-app/ttc/server/Presentation/bin/Release/netcoreapp3.1/publish/web.config
+/Users/macbook1/Documents/repos/work/ttc-app/ttc/server/Presentation/bin/Release/netcoreapp3.1/publish/appsettings.Development.json
+/Users/macbook1/Documents/repos/work/ttc-app/ttc/server/Presentation/bin/Release/netcoreapp3.1/publish/appsettings.json
+/Users/macbook1/Documents/repos/work/ttc-app/ttc/server/Presentation/bin/Release/netcoreapp3.1/publish/Presentation.deps.json
+/Users/macbook1/Documents/repos/work/ttc-app/ttc/server/Presentation/bin/Release/netcoreapp3.1/publish/Presentation.runtimeconfig.json
