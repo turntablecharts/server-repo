@@ -19,13 +19,7 @@ namespace Presentation.Areas.Identity
                 //     options.UseSqlite(
                 //         context.Configuration.GetConnectionString("AppConectionString")));
 
-                  services.AddDbContext<PresentationIdentityDbContext>(options =>
-                    options.UseSqlServer(
-                        context.Configuration.GetConnectionString("ProductionDbString")));
-
-                services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = false)
-                    .AddRoles<IdentityRole>()
-                    .AddEntityFrameworkStores<PresentationIdentityDbContext>();
+            
             });
         }
     }
