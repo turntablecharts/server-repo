@@ -153,6 +153,12 @@ namespace Presentation.Controllers {
         }
 
         [AllowAnonymous]
+        [HttpGet ("chart/category/{category}")]
+        public IActionResult GetCharts ([FromRoute]string category) {
+            return Ok ( _chartRepository.GetWithInclude (m => m.Category.Contains(category), "ChartItems").OrderByDescending (m => m.DateCreated));
+        }
+
+        [AllowAnonymous]
         [HttpGet("chart/latest")]
         public IActionResult GetChartForWeek(){
             var latest = _chartRepository.GetAll().OrderByDescending(m => m.DateCreated).FirstOrDefault();
