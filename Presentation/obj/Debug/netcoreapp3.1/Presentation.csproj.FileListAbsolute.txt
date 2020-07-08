@@ -362,8 +362,3 @@
 /Users/macbook1/Documents/repos/work/ttc-app/ttc/server/Presentation/bin/Debug/netcoreapp3.1/publish/publish/appsettings.json
 /Users/macbook1/Documents/repos/work/ttc-app/ttc/server/Presentation/bin/Debug/netcoreapp3.1/publish/publish/Presentation.deps.json
 /Users/macbook1/Documents/repos/work/ttc-app/ttc/server/Presentation/bin/Debug/netcoreapp3.1/publish/publish/Presentation.runtimeconfig.json
-/Users/macbook1/Documents/repos/work/ttc-app/ttc/server/Presentation/bin/Debug/netcoreapp3.1/publish/publish/publish/web.config
-/Users/macbook1/Documents/repos/work/ttc-app/ttc/server/Presentation/bin/Debug/netcoreapp3.1/publish/publish/publish/appsettings.Development.json
-/Users/macbook1/Documents/repos/work/ttc-app/ttc/server/Presentation/bin/Debug/netcoreapp3.1/publish/publish/publish/appsettings.json
-/Users/macbook1/Documents/repos/work/ttc-app/ttc/server/Presentation/bin/Debug/netcoreapp3.1/publish/publish/publish/Presentation.deps.json
-/Users/macbook1/Documents/repos/work/ttc-app/ttc/server/Presentation/bin/Debug/netcoreapp3.1/publish/publish/publish/Presentation.runtimeconfig.json

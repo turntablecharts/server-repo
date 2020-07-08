@@ -1,7 +1,8 @@
-namespace Core.Entities {
-    public class ChartItem {
-        public int Id { get; set; }
-          public int Rank { get; set; }
+namespace Presentation.ViewModels
+{
+    public class ChartItemVM
+    {
+         public int Rank { get; set; }
 
         public string Title { get; set; }
         public string Artiste { get; set; }
@@ -10,7 +11,5 @@ namespace Core.Entities {
        
         public int HighestPosition { get; set; }
         public string MusicLink { get; set; }
-
     }
-
 }

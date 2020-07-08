@@ -1,0 +1,4 @@
+{
+    "appService.defaultWebAppToDeploy": "/subscriptions/6f659c5c-3967-42f1-8c0b-5892a7e9c8f5/resourceGroups/TurntableCharts_RG/providers/Microsoft.Web/sites/turntablecharts",
+    "appService.deploySubpath": "Presentation/publish"
+}
