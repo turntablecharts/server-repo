@@ -144,6 +144,7 @@ namespace Presentation.Controllers {
             foreach (var item in result) {
 
                 var chartToFrontend = new Chart {
+                    Id = item.Id,
                     DateCreated = item.DateCreated,
                     Week = item.Week,
                     ChartItems = item.ChartItems.OrderBy (m => m.Rank).ToList (),
