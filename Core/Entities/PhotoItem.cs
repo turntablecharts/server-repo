@@ -12,5 +12,6 @@ namespace Core.Entities {
 
         public string HeaderImage { get; set; }
         public bool IsToDelete{ get; set; }
+        public string Category { get; set; }
     }
 }
