@@ -111,5 +111,29 @@ namespace Presentation.Controllers {
             return tokenHandler.WriteToken (token);
         }
 
+        [HttpGet("user")]
+        public IActionResult GetUser()
+        {
+            var user = HttpContext.User.Identity.Name;
+            if (user != null)
+            {
+                var currentUser = _userGenericRepo.GetAll().FirstOrDefault(m => m.Email == user);
+
+                var response = new UserResponse
+                {
+                    User = currentUser
+                };
+
+                return Ok(response);
+            }
+
+            return NotFound(null);
+        }
+
+    }
+
+    public class UserResponse
+    {
+        public TtcUser User { get; set; }
     }
 }

@@ -612,3 +612,17 @@
 /Users/simi/Documents/repos/work/ttc-app/ttc/server/Presentation/bin/Debug/netcoreapp3.1/publish/publish/publish/publish/publish/publish/publish/publish/publish/appsettings.json
 /Users/simi/Documents/repos/work/ttc-app/ttc/server/Presentation/bin/Debug/netcoreapp3.1/publish/publish/publish/publish/publish/publish/publish/publish/publish/Presentation.deps.json
 /Users/simi/Documents/repos/work/ttc-app/ttc/server/Presentation/bin/Debug/netcoreapp3.1/publish/publish/publish/publish/publish/publish/publish/publish/publish/Presentation.runtimeconfig.json
+/Users/simi/Documents/repos/work/ttc-app/ttc/server/Presentation/bin/Debug/netcoreapp3.1/publish/publish/publish/publish/publish/publish/publish/publish/publish/publish/web.config
+/Users/simi/Documents/repos/work/ttc-app/ttc/server/Presentation/bin/Debug/netcoreapp3.1/publish/publish/publish/publish/publish/publish/publish/publish/publish/publish/appsettings.Development.json
+/Users/simi/Documents/repos/work/ttc-app/ttc/server/Presentation/bin/Debug/netcoreapp3.1/publish/publish/publish/publish/publish/publish/publish/publish/publish/publish/appsettings.json
+/Users/simi/Documents/repos/work/ttc-app/ttc/server/Presentation/bin/Debug/netcoreapp3.1/publish/publish/publish/publish/publish/publish/publish/publish/publish/publish/Presentation.deps.json
+/Users/simi/Documents/repos/work/ttc-app/ttc/server/Presentation/bin/Debug/netcoreapp3.1/publish/publish/publish/publish/publish/publish/publish/publish/publish/publish/Presentation.runtimeconfig.json
+/Users/simi/Documents/repos/work/ttc-app/ttc/server/Presentation/bin/Debug/netcoreapp3.1/Microsoft.OpenApi.dll
+/Users/simi/Documents/repos/work/ttc-app/ttc/server/Presentation/bin/Debug/netcoreapp3.1/Swashbuckle.AspNetCore.Swagger.dll
+/Users/simi/Documents/repos/work/ttc-app/ttc/server/Presentation/bin/Debug/netcoreapp3.1/Swashbuckle.AspNetCore.SwaggerGen.dll
+/Users/simi/Documents/repos/work/ttc-app/ttc/server/Presentation/bin/Debug/netcoreapp3.1/Swashbuckle.AspNetCore.SwaggerUI.dll
+/Users/simi/Documents/repos/work/ttc-app/ttc/server/Presentation/bin/Debug/netcoreapp3.1/publish/publish/publish/publish/publish/publish/publish/publish/publish/publish/publish/web.config
+/Users/simi/Documents/repos/work/ttc-app/ttc/server/Presentation/bin/Debug/netcoreapp3.1/publish/publish/publish/publish/publish/publish/publish/publish/publish/publish/publish/appsettings.Development.json
+/Users/simi/Documents/repos/work/ttc-app/ttc/server/Presentation/bin/Debug/netcoreapp3.1/publish/publish/publish/publish/publish/publish/publish/publish/publish/publish/publish/appsettings.json
+/Users/simi/Documents/repos/work/ttc-app/ttc/server/Presentation/bin/Debug/netcoreapp3.1/publish/publish/publish/publish/publish/publish/publish/publish/publish/publish/publish/Presentation.deps.json
+/Users/simi/Documents/repos/work/ttc-app/ttc/server/Presentation/bin/Debug/netcoreapp3.1/publish/publish/publish/publish/publish/publish/publish/publish/publish/publish/publish/Presentation.runtimeconfig.json

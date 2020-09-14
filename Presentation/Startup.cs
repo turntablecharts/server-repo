@@ -70,6 +70,11 @@ namespace Presentation
             );
             services.AddRazorPages ();
 
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc(name: "v1", new Microsoft.OpenApi.Models.OpenApiInfo { Title = "TTC web api", Version = "v1" });
+            });
+
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor> ();
 
             //custom services 
@@ -91,6 +96,12 @@ namespace Presentation
 
             app.UseHttpsRedirection ();
             app.UseStaticFiles ();
+
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint(url: "/swagger/v1/swagger.json", name: "TTC web api");
+            });
 
             app.UseRouting ();
 

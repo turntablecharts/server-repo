@@ -548,5 +548,6 @@ namespace Presentation.Controllers
 
             return Ok (subscriber);
         }
+        
     }
 }
