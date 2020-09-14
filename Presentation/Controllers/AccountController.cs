@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Core.Entities;
 using Core.Interfaces;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -22,17 +23,20 @@ namespace Presentation.Controllers {
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly UserManager<IdentityUser> _userManager;
         private IGenericRepository<TtcUser> _userGenericRepo;
+        private IHttpContextAccessor _httpContextAccessor;
         private IConfiguration _config;
 
-        public AccountController (
+        public AccountController(
             UserManager<IdentityUser> userManager,
             SignInManager<IdentityUser> signInManager,
             IGenericRepository<TtcUser> userGenericRepo,
-            IConfiguration config) {
+            IHttpContextAccessor httpContextAccessor,
+        IConfiguration config) {
             _signInManager = signInManager;
             _userManager = userManager;
             _userGenericRepo = userGenericRepo;
             _config = config;
+            _httpContextAccessor = httpContextAccessor;
         }
 
         [HttpPost ("register")]
@@ -114,7 +118,10 @@ namespace Presentation.Controllers {
         [HttpGet("user")]
         public IActionResult GetUser()
         {
-            var user = HttpContext.User.Identity.Name;
+            var user = User.Identity.Name;
+            var _user = _userManager.GetUserAsync(HttpContext.User);
+            var userId = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+
             if (user != null)
             {
                 var currentUser = _userGenericRepo.GetAll().FirstOrDefault(m => m.Email == user);
