@@ -33,6 +33,7 @@ namespace Presentation.Controllers
         private readonly IGenericRepository<MediaItem> _mediaRepository;
         private IGenericRepository<TtcUser> _userGenericRepo;
         private IGenericRepository<SubscribersEmail> _subscribers;
+        private IGenericRepository<MagazineItem> _magazineRepository;
 
         public AuthorController (
 
@@ -46,7 +47,8 @@ namespace Presentation.Controllers
             IGenericRepository<PhotoItem> photoRepository,
             IGenericRepository<MediaItem> mediaRepository,
             IGenericRepository<TtcUser> userGenericRepo,
-            IGenericRepository<SubscribersEmail> subscribers
+            IGenericRepository<SubscribersEmail> subscribers,
+            IGenericRepository<MagazineItem> magazineRepository
         )
         {
 
@@ -60,6 +62,7 @@ namespace Presentation.Controllers
             _videoRepository = videoRepository;
             _photoRepository = photoRepository;
             _subscribers = subscribers;
+            _magazineRepository = magazineRepository;
         }
 
         #region charts
@@ -548,6 +551,91 @@ namespace Presentation.Controllers
 
             return Ok (subscriber);
         }
+
+            #region magazine
+        [HttpPost ("magazine/add")]
+        public async Task<IActionResult> AddMagazien ([FromBody] MagazineVM item)
+        {
+            if (!ModelState.IsValid)
+            {
+                BadRequest (ModelState);
+            }
+            item.DateCreated = DateTime.Now;
+
+            var user = _userGenericRepo.GetWithInclude (m => m.Email == item.Email, string.Empty).FirstOrDefault ();
+
+            item.TtcUserId = user.Id;
+
+            var magazine = await _magazineRepository.AddAsync (item);
+
+            return Ok (magazine);
+        }
+
+        [AllowAnonymous]
+        [HttpGet ("magazine/all")]
+        public IActionResult GetAllMagazine ()
+        {
+            return Ok (_magazineRepository.GetAll ().OrderByDescending (m => m.DateCreated));
+        }
+
+        [AllowAnonymous]
+        [HttpGet ("magazine/{id}")]
+        public IActionResult GetOneMagazine ([FromRoute] int id)
+        {
+            var magazine = _magazineRepository.GetById (id);
+            if (magazine == null)
+            {
+                return NotFound ();
+            }
+            return Ok (magazine);
+        }
+
+        [HttpPut ("magazine/edit/{id}/{userEmail}")]
+        public IActionResult EditMagazine ([FromRoute] int id, [FromBody] MagazineItem item, [FromRoute] string userEmail)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest (ModelState);
+            }
+            item.Id = id;
+            var editedMagazine = _magazineRepository.UpdateAsync (item);
+            if (editedMagazine == null)
+            {
+                return NotFound ();
+            }
+            _logRepository.AddAsync (new Log
+            {
+                Name = userEmail,
+                    EventDate = DateTime.Now,
+                    Event = "Edited Video, title: " + editedMagazine.Title
+            });
+            return Ok (editedMagazine);
+        }
+
+        [HttpDelete ("magazine/delete/{id}/{userEmail}")]
+        public IActionResult DeleteMagazine ([FromRoute] int id, [FromRoute] string userEmail)
+        {
+            try
+            {
+
+                _magazineRepository.Delete (_magazineRepository.GetById (id));
+
+                _logRepository.AddAsync (new Log
+                {
+                    Name = userEmail,
+                        Event = "Deleted Photo, Id: " + id,
+                        EventDate = DateTime.Now
+                });
+                return Ok ("Successfully deleted");
+            }
+            catch (NullReferenceException)
+            {
+                return NotFound ();
+            }
+        }
+        #endregion
+
+        
         
     }
 }

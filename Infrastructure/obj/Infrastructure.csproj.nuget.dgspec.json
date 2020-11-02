@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/Users/simi/Documents/repos/work/ttc-app/ttc/server/Infrastructure/Infrastructure.csproj": {}
+    "/Users/simi/Documents/repos/Work/ttc-app/ttc/server/Infrastructure/Infrastructure.csproj": {}
   },
   "projects": {
-    "/Users/simi/Documents/repos/work/ttc-app/ttc/server/Core/Core.csproj": {
+    "/Users/simi/Documents/repos/Work/ttc-app/ttc/server/Core/Core.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/simi/Documents/repos/work/ttc-app/ttc/server/Core/Core.csproj",
+        "projectUniqueName": "/Users/simi/Documents/repos/Work/ttc-app/ttc/server/Core/Core.csproj",
         "projectName": "Core",
-        "projectPath": "/Users/simi/Documents/repos/work/ttc-app/ttc/server/Core/Core.csproj",
+        "projectPath": "/Users/simi/Documents/repos/Work/ttc-app/ttc/server/Core/Core.csproj",
         "packagesPath": "/Users/simi/.nuget/packages/",
-        "outputPath": "/Users/simi/Documents/repos/work/ttc-app/ttc/server/Core/obj/",
+        "outputPath": "/Users/simi/Documents/repos/Work/ttc-app/ttc/server/Core/obj/",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "/usr/local/share/dotnet/sdk/NuGetFallbackFolder"
@@ -64,14 +64,14 @@
         }
       }
     },
-    "/Users/simi/Documents/repos/work/ttc-app/ttc/server/Infrastructure/Infrastructure.csproj": {
+    "/Users/simi/Documents/repos/Work/ttc-app/ttc/server/Infrastructure/Infrastructure.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/simi/Documents/repos/work/ttc-app/ttc/server/Infrastructure/Infrastructure.csproj",
+        "projectUniqueName": "/Users/simi/Documents/repos/Work/ttc-app/ttc/server/Infrastructure/Infrastructure.csproj",
         "projectName": "Infrastructure",
-        "projectPath": "/Users/simi/Documents/repos/work/ttc-app/ttc/server/Infrastructure/Infrastructure.csproj",
+        "projectPath": "/Users/simi/Documents/repos/Work/ttc-app/ttc/server/Infrastructure/Infrastructure.csproj",
         "packagesPath": "/Users/simi/.nuget/packages/",
-        "outputPath": "/Users/simi/Documents/repos/work/ttc-app/ttc/server/Infrastructure/obj/",
+        "outputPath": "/Users/simi/Documents/repos/Work/ttc-app/ttc/server/Infrastructure/obj/",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "/usr/local/share/dotnet/sdk/NuGetFallbackFolder"
@@ -88,8 +88,8 @@
         "frameworks": {
           "netstandard2.0": {
             "projectReferences": {
-              "/Users/simi/Documents/repos/work/ttc-app/ttc/server/Core/Core.csproj": {
-                "projectPath": "/Users/simi/Documents/repos/work/ttc-app/ttc/server/Core/Core.csproj"
+              "/Users/simi/Documents/repos/Work/ttc-app/ttc/server/Core/Core.csproj": {
+                "projectPath": "/Users/simi/Documents/repos/Work/ttc-app/ttc/server/Core/Core.csproj"
               }
             }
           }

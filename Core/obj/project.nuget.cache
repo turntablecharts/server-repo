@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "3k4s6MiHaAb9kn0J39DZRB9tB/WxgicgIFyeUrs37fVRUFrrz3avMieGHvN2M6t33TIWpn12BB6Q3cNxT439jA==",
+  "dgSpecHash": "rkSAvxK1PAwVuUX4mDJ2CuI6HmzRClk+/EuRnU2Af8dP6rX0iHS51CDQ6KO/2bXrfSgG2/CyPP0jofhH5W1hmQ==",
   "success": true,
-  "projectFilePath": "/Users/simi/Documents/repos/work/ttc-app/ttc/server/Core/Core.csproj",
+  "projectFilePath": "/Users/simi/Documents/repos/Work/ttc-app/ttc/server/Core/Core.csproj",
   "expectedPackageFiles": [
     "/Users/simi/.nuget/packages/microsoft.aspnetcore.http/2.2.2/microsoft.aspnetcore.http.2.2.2.nupkg.sha512",
     "/usr/local/share/dotnet/sdk/NuGetFallbackFolder/microsoft.aspnetcore.http.abstractions/2.2.0/microsoft.aspnetcore.http.abstractions.2.2.0.nupkg.sha512",
