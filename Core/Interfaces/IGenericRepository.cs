@@ -10,7 +10,7 @@ namespace Core.Interfaces {
         TEntity GetById (int id);
         void Delete (TEntity entity);
 
-        IEnumerable<TEntity> GetAll ();
+        IQueryable<TEntity> GetAll ();
         TEntity UpdateAsync (TEntity entity);
 
         IQueryable<TEntity> GetWithInclude (Expression<Func<TEntity, bool>> filter, string includeProperties);

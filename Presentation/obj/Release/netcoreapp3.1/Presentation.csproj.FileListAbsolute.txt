@@ -225,7 +225,6 @@
 /Users/macbook1/Documents/repos/work/ttc-app/ttc/server/Presentation/bin/Release/netcoreapp3.1/publish/publish/publish/publish/publish/publish/publish/Presentation.runtimeconfig.json
 /Users/simi/Documents/repos/work/ttc-app/ttc/server/Presentation/bin/Release/netcoreapp3.1/publish/publish/publish/publish/publish/publish/publish/web.config
 /Users/simi/Documents/repos/work/ttc-app/ttc/server/Presentation/bin/Release/netcoreapp3.1/appsettings.Development.json
-/Users/simi/Documents/repos/work/ttc-app/ttc/server/Presentation/bin/Release/netcoreapp3.1/Properties/launchSettings.json
 /Users/simi/Documents/repos/work/ttc-app/ttc/server/Presentation/bin/Release/netcoreapp3.1/publish/appsettings.Development.json
 /Users/simi/Documents/repos/work/ttc-app/ttc/server/Presentation/bin/Release/netcoreapp3.1/publish/appsettings.json
 /Users/simi/Documents/repos/work/ttc-app/ttc/server/Presentation/bin/Release/netcoreapp3.1/publish/Presentation.runtimeconfig.json
@@ -477,3 +476,14 @@
 /Users/simi/Documents/repos/Work/ttc-app/ttc/server/Presentation/bin/Release/netcoreapp3.1/publish/publish/publish/publish/publish/publish/publish/publish/publish/publish/publish/publish/appsettings.json
 /Users/simi/Documents/repos/Work/ttc-app/ttc/server/Presentation/bin/Release/netcoreapp3.1/publish/publish/publish/publish/publish/publish/publish/publish/publish/publish/publish/publish/Presentation.deps.json
 /Users/simi/Documents/repos/Work/ttc-app/ttc/server/Presentation/bin/Release/netcoreapp3.1/publish/publish/publish/publish/publish/publish/publish/publish/publish/publish/publish/publish/Presentation.runtimeconfig.json
+/Users/simi/Documents/repos/Work/ttc-app/ttc/server/Presentation/bin/Release/netcoreapp3.1/publish/publish/publish/publish/publish/publish/publish/publish/publish/publish/publish/publish/publish/web.config
+/Users/simi/Documents/repos/Work/ttc-app/ttc/server/Presentation/bin/Release/netcoreapp3.1/publish/publish/publish/publish/publish/publish/publish/publish/publish/publish/publish/publish/publish/appsettings.Development.json
+/Users/simi/Documents/repos/Work/ttc-app/ttc/server/Presentation/bin/Release/netcoreapp3.1/publish/publish/publish/publish/publish/publish/publish/publish/publish/publish/publish/publish/publish/appsettings.json
+/Users/simi/Documents/repos/Work/ttc-app/ttc/server/Presentation/bin/Release/netcoreapp3.1/publish/publish/publish/publish/publish/publish/publish/publish/publish/publish/publish/publish/publish/Presentation.deps.json
+/Users/simi/Documents/repos/Work/ttc-app/ttc/server/Presentation/bin/Release/netcoreapp3.1/publish/publish/publish/publish/publish/publish/publish/publish/publish/publish/publish/publish/publish/Presentation.runtimeconfig.json
+/Users/simi/Documents/repos/Work/ttc-app/ttc/server/Presentation/obj/Release/netcoreapp3.1/scopedcss/bundle/Presentation.styles.css
+/Users/simi/Documents/repos/Work/ttc-app/ttc/server/Presentation/bin/Release/netcoreapp3.1/publish/publish/publish/publish/publish/publish/publish/publish/publish/publish/publish/publish/publish/publish/web.config
+/Users/simi/Documents/repos/Work/ttc-app/ttc/server/Presentation/bin/Release/netcoreapp3.1/publish/publish/publish/publish/publish/publish/publish/publish/publish/publish/publish/publish/publish/publish/appsettings.Development.json
+/Users/simi/Documents/repos/Work/ttc-app/ttc/server/Presentation/bin/Release/netcoreapp3.1/publish/publish/publish/publish/publish/publish/publish/publish/publish/publish/publish/publish/publish/publish/appsettings.json
+/Users/simi/Documents/repos/Work/ttc-app/ttc/server/Presentation/bin/Release/netcoreapp3.1/publish/publish/publish/publish/publish/publish/publish/publish/publish/publish/publish/publish/publish/publish/Presentation.deps.json
+/Users/simi/Documents/repos/Work/ttc-app/ttc/server/Presentation/bin/Release/netcoreapp3.1/publish/publish/publish/publish/publish/publish/publish/publish/publish/publish/publish/publish/publish/publish/Presentation.runtimeconfig.json

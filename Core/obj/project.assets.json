@@ -705,11 +705,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/simi/Documents/repos/work/ttc-app/ttc/server/Core/Core.csproj",
+      "projectUniqueName": "/Users/simi/Documents/repos/Work/ttc-app/ttc/server/Core/Core.csproj",
       "projectName": "Core",
-      "projectPath": "/Users/simi/Documents/repos/work/ttc-app/ttc/server/Core/Core.csproj",
+      "projectPath": "/Users/simi/Documents/repos/Work/ttc-app/ttc/server/Core/Core.csproj",
       "packagesPath": "/Users/simi/.nuget/packages/",
-      "outputPath": "/Users/simi/Documents/repos/work/ttc-app/ttc/server/Core/obj/",
+      "outputPath": "/Users/simi/Documents/repos/Work/ttc-app/ttc/server/Core/obj/",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "/usr/local/share/dotnet/sdk/NuGetFallbackFolder"
@@ -725,6 +725,7 @@
       },
       "frameworks": {
         "netstandard2.0": {
+          "targetAlias": "netstandard2.0",
           "projectReferences": {}
         }
       },
@@ -736,6 +737,7 @@
     },
     "frameworks": {
       "netstandard2.0": {
+        "targetAlias": "netstandard2.0",
         "dependencies": {
           "Microsoft.AspNetCore.Http": {
             "target": "Package",
@@ -758,7 +760,7 @@
         ],
         "assetTargetFallback": true,
         "warn": true,
-        "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/3.1.402/RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/5.0.100/RuntimeIdentifierGraph.json"
       }
     }
   }

@@ -37,10 +37,10 @@ namespace Infrastructure.DAL {
 
         
 
-        public IEnumerable<TEntity> GetAll () {
+        public IQueryable<TEntity> GetAll () {
             IQueryable<TEntity> query = dbSet;
 
-            return query.AsEnumerable ();
+            return query;
         }
 
         public TEntity GetById (int id) {
