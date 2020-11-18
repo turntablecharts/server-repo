@@ -171,12 +171,23 @@ namespace Presentation.Controllers {
 
         [AllowAnonymous]
         [HttpGet ("chart/latest")]
-        public IActionResult GetChartForWeek ([FromQuery] string category) {
+        public IActionResult GetLatestChart ([FromQuery] string category) {
             var latest = _chartRepository.GetAll ().OrderByDescending (m => m.DateCreated).Where (m => m.Category.Contains (category ?? "Turntable Top 50")).FirstOrDefault ();
 
             var result = _chartRepository.GetWithInclude (m => m.Id == latest.Id, "ChartItems").FirstOrDefault ();
 
-            return Ok (result);
+             var chartToFrontend = new Chart {
+                    Id = result.Id,
+                    DateCreated = result.DateCreated,
+                    Week = result.Week,
+                    ChartItems = result.ChartItems.OrderBy (m => m.Rank).Take(10).ToList (),
+                    Category = result.Category,
+                    Genre = result.Genre,
+                    HeaderVideoUrl = result.HeaderVideoUrl
+                };
+            //result.ChartItems.OrderBy(m => m.Rank).ToList();
+
+            return Ok (chartToFrontend);
         }
         #endregion
 
