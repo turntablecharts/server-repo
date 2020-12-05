@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "4dwQNoogVBPuSO3pBDVKfK4QovyLqi5bIHQ2rclEo8lbIlxkDCnH/PSeoXsHsE4OwsBeAAMwiUBv/HTCpvI++g==",
+  "dgSpecHash": "3yVlqISq9nVOJmHbotOeiehWoKE9ggjfDAaDyNF4JuIiOkQWCO1+6W4UlAx7av6DEz9ea7rUMQz/2dZGhT6oHA==",
   "success": true,
-  "projectFilePath": "/Users/simi/Documents/repos/Work/ttc-app/ttc/server/Presentation/Presentation.csproj",
+  "projectFilePath": "/Users/simi/Documents/repos/Work/ttc-app/server/server-repo/Presentation/Presentation.csproj",
   "expectedPackageFiles": [
     "/Users/simi/.nuget/packages/csvhelper/15.0.5/csvhelper.15.0.5.nupkg.sha512",
     "/Users/simi/.nuget/packages/microsoft.aspnetcore.authentication.jwtbearer/3.1.3/microsoft.aspnetcore.authentication.jwtbearer.3.1.3.nupkg.sha512",

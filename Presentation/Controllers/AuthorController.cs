@@ -144,29 +144,32 @@ namespace Presentation.Controllers {
         }
 
         [AllowAnonymous]
-        [HttpGet ("chart/category/{category}")]
-        public async Task<IActionResult> GetCharts ([FromRoute] string category) {
-            var result = _chartRepository.GetWithInclude (m => m.Category.Contains (category), "ChartItems").OrderByDescending (m => m.DateCreated);
-            List<Chart> charts = new List<Chart> ();
-            foreach (var item in result) {
+        [HttpGet("chart/category/{category}")]
+        public IActionResult GetCharts([FromRoute] string category)
+        {
+            var result = _chartRepository.GetWithInclude(m => m.Category.Contains(category), "ChartItems").OrderByDescending(m => m.DateCreated);
+            List<Chart> charts = new List<Chart>();
+            foreach (var item in result)
+            {
 
-                var chartToFrontend = new Chart {
+                var chartToFrontend = new Chart
+                {
                     Id = item.Id,
                     DateCreated = item.DateCreated,
                     Week = item.Week,
-                    ChartItems = item.ChartItems.OrderBy (m => m.Rank).ToList (),
+                    ChartItems = item.ChartItems.OrderBy(m => m.Rank).ToList(),
                     Category = item.Category,
                     Genre = item.Genre,
                     HeaderVideoUrl = item.HeaderVideoUrl
                 };
 
-                charts.Add (chartToFrontend);
+                charts.Add(chartToFrontend);
             }
 
             //int pageSize = 10;
             //return Ok (await PaginatedList<Chart>.CreateAsync (charts.AsQueryable (), pageNumber ?? 1, pageSize));
 
-            return Ok (charts);
+            return Ok(charts);
         }
 
         [AllowAnonymous]
