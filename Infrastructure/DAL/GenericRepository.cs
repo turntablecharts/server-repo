@@ -25,6 +25,18 @@ namespace Infrastructure.DAL {
             return entity;
         }
 
+        public async Task<List<TEntity>> AddRange(List<TEntity> entity)
+        {
+             if (entity == null)
+                throw new ArgumentNullException ("entity");
+
+            await dbSet.AddRangeAsync (entity);
+
+            await context.SaveChangesAsync ();
+
+            return entity;
+        }
+
         public void Delete (TEntity entityToDelete) {
             if (context.Entry (entityToDelete).State == EntityState.Detached) {
                 dbSet.Attach (entityToDelete);

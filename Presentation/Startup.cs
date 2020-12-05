@@ -63,7 +63,9 @@ namespace Presentation
                 options.UseSqlServer (Configuration.GetConnectionString ("ProductionDbString"),
                     optionsBuilder =>
                     optionsBuilder.MigrationsAssembly ("Presentation"));
-            });
+            }, ServiceLifetime.Transient);
+
+            //services.AddDbContext<ApplicationDbContext>(options => options.UseSqlite("Data Source=conferences.db"), ServiceLifetime.Transient);
 
             services.AddControllers ().AddNewtonsoftJson (options =>
                 options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
@@ -80,7 +82,7 @@ namespace Presentation
             //custom services 
             services.AddScoped<IMediaRepo, MediaRepo> ();
             services.AddScoped<IBlobRepo, BlobRepo> ();
-            services.AddScoped (typeof (IGenericRepository<>), typeof (GenericRepository<>));
+            services.AddTransient (typeof (IGenericRepository<>), typeof (GenericRepository<>));
 
             //services.AddSwaggerGen();
         }

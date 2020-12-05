@@ -30,5 +30,9 @@ namespace Infrastructure
         /// new datas
         public DbSet<MagazineData> MagazineDatas { get; set; }
         public DbSet<MagazineEditionData> MagazineEditionDatas { get; set; }
+
+
+        public DbSet<NewsData> NewsDatas { get; set; }
+        public DbSet<NewsCategoryData>  NewsCategoryDatas { get; set; }
     }
 }

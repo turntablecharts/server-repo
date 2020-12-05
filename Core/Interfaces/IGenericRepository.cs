@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 namespace Core.Interfaces {
     public interface IGenericRepository<TEntity> where TEntity : class {
         Task<TEntity> AddAsync (TEntity entity);
+
+        Task<List<TEntity>> AddRange(List<TEntity> entity);
         TEntity GetById (int id);
         void Delete (TEntity entity);
 
