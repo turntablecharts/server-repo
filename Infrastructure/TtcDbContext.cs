@@ -20,5 +20,15 @@ namespace Infrastructure
         public DbSet<Log> Logs {get; set;}
         public DbSet<SubscribersEmail> SubscribersEmails { get; set; }
         public DbSet<MagazineItem> MagazineItems { get; set; }
+
+
+
+
+
+
+
+        /// new datas
+        public DbSet<MagazineData> MagazineDatas { get; set; }
+        public DbSet<MagazineEditionData> MagazineEditionDatas { get; set; }
     }
 }

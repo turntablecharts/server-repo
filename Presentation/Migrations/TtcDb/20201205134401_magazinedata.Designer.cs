@@ -4,14 +4,16 @@ using Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Presentation.Migrations.TtcDb
 {
     [DbContext(typeof(TtcDbContext))]
-    partial class TtcDbContextModelSnapshot : ModelSnapshot
+    [Migration("20201205134401_magazinedata")]
+    partial class magazinedata
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -127,9 +129,6 @@ namespace Presentation.Migrations.TtcDb
                     b.Property<string>("HeaderImage")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("MagazineEditionDataId")
-                        .HasColumnType("int");
-
                     b.Property<int>("MagazineEditionId")
                         .HasColumnType("int");
 
@@ -141,14 +140,14 @@ namespace Presentation.Migrations.TtcDb
 
                     b.HasKey("Id");
 
-                    b.HasIndex("MagazineEditionDataId");
+                    b.HasIndex("MagazineEditionId");
 
                     b.HasIndex("TtcUserId");
 
                     b.ToTable("MagazineDatas");
                 });
 
-            modelBuilder.Entity("Core.Entities.MagazineEditionData", b =>
+            modelBuilder.Entity("Core.Entities.MagazineEdition", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -160,7 +159,7 @@ namespace Presentation.Migrations.TtcDb
 
                     b.HasKey("Id");
 
-                    b.ToTable("MagazineEditionDatas");
+                    b.ToTable("MagazineEditions");
                 });
 
             modelBuilder.Entity("Core.Entities.MagazineItem", b =>
@@ -358,9 +357,11 @@ namespace Presentation.Migrations.TtcDb
 
             modelBuilder.Entity("Core.Entities.MagazineData", b =>
                 {
-                    b.HasOne("Core.Entities.MagazineEditionData", null)
+                    b.HasOne("Core.Entities.MagazineEdition", null)
                         .WithMany("MagazineDatas")
-                        .HasForeignKey("MagazineEditionDataId");
+                        .HasForeignKey("MagazineEditionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Core.Entities.TtcUser", "TtcUser")
                         .WithMany()
