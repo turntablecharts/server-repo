@@ -15,20 +15,20 @@ namespace Presentation.Controllers
     [Route ("api/author")]
     public class NewsController : ControllerBase
     {
-         private readonly IGenericRepository<NewsItem> _newsRepository;
+      
         private readonly IGenericRepository<Log> _logRepository;
         private readonly IGenericRepository<NewsData> _newsDataRepo;
 
         private readonly IGenericRepository<NewsCategoryData> _newsCateogryDataRepo;
         
            private IGenericRepository<TtcUser> _userGenericRepo;
-        public NewsController( IGenericRepository<NewsItem> newsRepository,
+        public NewsController( 
             IGenericRepository<Log> logRepository,
             IGenericRepository<NewsData> newsDataRepo, IGenericRepository<NewsCategoryData> newsCateogryDataRepo,
             IGenericRepository<TtcUser> userGenericRepo)
         {
                _userGenericRepo = userGenericRepo;
-            _newsRepository = newsRepository;
+          
             _logRepository = logRepository;
             _newsCateogryDataRepo = newsCateogryDataRepo;
             _newsDataRepo = newsDataRepo;
@@ -81,23 +81,25 @@ namespace Presentation.Controllers
             }
 
             int pageSize = 10;
-            int skipSize = (int)pageNumber * pageSize;
+            int skipSize = ((int)pageNumber-1) * pageSize;
 
             var news = _newsCateogryDataRepo.GetWithInclude(m => m.Name == category, "NewsDatas")
                 .FirstOrDefault()
                 .NewsDatas
-                .OrderByDescending(m => m.DateCreated);
-            
-            if(news.Count() < pageSize)
-            {
-                news.ToList();
-                return Ok(news);
-            }
-            else{
-                news.Skip(skipSize).Take(pageSize).ToList();
-                return Ok(news);
-            }
-            
+                .OrderByDescending(m => m.DateCreated)
+                .Skip(skipSize).Take(pageSize).ToList();
+
+            // if(news.Count() < pageSize)
+            // {
+            //     news.ToList();
+            //     return Ok(news);
+            // }
+            // else{
+            //     news.Skip(skipSize).Take(pageSize).ToList();
+            //     return Ok(news);
+            // }
+            return Ok(news);
+
         }
 
         [AllowAnonymous]
@@ -151,15 +153,6 @@ namespace Presentation.Controllers
                     EventDate = DateTime.Now
             });
             return Ok (updatedNews);
-        }
-
-        [HttpGet ("news/mark-to-delete/{id}")]
-        public IActionResult MarkToDeleteNews ([FromRoute] int id) {
-            var news = _newsRepository.GetById (id);
-            news.IsToDelete = true;
-            _newsRepository.UpdateAsync (news);
-
-            return Ok (news);
         }
 
         [HttpDelete ("news/delete/{id}/{userEmail}")]

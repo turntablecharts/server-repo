@@ -4,14 +4,16 @@ using Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Presentation.Migrations.TtcDb
 {
     [DbContext(typeof(TtcDbContext))]
-    partial class TtcDbContextModelSnapshot : ModelSnapshot
+    [Migration("20201205163946_photoMigrations")]
+    partial class photoMigrations
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -343,7 +345,7 @@ namespace Presentation.Migrations.TtcDb
                     b.Property<bool>("IsToDelete")
                         .HasColumnType("bit");
 
-                    b.Property<int>("PhotoCategoryDataId")
+                    b.Property<int?>("PhotoCategoryDataId")
                         .HasColumnType("int");
 
                     b.Property<string>("Title")
@@ -521,9 +523,7 @@ namespace Presentation.Migrations.TtcDb
                 {
                     b.HasOne("Core.Entities.PhotoCategoryData", null)
                         .WithMany("PhotoDatas")
-                        .HasForeignKey("PhotoCategoryDataId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("PhotoCategoryDataId");
 
                     b.HasOne("Core.Entities.TtcUser", "TtcUser")
                         .WithMany()

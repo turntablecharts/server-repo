@@ -34,5 +34,9 @@ namespace Infrastructure
 
         public DbSet<NewsData> NewsDatas { get; set; }
         public DbSet<NewsCategoryData>  NewsCategoryDatas { get; set; }
+
+
+        public DbSet<PhotoData> PhotoDatas { get; set; }
+        public DbSet<PhotoCategoryData> PhotoCategoryDatas { get; set; }
     }
 }

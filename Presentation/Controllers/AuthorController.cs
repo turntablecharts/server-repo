@@ -18,49 +18,36 @@ using Presentation.ViewModels;
 namespace Presentation.Controllers {
 
     [ApiController]
-    [Route ("api/[controller]")]
+    [Route ("api/author")]
     public class AuthorController : ControllerBase {
-
-        private readonly IMediaRepo _mediaUpload;
-        private IConfiguration _config;
-
+       private readonly IGenericRepository<Log> _logRepository;
         private readonly IGenericRepository<Chart> _chartRepository;
-        private readonly IGenericRepository<NewsItem> _newsRepository;
-        private readonly IGenericRepository<Log> _logRepository;
-        private readonly IGenericRepository<VideoItem> _videoRepository;
-        private readonly IGenericRepository<PhotoItem> _photoRepository;
-        private readonly IGenericRepository<MediaItem> _mediaRepository;
         private IGenericRepository<TtcUser> _userGenericRepo;
         private IGenericRepository<SubscribersEmail> _subscribers;
-        private IGenericRepository<MagazineItem> _magazineRepository;
 
         public AuthorController (
 
-            IMediaRepo mediaUpload,
-
-            IConfiguration config,
+           
             IGenericRepository<Chart> chartRepository,
-            IGenericRepository<NewsItem> newsRepository,
+           
             IGenericRepository<Log> logRepository,
-            IGenericRepository<VideoItem> videoRepository,
+           
             IGenericRepository<PhotoItem> photoRepository,
-            IGenericRepository<MediaItem> mediaRepository,
+           
             IGenericRepository<TtcUser> userGenericRepo,
-            IGenericRepository<SubscribersEmail> subscribers,
-            IGenericRepository<MagazineItem> magazineRepository
+            IGenericRepository<SubscribersEmail> subscribers
+            
         ) {
 
-            _mediaRepository = mediaRepository;
-            _mediaUpload = mediaUpload;
+           
             _userGenericRepo = userGenericRepo;
-            _config = config;
+           
             _chartRepository = chartRepository;
-            _newsRepository = newsRepository;
+           
             _logRepository = logRepository;
-            _videoRepository = videoRepository;
-            _photoRepository = photoRepository;
+            
             _subscribers = subscribers;
-            _magazineRepository = magazineRepository;
+          
         }
 
         #region charts
@@ -194,220 +181,8 @@ namespace Presentation.Controllers {
         }
         #endregion
 
-     #region videos
-        [HttpPost ("videos/add")]
-        public async Task<IActionResult> AddVideo ([FromBody] VideoItem video) {
-            if (!ModelState.IsValid) {
-                return BadRequest (ModelState);
-            }
 
-            var result = await _videoRepository.AddAsync (video);
-            return Ok (result);
-        }
-
-        [AllowAnonymous]
-        [HttpGet ("videos/all")]
-        public IActionResult GetAllVideos () {
-            return Ok (_videoRepository.GetAll ().OrderByDescending (m => m.Id));
-        }
-
-        [AllowAnonymous]
-        [HttpGet ("videos/{id}")]
-        public IActionResult GetOneVideo (int id) {
-            var video = _videoRepository.GetById (id);
-            if (video == null) {
-                return NotFound ();
-            }
-
-            return Ok (video);
-        }
-
-        [AllowAnonymous]
-        [HttpGet ("videos/category/{category}")]
-        public ActionResult GetVideoByCategory ([FromRoute] string category) {
-            var news = _videoRepository.GetWithInclude (m => m.Category.Contains (category), null).ToList ();
-
-            return Ok (news);
-        }
-
-        [HttpPut ("videos/edit/{id}/{userEmail}")]
-        public IActionResult EditVideo ([FromRoute] int id, [FromBody] VideoItem item, [FromRoute] string userEmail) {
-            if (!ModelState.IsValid) {
-                return BadRequest (ModelState);
-            }
-
-            item.Id = id;
-            var updatedVideo = _videoRepository.UpdateAsync (item);
-
-            if (updatedVideo == null) {
-                return NotFound ();
-            }
-
-            _logRepository.AddAsync (new Log {
-                Name = userEmail,
-                    Event = "Edited Video, title" + updatedVideo.Title,
-                    EventDate = DateTime.Now
-            });
-
-            return Ok (updatedVideo);
-        }
-
-        [HttpGet ("video/mark-to-delete/{id}")]
-        public IActionResult MarkToDeleteVideo ([FromRoute] int id) {
-            var video = _videoRepository.GetById (id);
-            video.IsToDelete = true;
-            _videoRepository.UpdateAsync (video);
-
-            return Ok (video);
-        }
-
-        [HttpDelete ("videos/delete/{id}/{userEmail}")]
-        public IActionResult DeleteVideo ([FromRoute] int id, [FromRoute] string userEmail) {
-            try {
-                var video = _videoRepository.GetById (id);
-                _videoRepository.Delete (video);
-                _logRepository.AddAsync (new Log {
-                    Name = userEmail,
-                        Event = "Deleted Video, id: " + id,
-                        EventDate = DateTime.Now
-                });
-                return Ok ("Successfully deleted");
-            } catch (NullReferenceException) {
-                return NotFound ();
-            }
-        }
-        #endregion
-
-        #region mediaItem
-        [HttpPost ("media/add")]
-        public async Task<IActionResult> AddMedia ([FromForm] MediaItemVM item) {
-            if (!ModelState.IsValid) {
-                return BadRequest (ModelState);
-            }
-
-            var blobKey = _config.GetSection ("BlobSettings").GetValue<String> ("AccessKey");
-
-            var mediaItem = new MediaItem {
-                Title = item.Title,
-            };
-            var media = await _mediaUpload.Add (mediaItem, item.Image, blobKey);
-
-            return Ok (media);
-        }
-
-        [HttpGet ("media/all")]
-        public IActionResult GetAllMedia () {
-            return Ok (_mediaRepository.GetAll ());
-        }
-
-        [HttpGet ("media/{id}")]
-        public IActionResult GetOneMedia ([FromRoute] int id) {
-            var media = _mediaRepository.GetById (id);
-            if (media == null) {
-                return NotFound ();
-            }
-
-            return Ok (media);
-        }
-
-        [HttpDelete ("media/delete/{id}/{userEmail}")]
-        public IActionResult DeleteMedia ([FromRoute] int id, [FromRoute] string userEmail) {
-            try {
-                _mediaRepository.Delete (_mediaRepository.GetById (id));
-                _logRepository.AddAsync (new Log {
-                    Name = userEmail,
-                        Event = "Deleted Media, Id: " + id,
-                        EventDate = DateTime.Now
-                });
-                return Ok ("Successfully deleted");
-            } catch (NullReferenceException) {
-                return NotFound ();
-            }
-        }
-        #endregion
-
-        #region photo
-        [HttpPost ("photo/add")]
-        public async Task<IActionResult> AddPhoto ([FromBody] PhotoItemVM item) {
-            if (!ModelState.IsValid) {
-                BadRequest (ModelState);
-            }
-            item.DateCreated = DateTime.Now;
-
-            var user = _userGenericRepo.GetWithInclude (m => m.Email == item.Email, string.Empty).FirstOrDefault ();
-
-            item.TtcUserId = user.Id;
-
-            var photo = await _photoRepository.AddAsync (item);
-
-            return Ok (photo);
-        }
-
-        [AllowAnonymous]
-        [HttpGet ("photo/all")]
-        public async Task<IActionResult> GetAllPhoto ([FromQuery] int? pageNumber) {
-            int pageSize = 10;
-            var photos = _photoRepository.GetAll ().OrderByDescending (m => m.DateCreated);
-
-            return Ok (await PaginatedList<PhotoItem>.CreateAsync (photos, pageNumber ?? 1, pageSize));
-
-        }
-
-        [AllowAnonymous]
-        [HttpGet ("photo/{id}")]
-        public IActionResult GetOnePhoto ([FromRoute] int id) {
-            var photo = _photoRepository.GetById (id);
-            if (photo == null) {
-                return NotFound ();
-            }
-            return Ok (photo);
-        }
-
-        [AllowAnonymous]
-        [HttpGet ("photo/category/{category}")]
-        public async Task<ActionResult> GetPhotoByCategory ([FromRoute] string category, [FromQuery] int? pageNumber) {
-            var news = _photoRepository.GetWithInclude (m => m.Category.Contains (category), null).OrderByDescending (m => m.DateCreated);
-
-            int pageSize = 10;
-            return Ok (await PaginatedList<PhotoItem>.CreateAsync (news, pageNumber ?? 1, pageSize));
-
-        }
-
-        [HttpPut ("photo/edit/{id}/{userEmail}")]
-        public IActionResult EditPhoto ([FromRoute] int id, [FromBody] PhotoItem item, [FromRoute] string userEmail) {
-            if (!ModelState.IsValid) {
-                return BadRequest (ModelState);
-            }
-            item.Id = id;
-            var editedPhoto = _photoRepository.UpdateAsync (item);
-            if (editedPhoto == null) {
-                return NotFound ();
-            }
-            _logRepository.AddAsync (new Log {
-                Name = userEmail,
-                    EventDate = DateTime.Now,
-                    Event = "Edited Video, title: " + editedPhoto.Title
-            });
-            return Ok (editedPhoto);
-        }
-
-        [HttpDelete ("photo/delete/{id}/{userEmail}")]
-        public IActionResult DeletePhoto ([FromRoute] int id, [FromRoute] string userEmail) {
-            try {
-
-                _photoRepository.Delete (_photoRepository.GetById (id));
-
-                _logRepository.AddAsync (new Log {
-                    Name = userEmail,
-                        Event = "Deleted Photo, Id: " + id,
-                        EventDate = DateTime.Now
-                });
-                return Ok ("Successfully deleted");
-            } catch (NullReferenceException) {
-                return NotFound ();
-            }
-        }
-        #endregion
+       
 
         [AllowAnonymous]
         [HttpPost ("subscribe")]

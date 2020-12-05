@@ -84,26 +84,11 @@ namespace Presentation.Controllers {
         }
 
         [HttpPut ("magazine/edit/{id}/{userEmail}")]
-        public async Task<IActionResult> EditMagazine ([FromRoute] int id, [FromBody] MagazineVM item, [FromRoute] string userEmail) {
+        public async Task<IActionResult> EditMagazine ([FromRoute] int id, [FromBody] MagazineData item, [FromRoute] string userEmail) {
             if (!ModelState.IsValid) {
                 return BadRequest (ModelState);
             }
             item.Id = id;
-
-            int magEditionId;
-            var edition = _magEditionRepository.GetWithInclude (m => m.Name.ToUpper() == item.Edition.ToUpper(), string.Empty).FirstOrDefault ();
-
-            if (edition == null) {
-                var createdEdition = await _magEditionRepository.AddAsync (new MagazineEditionData {
-                    Name = item.Edition
-                });
-
-                magEditionId = createdEdition.Id;
-            }
-            else{
-                magEditionId = edition.Id;
-            }
-            item.MagazineEditionDataId = magEditionId;
 
             var editedMagazine = _magazineRepository.UpdateAsync (item);
             if (editedMagazine == null) {

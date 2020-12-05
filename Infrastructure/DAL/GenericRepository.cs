@@ -83,6 +83,8 @@ namespace Infrastructure.DAL {
 
             context.Entry (entityToUpdate).State = EntityState.Modified;
 
+            context.SaveChanges();
+
             return entityToUpdate;
         }
     }
