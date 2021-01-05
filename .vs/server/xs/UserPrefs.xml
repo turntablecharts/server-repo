@@ -1,0 +1,33 @@
+﻿<Properties StartupConfiguration="{012982A3-42F7-4868-A0D5-4373DADC45BC}|Default">
+  <MonoDevelop.Ide.ItemProperties.Presentation PreferredExecutionTarget="/Applications/Google Chrome.app" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Presentation/Controllers/AuthorController.cs">
+    <Files>
+      <File FileName="Presentation/Controllers/AuthorController.cs" Line="231" Column="1" />
+      <File FileName="Presentation/ViewModels/SubscribersList.cs" Line="15" Column="60" />
+      <File FileName="Presentation/Startup.cs" Line="137" Column="1" />
+      <File FileName="Presentation/Program.cs" Line="16" Column="1" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="server" expanded="True">
+            <Node name="Presentation" expanded="True">
+              <Node name="Controllers" expanded="True">
+                <Node name="AuthorController.cs" selected="True" />
+              </Node>
+              <Node name="ViewModels" expanded="True" />
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore>
+      <Breakpoint file="/Users/simi/Documents/repos/Work/ttc-app/v1/server/Presentation/Controllers/AuthorController.cs" relfile="Presentation/Controllers/AuthorController.cs" line="228" column="1" />
+    </BreakpointStore>
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MultiItemStartupConfigurations />
+</Properties>

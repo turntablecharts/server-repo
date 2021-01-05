@@ -15,119 +15,137 @@ using Microsoft.Extensions.Configuration;
 using Presentation.Utilities;
 using Presentation.ViewModels;
 
-namespace Presentation.Controllers {
+namespace Presentation.Controllers
+{
 
     [ApiController]
-    [Route ("api/author")]
-    public class AuthorController : ControllerBase {
-       private readonly IGenericRepository<Log> _logRepository;
+    [Route("api/author")]
+    public class AuthorController : ControllerBase
+    {
+        private readonly IGenericRepository<Log> _logRepository;
         private readonly IGenericRepository<Chart> _chartRepository;
         private IGenericRepository<TtcUser> _userGenericRepo;
         private IGenericRepository<SubscribersEmail> _subscribers;
 
-        public AuthorController (
+        public AuthorController(
 
-           
+
             IGenericRepository<Chart> chartRepository,
-           
+
             IGenericRepository<Log> logRepository,
-           
+
             IGenericRepository<PhotoItem> photoRepository,
-           
+
             IGenericRepository<TtcUser> userGenericRepo,
             IGenericRepository<SubscribersEmail> subscribers
-            
-        ) {
 
-           
+        )
+        {
+
+
             _userGenericRepo = userGenericRepo;
-           
+
             _chartRepository = chartRepository;
-           
+
             _logRepository = logRepository;
-            
+
             _subscribers = subscribers;
-          
+
         }
 
         #region charts
-        [HttpPost ("chart/upload")]
-        public async Task<IActionResult> UploadChart ([FromForm] ChartVM input) {
-            if (!ModelState.IsValid) {
-                ModelState.AddModelError ("description", "invalid form format");
-                return BadRequest (ModelState);
+        [HttpPost("chart/upload")]
+        public async Task<IActionResult> UploadChart([FromForm] ChartVM input)
+        {
+            if (!ModelState.IsValid)
+            {
+                ModelState.AddModelError("description", "invalid form format");
+                return BadRequest(ModelState);
             }
-            List<ChartItemVM> chartListVM = new List<ChartItemVM> ();
+            List<ChartItemVM> chartListVM = new List<ChartItemVM>();
 
-            using (var reader = new StreamReader (input.DataCSVFile.OpenReadStream ()))
-            using (var csv = new CsvReader (reader, CultureInfo.InvariantCulture)) {
-                chartListVM = csv.GetRecords<ChartItemVM> ().ToList ();
+            using (var reader = new StreamReader(input.DataCSVFile.OpenReadStream()))
+            using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
+            {
+                chartListVM = csv.GetRecords<ChartItemVM>().ToList();
             }
 
-            var chartList = new List<ChartItem> ();
-            foreach (var item in chartListVM) {
-                chartList.Add (new ChartItem {
+            var chartList = new List<ChartItem>();
+            foreach (var item in chartListVM)
+            {
+                chartList.Add(new ChartItem
+                {
                     Title = item.Title,
-                        Artiste = item.Artiste,
-                        Rank = item.Rank,
-                        ImageUri = item.ImageUri,
-                        HighestPosition = item.HighestPosition,
-                        LastPosition = item.LastPosition,
-                        MusicLink = item.MusicLink
+                    Artiste = item.Artiste,
+                    Rank = item.Rank,
+                    ImageUri = item.ImageUri,
+                    HighestPosition = item.HighestPosition,
+                    LastPosition = item.LastPosition,
+                    MusicLink = item.MusicLink
                 });
             }
-            var chartToAdd = new Chart {
+            var chartToAdd = new Chart
+            {
                 DateCreated = DateTime.Now,
                 Week = input.Week,
-                ChartItems = (List<ChartItem>) chartList,
+                ChartItems = (List<ChartItem>)chartList,
                 Category = input.ChartCategory,
                 Genre = input.ChartGenre,
                 HeaderVideoUrl = input.HeaderVideoUrl
             };
 
-            await _chartRepository.AddAsync (chartToAdd);
+            await _chartRepository.AddAsync(chartToAdd);
             //await _chartRepo.AddChart (chartToAdd);
 
-            return Ok (chartToAdd);
+            return Ok(chartToAdd);
 
         }
 
-        [HttpDelete ("chart/delete/{id}/{userEmail}")]
-        public IActionResult DeleteChart ([FromRoute] int id, [FromRoute] string userEmail) {
-            try {
-                var chartToDelete = _chartRepository.GetWithInclude (m => m.Id == id, "ChartItems").FirstOrDefault ();
-                _chartRepository.Delete (chartToDelete);
+        [HttpDelete("chart/delete/{id}/{userEmail}")]
+        public IActionResult DeleteChart([FromRoute] int id, [FromRoute] string userEmail)
+        {
+            try
+            {
+                var chartToDelete = _chartRepository.GetWithInclude(m => m.Id == id, "ChartItems").FirstOrDefault();
+                _chartRepository.Delete(chartToDelete);
 
-                _logRepository.AddAsync (new Log {
+                _logRepository.AddAsync(new Log
+                {
                     Name = userEmail,
-                        Event = "Deleted chart with id: " + id,
-                        EventDate = DateTime.Now
+                    Event = "Deleted chart with id: " + id,
+                    EventDate = DateTime.Now
                 });
-                return Ok ("Successfully deleted");
-            } catch (NullReferenceException) {
-                return NotFound ();
+                return Ok("Successfully deleted");
+            }
+            catch (NullReferenceException)
+            {
+                return NotFound();
             }
         }
 
         [AllowAnonymous]
-        [HttpGet ("chart/{id}")]
+        [HttpGet("chart/{id}")]
 
-        public IActionResult GetOnechart ([FromRoute] int id) {
-            var result = _chartRepository.GetWithInclude (m => m.Id == id, "ChartItems").FirstOrDefault ();
-            if (result != null) {
-                return Ok (result);
-            } else {
-                return NotFound ();
+        public IActionResult GetOnechart([FromRoute] int id)
+        {
+            var result = _chartRepository.GetWithInclude(m => m.Id == id, "ChartItems").FirstOrDefault();
+            if (result != null)
+            {
+                return Ok(result);
+            }
+            else
+            {
+                return NotFound();
             }
         }
 
         [AllowAnonymous]
-        [HttpGet ("chart/all")]
-        public async Task< IActionResult> GetCharts ([FromQuery]int? pageNumber) 
+        [HttpGet("chart/all")]
+        public async Task<IActionResult> GetCharts([FromQuery] int? pageNumber)
         {
             var charts = _chartRepository.GetWithInclude(null, "ChartItems").OrderByDescending(m => m.DateCreated).AsQueryable();
             int pageSize = 10;
-            return Ok (await PaginatedList<Chart>.CreateAsync(charts, pageNumber ?? 1, pageSize));
+            return Ok(await PaginatedList<Chart>.CreateAsync(charts, pageNumber ?? 1, pageSize));
         }
 
         [AllowAnonymous]
@@ -160,37 +178,75 @@ namespace Presentation.Controllers {
         }
 
         [AllowAnonymous]
-        [HttpGet ("chart/latest")]
-        public IActionResult GetLatestChart ([FromQuery] string category) {
-            var latest = _chartRepository.GetAll ().OrderByDescending (m => m.DateCreated).Where (m => m.Category.Contains (category ?? "Turntable Top 50")).FirstOrDefault ();
+        [HttpGet("chart/latest")]
+        public IActionResult GetLatestChart([FromQuery] string category)
+        {
+            var latest = _chartRepository.GetAll().OrderByDescending(m => m.DateCreated).Where(m => m.Category.Contains(category ?? "Turntable Top 50")).FirstOrDefault();
 
-            var result = _chartRepository.GetWithInclude (m => m.Id == latest.Id, "ChartItems").FirstOrDefault ();
+            var result = _chartRepository.GetWithInclude(m => m.Id == latest.Id, "ChartItems").FirstOrDefault();
 
-             var chartToFrontend = new Chart {
-                    Id = result.Id,
-                    DateCreated = result.DateCreated,
-                    Week = result.Week,
-                    ChartItems = result.ChartItems.OrderBy (m => m.Rank).Take(10).ToList (),
-                    Category = result.Category,
-                    Genre = result.Genre,
-                    HeaderVideoUrl = result.HeaderVideoUrl
-                };
+            var chartToFrontend = new Chart
+            {
+                Id = result.Id,
+                DateCreated = result.DateCreated,
+                Week = result.Week,
+                ChartItems = result.ChartItems.OrderBy(m => m.Rank).Take(10).ToList(),
+                Category = result.Category,
+                Genre = result.Genre,
+                HeaderVideoUrl = result.HeaderVideoUrl
+            };
             //result.ChartItems.OrderBy(m => m.Rank).ToList();
 
-            return Ok (chartToFrontend);
+            return Ok(chartToFrontend);
         }
         #endregion
 
 
-       
+
 
         [AllowAnonymous]
-        [HttpPost ("subscribe")]
-        public async Task<IActionResult> Subscribe ([FromBody] SubscribersEmail subsciberInfo) {
-            if(subsciberInfo.)
-            var subscriber = await _subscribers.AddAsync (subsciberInfo);
+        [HttpPost("subscribe")]
+        public async Task<IActionResult> Subscribe([FromBody] SubscribersEmail subscriberInfo)
+        {
+            if (!string.IsNullOrEmpty(subscriberInfo.Email))
+            {
+                var alreadyExists = _subscribers.GetWithInclude(m => m.Email == subscriberInfo.Email, string.Empty);
+                if (alreadyExists == null)
+                {
+                    var subscriber = await _subscribers.AddAsync(subscriberInfo);
+                    return Ok(subscriber);
+                }
+            }
 
-            return Ok (subscriber);
+            return Ok();
         }
-}
+
+
+        [AllowAnonymous]
+        [HttpGet("subscribe-list")]
+        public IActionResult GetSubscriptions()
+        {
+            List<SubscribersList> subscribersLists = new List<SubscribersList>();
+            var emails = _subscribers.GetAll().Where(m => !string.IsNullOrEmpty(m.Email)).Select(m => m.Email).Distinct().ToList();
+            foreach (var item in emails)
+            {
+                subscribersLists.Add(new SubscribersList
+                {
+                    EmailAddress = item
+                });
+            }
+
+            using (var writer = new StreamWriter("total-emails.csv"))
+            using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
+            {
+                csv.WriteRecords(subscribersLists);
+            }
+
+            
+
+
+            return Ok(subscribersLists);
+        }
+    }
+
 }
