@@ -17,6 +17,8 @@ namespace Core.Entities
         public int MagazineEditionId { get; set; }
 
         public int MagazineEditionDataId { get; set; }
+
+        public int ArticlePosition { get; set; }
     }
     
 }

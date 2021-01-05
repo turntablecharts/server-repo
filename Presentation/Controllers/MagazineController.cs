@@ -129,7 +129,7 @@ namespace Presentation.Controllers {
 
             output.Id = magazines.Id;
             output.Name = magazines.Name;
-            output.MagazineDatas = magazines.MagazineDatas.OrderByDescending(m => m.DateCreated).ToList();
+            output.MagazineDatas = magazines.MagazineDatas.OrderBy(m => m.ArticlePosition).ToList();
 
             return Ok(output);
         }

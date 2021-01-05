@@ -187,6 +187,7 @@ namespace Presentation.Controllers {
         [AllowAnonymous]
         [HttpPost ("subscribe")]
         public async Task<IActionResult> Subscribe ([FromBody] SubscribersEmail subsciberInfo) {
+            if(subsciberInfo.)
             var subscriber = await _subscribers.AddAsync (subsciberInfo);
 
             return Ok (subscriber);
