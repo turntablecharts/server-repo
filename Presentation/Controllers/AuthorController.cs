@@ -79,8 +79,8 @@ namespace Presentation.Controllers
                     Artiste = item.Artiste,
                     Rank = item.Rank,
                     ImageUri = item.ImageUri,
-                    HighestPosition = item.HighestPosition,
-                    LastPosition = item.LastPosition,
+                    HighestPosition = int.Parse(item.HighestPosition),
+                    LastPosition = int.Parse(item.LastPosition),
                     MusicLink = item.MusicLink
                 });
             }
