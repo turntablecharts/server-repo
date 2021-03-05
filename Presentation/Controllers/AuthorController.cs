@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using Presentation.Base;
 using Presentation.Utilities;
 using Presentation.ViewModels;
 
@@ -20,7 +21,7 @@ namespace Presentation.Controllers
 
     [ApiController]
     [Route("api/author")]
-    public class AuthorController : ControllerBase
+    public class AuthorController : BaseController
     {
         private readonly IGenericRepository<Log> _logRepository;
         private readonly IGenericRepository<Chart> _chartRepository;
@@ -171,6 +172,32 @@ namespace Presentation.Controllers
                 charts.Add(chartToFrontend);
             }
 
+            //int pageSize = 10;
+            //return Ok (await PaginatedList<Chart>.CreateAsync (charts.AsQueryable (), pageNumber ?? 1, pageSize));
+
+            return Ok(charts);
+        }
+
+        [AllowAnonymous]
+        [HttpGet("chart/categoryv2/{category}")]
+        public IActionResult GetChartByCategory([FromRoute] string category)
+        {
+            var latest = _chartRepository.GetAll().OrderByDescending(m => m.DateCreated).Where(m => m.Category.Contains(category)).FirstOrDefault();
+
+            var result = _chartRepository.GetWithInclude(m => m.Id == latest.Id, "ChartItems").FirstOrDefault();
+
+            var chartToFrontend = new Chart
+            {
+                Id = result.Id,
+                DateCreated = result.DateCreated,
+                Week = result.Week,
+                ChartItems = result.ChartItems.OrderBy(m => m.Rank).Take(10).ToList(),
+                Category = result.Category,
+                Genre = result.Genre,
+                HeaderVideoUrl = result.HeaderVideoUrl
+            };
+
+            var charts = GetChartResponseDto(chartToFrontend);
             //int pageSize = 10;
             //return Ok (await PaginatedList<Chart>.CreateAsync (charts.AsQueryable (), pageNumber ?? 1, pageSize));
 
