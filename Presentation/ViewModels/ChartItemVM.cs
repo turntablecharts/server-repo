@@ -11,5 +11,8 @@ namespace Presentation.ViewModels
        
         public string HighestPosition { get; set; }
         public string MusicLink { get; set; }
+         public int WeeksOnChart { get; set; }
+
+        public string ProducedBy { get; set; }
     }
 }

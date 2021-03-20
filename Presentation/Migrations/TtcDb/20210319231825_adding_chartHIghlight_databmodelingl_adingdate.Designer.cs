@@ -4,14 +4,16 @@ using Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Presentation.Migrations.TtcDb
 {
     [DbContext(typeof(TtcDbContext))]
-    partial class TtcDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210319231825_adding_chartHIghlight_databmodelingl_adingdate")]
+    partial class adding_chartHIghlight_databmodelingl_adingdate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -77,9 +79,6 @@ namespace Presentation.Migrations.TtcDb
                     b.Property<string>("MusicLink")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Rank")
-                        .HasColumnType("int");
-
                     b.Property<string>("Title")
                         .HasColumnType("nvarchar(max)");
 
@@ -113,17 +112,11 @@ namespace Presentation.Migrations.TtcDb
                     b.Property<string>("MusicLink")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ProducedBy")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int>("Rank")
                         .HasColumnType("int");
 
                     b.Property<string>("Title")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("WeeksOnChart")
-                        .HasColumnType("int");
 
                     b.HasKey("Id");
 

@@ -8,11 +8,13 @@ using System.Threading.Tasks;
 using Core.Entities;
 using Core.Interfaces;
 using CsvHelper;
+using Infrastructure.Constants;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Presentation.Base;
+using Presentation.DTO;
 using Presentation.Utilities;
 using Presentation.ViewModels;
 
@@ -27,6 +29,7 @@ namespace Presentation.Controllers
         private readonly IGenericRepository<Chart> _chartRepository;
         private IGenericRepository<TtcUser> _userGenericRepo;
         private IGenericRepository<SubscribersEmail> _subscribers;
+        private IGenericRepository<ChartHighlight> _chartHighlightRepo;
 
         public AuthorController(
 
@@ -38,7 +41,8 @@ namespace Presentation.Controllers
             IGenericRepository<PhotoItem> photoRepository,
 
             IGenericRepository<TtcUser> userGenericRepo,
-            IGenericRepository<SubscribersEmail> subscribers
+            IGenericRepository<SubscribersEmail> subscribers,
+            IGenericRepository<ChartHighlight> chartHighlightRepo
 
         )
         {
@@ -51,6 +55,7 @@ namespace Presentation.Controllers
             _logRepository = logRepository;
 
             _subscribers = subscribers;
+            _chartHighlightRepo = chartHighlightRepo;
 
         }
 
@@ -82,7 +87,9 @@ namespace Presentation.Controllers
                     ImageUri = item.ImageUri,
                     HighestPosition = int.Parse(item.HighestPosition),
                     LastPosition = int.Parse(item.LastPosition),
-                    MusicLink = item.MusicLink
+                    MusicLink = item.MusicLink,
+                    WeeksOnChart = item.WeeksOnChart,
+                    ProducedBy = item.ProducedBy
                 });
             }
             var chartToAdd = new Chart
@@ -97,6 +104,23 @@ namespace Presentation.Controllers
 
             await _chartRepository.AddAsync(chartToAdd);
             //await _chartRepo.AddChart (chartToAdd);
+
+            if(input.ChartCategory == ChartCategoryConst.TOP_50)
+            {
+                var biggestDebut = BiggestDebut(chartToAdd);
+                var biggestMover = GetChartHighlight(chartToAdd, ChartCategoryConst.TOP_50);
+
+                var highlight = new List<ChartHighlight>();
+                highlight.Add(biggestDebut);
+                highlight.Add(biggestMover);
+
+                await _chartHighlightRepo.AddRange(highlight);
+            }
+            else
+            {
+                var biggestMover = GetChartHighlight(chartToAdd, input.ChartCategory);
+                await _chartHighlightRepo.AddAsync(biggestMover);
+            }
 
             return Ok(chartToAdd);
 
@@ -170,6 +194,43 @@ namespace Presentation.Controllers
                 };
 
                 charts.Add(chartToFrontend);
+            }
+
+            //int pageSize = 10;
+            //return Ok (await PaginatedList<Chart>.CreateAsync (charts.AsQueryable (), pageNumber ?? 1, pageSize));
+
+            return Ok(charts);
+        }
+
+        [AllowAnonymous]
+        [HttpGet("chart/category/top50")]
+        public IActionResult GetTop50Charts()
+        {
+            string category = ChartCategoryConst.TOP_50;
+            var result = _chartRepository.GetWithInclude(m => m.Category.Contains(category), "ChartItems").OrderByDescending(m => m.DateCreated);
+            List<ChartWithHighlightDto> charts = new List<ChartWithHighlightDto>();
+            foreach (var item in result)
+            {
+
+                var chartToFrontend = new Chart
+                {
+                    Id = item.Id,
+                    DateCreated = item.DateCreated,
+                    Week = item.Week,
+                    ChartItems = item.ChartItems.OrderBy(m => m.Rank).ToList(),
+                    Category = item.Category,
+                    Genre = item.Genre,
+                    HeaderVideoUrl = item.HeaderVideoUrl
+                };
+
+                var highlights = GetTotalHightLights(item.DateCreated, _chartHighlightRepo);
+
+                charts.Add(new ChartWithHighlightDto
+                {
+                    Chart = chartToFrontend,
+                    ChartHighlights = highlights, 
+                    ChartId = item.Id
+                });
             }
 
             //int pageSize = 10;
@@ -274,6 +335,40 @@ namespace Presentation.Controllers
 
             return Ok(subscribersLists);
         }
+
+
+        // [AllowAnonymous]
+        // [HttpGet("highlight-chart")]
+        // public async Task<IActionResult> HighlightChart()
+        // {
+        //     string category = ChartCategoryConst.TOP_50;
+
+        //     var highlists = _chartHighlightRepo.GetAll().ToList();
+        //     var result = _chartRepository.GetWithInclude(m => m.Category.Contains(category), "ChartItems").OrderByDescending(m => m.DateCreated).ToList();
+
+        //     var chartHighlights = DeductChartHighlight(result, category);
+
+        //     int totalLength = chartHighlights.Count;
+
+        //     // var first10 = chartHighlights.Take(10).ToList();
+        //     // var last = chartHighlights.Skip(9).Take(totalLength - 1 - 9).ToList();
+
+        //     // // var highlisttosave = chartHighlights.Skip(25).Take(36 - 25);
+        //     // // foreach (var item in highlisttosave)
+        //     // // { radio done, 
+        //     // //     await _chartHighlightRepo.AddAsync(item);
+        //     // // }
+
+
+
+        //     await _chartHighlightRepo.AddRange(chartHighlights);
+        //    // await _chartHighlightRepo.AddRange(last);
+
+
+        //     return Ok();
+
+
+        // }
     }
 
 }

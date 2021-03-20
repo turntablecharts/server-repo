@@ -1,6 +1,8 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Core.Entities;
+using Core.Interfaces;
 using Infrastructure.Constants;
 using Microsoft.AspNetCore.Mvc;
 using Presentation.DTO;
@@ -237,6 +239,130 @@ namespace Presentation.Base
             
 
             // return response;
+        }
+
+
+
+        public static List<ChartHighlight> DeductChartHighlight(List<Chart> charts, string category)
+        {
+            List<ChartHighlight> chartHighlights = new List<ChartHighlight>();
+
+
+            foreach (var chart in charts)
+            {
+                if( category != ChartCategoryConst.TOP_50)
+                {
+                    var result = GetChartHighlight(chart, category);
+                    chartHighlights.Add(result);
+                }
+                else 
+                {
+                    // var result = GetChartHighlight(chart, category);
+                    // chartHighlights.Add(result);
+                    var debutResult = BiggestDebut(chart);
+                    chartHighlights.Add(debutResult);
+                }
+            }
+
+
+            return chartHighlights;
+        }
+
+        public static ChartHighlight GetChartHighlight(Chart chart, string category)
+        {
+            int biggestGain = 0;
+            Dictionary<string, string> ChartHighlightDict = new Dictionary<string, string>();
+            
+            ChartHighlightDict.Add(ChartCategoryConst.TOP_50, ChartHighlightConstant.TOP_50_MOVER);
+            ChartHighlightDict.Add(ChartCategoryConst.AIRPLAY, ChartHighlightConstant.BIGGEST_RADIO_MOVER);
+            ChartHighlightDict.Add(ChartCategoryConst.TV, ChartHighlightConstant.BIGGEST_TV_MOVER);
+            ChartHighlightDict.Add(ChartCategoryConst.STREAMING, ChartHighlightConstant.STREAMING_MOVER);
+           
+
+            ChartHighlight response = null;
+            var chartItems = chart.ChartItems.Where(m => m.LastPosition != 0);
+            var chartItems_1 = chartItems.Where(m => m.LastPosition != -1);
+            foreach (var chartItem in chartItems_1)
+            {
+               var gain = chartItem.LastPosition - chartItem.Rank;
+                if(gain > biggestGain)
+                    {
+                        response = new ChartHighlight
+                        {
+                            Title = chartItem.Title,
+                            Artiste = chartItem.Artiste,
+                            ImageUri = chartItem.ImageUri,
+                            LastPosition = chartItem.LastPosition,
+                            HighestPosition = chartItem.HighestPosition,
+                            MusicLink = chartItem.MusicLink,
+                            DateCreated = chart.DateCreated,
+                            ChartHighlightType = ChartHighlightDict[category],
+                            Rank = chartItem.Rank
+                        };
+
+                        biggestGain = gain;
+                    }
+            }
+
+            if(response == null)
+            {
+                response = new ChartHighlight
+                {
+                            Title = chart.ChartItems.FirstOrDefault().Title,
+                            Artiste = chart.ChartItems.FirstOrDefault().Artiste,
+                            ImageUri = chart.ChartItems.FirstOrDefault().ImageUri,
+                            LastPosition = chart.ChartItems.FirstOrDefault().LastPosition,
+                            HighestPosition = chart.ChartItems.FirstOrDefault().HighestPosition,
+                            MusicLink = chart.ChartItems.FirstOrDefault().MusicLink,
+                            DateCreated = chart.DateCreated,
+                            ChartHighlightType = ChartHighlightDict[category],
+                            Rank = chart.ChartItems.FirstOrDefault().Rank
+                };
+            }
+
+            return response;
+        }
+
+
+        public static ChartHighlight BiggestDebut(Chart chart)
+        {
+          
+            ChartHighlight response = null;
+
+            var debutChartItem = chart.ChartItems.Where (m => m.LastPosition == 0).OrderBy (m => m.Rank).FirstOrDefault ();
+            response = new ChartHighlight
+            {
+                Title = debutChartItem.Title,
+                Artiste = debutChartItem.Artiste,
+                ImageUri = debutChartItem.ImageUri,
+                LastPosition = debutChartItem.LastPosition,
+                HighestPosition = debutChartItem.HighestPosition,
+                MusicLink = debutChartItem.MusicLink,
+                DateCreated = chart.DateCreated,
+                ChartHighlightType = ChartHighlightConstant.BIGGEST_DEBUT,
+                Rank = debutChartItem.Rank
+            };
+
+            return response;
+        }
+
+
+        public static List<ChartHighlight> GetTotalHightLights(DateTime chartDate, IGenericRepository<ChartHighlight> _chartHighlightRepo)
+        {
+            var chartWeek = chartDate.AddDays(7);
+            //var highlights = _chartHighlightRepo.GetWithInclude(m => m.DateCreated);
+
+            DayOfWeek currentDay = chartDate.DayOfWeek;  
+            int daysTillCurrentDay = currentDay - DayOfWeek.Sunday;  
+            DateTime currentWeekStartDate = chartDate.AddDays(-daysTillCurrentDay);
+
+            DateTime[] weekDates = new DateTime[] {currentWeekStartDate.Date, currentWeekStartDate.AddDays(1).Date, currentWeekStartDate.AddDays(2).Date,currentWeekStartDate.AddDays(3).Date,
+                currentWeekStartDate.AddDays(4).Date, currentWeekStartDate.AddDays(5).Date, currentWeekStartDate.AddDays(6).Date};
+
+            var highlights = _chartHighlightRepo.GetWithInclude(m => weekDates.Contains(m.DateCreated.Date), "").ToList();
+
+
+            return highlights;
         }
     }
 }

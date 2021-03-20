@@ -38,5 +38,8 @@ namespace Infrastructure
 
         public DbSet<PhotoData> PhotoDatas { get; set; }
         public DbSet<PhotoCategoryData> PhotoCategoryDatas { get; set; }
+
+
+        public DbSet<ChartHighlight> ChartHighlights { get; set; }
     }
 }
