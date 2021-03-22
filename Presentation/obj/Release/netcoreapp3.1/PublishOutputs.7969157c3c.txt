@@ -19,8 +19,13 @@
 /Users/simi/Documents/repos/Work/ttc-app/v1/server/Presentation/publish/wwwroot/lib/jquery/dist/jquery.min.js
 /Users/simi/Documents/repos/Work/ttc-app/v1/server/Presentation/publish/wwwroot/lib/jquery/dist/jquery.min.map
 /Users/simi/Documents/repos/Work/ttc-app/v1/server/Presentation/publish/wwwroot/lib/jquery/LICENSE.txt
+/Users/simi/Documents/repos/Work/ttc-app/v1/server/Presentation/publish/publish/web.config
 /Users/simi/Documents/repos/Work/ttc-app/v1/server/Presentation/publish/appsettings.Development.json
 /Users/simi/Documents/repos/Work/ttc-app/v1/server/Presentation/publish/appsettings.json
+/Users/simi/Documents/repos/Work/ttc-app/v1/server/Presentation/publish/publish/appsettings.Development.json
+/Users/simi/Documents/repos/Work/ttc-app/v1/server/Presentation/publish/publish/appsettings.json
+/Users/simi/Documents/repos/Work/ttc-app/v1/server/Presentation/publish/publish/Presentation.deps.json
+/Users/simi/Documents/repos/Work/ttc-app/v1/server/Presentation/publish/publish/Presentation.runtimeconfig.json
 /Users/simi/Documents/repos/Work/ttc-app/v1/server/Presentation/publish/Presentation.dll
 /Users/simi/Documents/repos/Work/ttc-app/v1/server/Presentation/publish/Presentation.runtimeconfig.json
 /Users/simi/Documents/repos/Work/ttc-app/v1/server/Presentation/publish/Presentation.pdb

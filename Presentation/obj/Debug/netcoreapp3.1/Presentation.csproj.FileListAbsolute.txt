@@ -1119,3 +1119,8 @@
 /Users/simi/Documents/repos/Work/ttc-app/v1/server/Presentation/obj/Debug/netcoreapp3.1/Presentation.dll
 /Users/simi/Documents/repos/Work/ttc-app/v1/server/Presentation/obj/Debug/netcoreapp3.1/Presentation.pdb
 /Users/simi/Documents/repos/Work/ttc-app/v1/server/Presentation/obj/Debug/netcoreapp3.1/Presentation.genruntimeconfig.cache
+/Users/simi/Documents/repos/Work/ttc-app/v1/server/Presentation/bin/Debug/netcoreapp3.1/publish/publish/web.config
+/Users/simi/Documents/repos/Work/ttc-app/v1/server/Presentation/bin/Debug/netcoreapp3.1/publish/publish/appsettings.Development.json
+/Users/simi/Documents/repos/Work/ttc-app/v1/server/Presentation/bin/Debug/netcoreapp3.1/publish/publish/appsettings.json
+/Users/simi/Documents/repos/Work/ttc-app/v1/server/Presentation/bin/Debug/netcoreapp3.1/publish/publish/Presentation.deps.json
+/Users/simi/Documents/repos/Work/ttc-app/v1/server/Presentation/bin/Debug/netcoreapp3.1/publish/publish/Presentation.runtimeconfig.json
