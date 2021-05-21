@@ -27,7 +27,7 @@ namespace Infrastructure.DAL {
 
         public async Task<List<TEntity>> AddRange(List<TEntity> entity)
         {
-             if (entity == null)
+            if (entity == null)
                 throw new ArgumentNullException ("entity");
 
             await dbSet.AddRangeAsync (entity);

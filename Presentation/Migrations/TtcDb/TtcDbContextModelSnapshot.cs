@@ -457,6 +457,9 @@ namespace Presentation.Migrations.TtcDb
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<DateTime?>("SignUpDate")
+                        .HasColumnType("datetime2");
+
                     b.HasKey("Id");
 
                     b.ToTable("SubscribersEmails");

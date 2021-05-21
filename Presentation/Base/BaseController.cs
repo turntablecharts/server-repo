@@ -361,8 +361,12 @@ namespace Presentation.Base
 
             var highlights = _chartHighlightRepo.GetWithInclude(m => weekDates.Contains(m.DateCreated.Date), "").ToList();
 
+            var result = highlights.GroupBy(m => m.ChartHighlightType)
+                .Select(s => s.First())
+                .ToList();
 
-            return highlights;
+
+            return result;
         }
     }
 }

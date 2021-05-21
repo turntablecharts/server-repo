@@ -298,9 +298,10 @@ namespace Presentation.Controllers
         {
             if (!string.IsNullOrEmpty(subscriberInfo.Email))
             {
-                var alreadyExists = _subscribers.GetWithInclude(m => m.Email == subscriberInfo.Email, string.Empty);
+                var alreadyExists = _subscribers.GetWithInclude(m => m.Email == subscriberInfo.Email, string.Empty).FirstOrDefault();
                 if (alreadyExists == null)
                 {
+                    subscriberInfo.SignUpDate = DateTime.UtcNow;
                     var subscriber = await _subscribers.AddAsync(subscriberInfo);
                     return Ok(subscriber);
                 }
