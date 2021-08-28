@@ -53,6 +53,7 @@ namespace Presentation.Controllers {
                     await _userGenericRepo.AddAsync (new TtcUserVM {
                         Email = input.Email,
                             FirstName = input.FirstName,
+                            Bio = input.Bio,
                             LastName = input.LastName
                     });
                     //later send a link for email confirmation 

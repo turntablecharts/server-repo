@@ -980,3 +980,8 @@
 /Users/simi/Documents/repos/Work/ttc-app/v1/server/Presentation/bin/Release/netcoreapp3.1/publish/publish/publish/publish/appsettings.json
 /Users/simi/Documents/repos/Work/ttc-app/v1/server/Presentation/bin/Release/netcoreapp3.1/publish/publish/publish/publish/Presentation.deps.json
 /Users/simi/Documents/repos/Work/ttc-app/v1/server/Presentation/bin/Release/netcoreapp3.1/publish/publish/publish/publish/Presentation.runtimeconfig.json
+/Users/simi/Documents/repos/Work/ttc-app/v1/server/Presentation/bin/Release/netcoreapp3.1/publish/publish/publish/publish/publish/web.config
+/Users/simi/Documents/repos/Work/ttc-app/v1/server/Presentation/bin/Release/netcoreapp3.1/publish/publish/publish/publish/publish/appsettings.Development.json
+/Users/simi/Documents/repos/Work/ttc-app/v1/server/Presentation/bin/Release/netcoreapp3.1/publish/publish/publish/publish/publish/appsettings.json
+/Users/simi/Documents/repos/Work/ttc-app/v1/server/Presentation/bin/Release/netcoreapp3.1/publish/publish/publish/publish/publish/Presentation.deps.json
+/Users/simi/Documents/repos/Work/ttc-app/v1/server/Presentation/bin/Release/netcoreapp3.1/publish/publish/publish/publish/publish/Presentation.runtimeconfig.json

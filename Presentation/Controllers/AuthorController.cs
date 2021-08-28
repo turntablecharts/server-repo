@@ -95,7 +95,7 @@ namespace Presentation.Controllers
             var chartToAdd = new Chart
             {
                 DateCreated = DateTime.Now,
-                Week = input.Week,
+                Week = input.Week == null ? "Week of" : input.Week,
                 ChartItems = (List<ChartItem>)chartList,
                 Category = input.ChartCategory,
                 Genre = input.ChartGenre,
@@ -105,22 +105,30 @@ namespace Presentation.Controllers
             await _chartRepository.AddAsync(chartToAdd);
             //await _chartRepo.AddChart (chartToAdd);
 
-            if(input.ChartCategory == ChartCategoryConst.TOP_50)
-            {
-                var biggestDebut = BiggestDebut(chartToAdd);
-                var biggestMover = GetChartHighlight(chartToAdd, ChartCategoryConst.TOP_50);
+            string[] highlightsToCheck = new string[]{ChartCategoryConst.TOP_50, ChartCategoryConst.AIRPLAY, ChartCategoryConst.STREAMING, ChartCategoryConst.TV};
 
-                var highlight = new List<ChartHighlight>();
-                highlight.Add(biggestDebut);
-                highlight.Add(biggestMover);
-
-                await _chartHighlightRepo.AddRange(highlight);
-            }
-            else
+            if(highlightsToCheck.Contains(input.ChartCategory))
             {
-                var biggestMover = GetChartHighlight(chartToAdd, input.ChartCategory);
-                await _chartHighlightRepo.AddAsync(biggestMover);
+                if(input.ChartCategory == ChartCategoryConst.TOP_50)
+                {
+                    var biggestDebut = BiggestDebut(chartToAdd);
+                    var biggestMover = GetChartHighlight(chartToAdd, ChartCategoryConst.TOP_50);
+
+                    var highlight = new List<ChartHighlight>();
+                    highlight.Add(biggestDebut);
+                    highlight.Add(biggestMover);
+
+                    await _chartHighlightRepo.AddRange(highlight);
+                }
+                else
+                {
+                    var biggestMover = GetChartHighlight(chartToAdd, input.ChartCategory);
+                    await _chartHighlightRepo.AddAsync(biggestMover);
+                }
             }
+
+
+           
 
             return Ok(chartToAdd);
 
