@@ -2,7 +2,7 @@ using System;
 
 namespace Core.Entities
 {
-    public class PhotoData
+    public class Photo
     {
          public int Id { get; set; }
         public DateTime DateCreated { get; set; }
@@ -13,8 +13,8 @@ namespace Core.Entities
         public string Content { get; set; }
 
         public string HeaderImage { get; set; }
-        public bool IsToDelete{ get; set; }
+        public bool IsDeleted { get; set; }
         public string Category { get; set; }
-        public int PhotoCategoryDataId  { get; set; }
+        public int PhotoCategoryId  { get; set; }
     }
 }

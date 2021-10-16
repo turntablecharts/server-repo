@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "tu0EbuK/dJLE3RWVqCuOCqd22a69tLCQi6EtpPlv3H8lSOtYM7rGx4e/W2vShowhUfkAyx/MJF8MfPMt0Rljsg==",
+  "dgSpecHash": "+IFoWcrNAvrNpJiZsWd4pfVQroNuPZaIgwNisas7tZzaHuuwHpBoYhLdOMLMaCGrTWEPpCYN9K1lzjK+kpyYCw==",
   "success": true,
   "projectFilePath": "C:\\Users\\hp\\Documents\\ttc-app\\v1\\server\\Presentation\\Presentation.csproj",
   "expectedPackageFiles": [
@@ -199,7 +199,8 @@
     "C:\\Users\\hp\\.nuget\\packages\\system.xml.xdocument\\4.3.0\\system.xml.xdocument.4.3.0.nupkg.sha512",
     "C:\\Users\\hp\\.nuget\\packages\\system.xml.xmldocument\\4.3.0\\system.xml.xmldocument.4.3.0.nupkg.sha512",
     "C:\\Users\\hp\\.nuget\\packages\\system.xml.xmlserializer\\4.3.0\\system.xml.xmlserializer.4.3.0.nupkg.sha512",
-    "C:\\Users\\hp\\.nuget\\packages\\windowsazure.storage\\9.3.3\\windowsazure.storage.9.3.3.nupkg.sha512"
+    "C:\\Users\\hp\\.nuget\\packages\\windowsazure.storage\\9.3.3\\windowsazure.storage.9.3.3.nupkg.sha512",
+    "C:\\Users\\hp\\.nuget\\packages\\microsoft.netcore.app.host.win-x64\\3.1.18\\microsoft.netcore.app.host.win-x64.3.1.18.nupkg.sha512"
   ],
   "logs": []
 }

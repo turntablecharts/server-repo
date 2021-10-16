@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using Core.Entities;
+using Presentation.Enums;
 
 namespace Presentation.ViewModels
 {
@@ -8,6 +9,7 @@ namespace Presentation.ViewModels
         [Required]
         [DataType(DataType.Password)]
         public string Password { get; set; }
-        public string Role {get; set;}
+        
+        public AppUserRoles Role {get; set;}
     }
 }

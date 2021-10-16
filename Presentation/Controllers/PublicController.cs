@@ -11,13 +11,13 @@ namespace Presentation.Controllers
     [Route("api/public")]
     public class PublicController : ControllerBase
     {
-        private readonly IGenericRepository<NewsCategoryData> _newsRepo;
+        private readonly IGenericRepository<NewsCategory> _newsRepo;
         private readonly IGenericRepository<Chart> _chartRepo;
-        private readonly IGenericRepository<PhotoCategoryData> _photoRepo;
+        private readonly IGenericRepository<PhotoCategory> _photoRepo;
 
-        public PublicController( IGenericRepository<NewsCategoryData> newsRepo,
+        public PublicController( IGenericRepository<NewsCategory> newsRepo,
           IGenericRepository<Chart> chartRepo,
-          IGenericRepository<PhotoCategoryData> photoRepo)
+          IGenericRepository<PhotoCategory> photoRepo)
         {
             _newsRepo = newsRepo;
             _chartRepo = chartRepo;
@@ -36,16 +36,16 @@ namespace Presentation.Controllers
             int pageSize = 10;
             int skipSize = ((int)pageNumber - 1) * pageSize;
 
-            var photos = _photoRepo.GetWithInclude(m => m.Name == photoCategory, "PhotoDatas")
+            var photos = _photoRepo.GetWithInclude(m => m.Name == photoCategory, "Photos")
                 .FirstOrDefault()
-                .PhotoDatas
+                .Photos
                 .OrderByDescending(m => m.DateCreated)
                 .Skip(skipSize).Take(pageSize).ToList();
 
             //load news
-            var news = _newsRepo.GetWithInclude(m => m.Name == newsCategory, "NewsDatas")
+            var news = _newsRepo.GetWithInclude(m => m.Name == newsCategory, "NewsList")
                 .FirstOrDefault()
-                .NewsDatas
+                .NewsList
                 .OrderByDescending(m => m.DateCreated)
                 .Skip(skipSize).Take(pageSize).ToList();
 

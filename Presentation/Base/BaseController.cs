@@ -24,7 +24,7 @@ namespace Presentation.Base
                 Category = thisWeek.Category,
                 Genre = thisWeek.Genre,
                 HeaderVideoUrl = thisWeek.HeaderVideoUrl,
-                IsToDelete = thisWeek.IsToDelete,
+                IsToDelete = thisWeek.IsDeleted,
                 ChartItems = new List<ChartItemDto> ()
             };
 

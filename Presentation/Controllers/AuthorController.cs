@@ -15,12 +15,14 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Presentation.Base;
 using Presentation.DTO;
+using Presentation.Enums;
 using Presentation.Utilities;
 using Presentation.ViewModels;
 
 namespace Presentation.Controllers
 {
 
+    [Authorize]
     [ApiController]
     [Route("api/author")]
     public class AuthorController : BaseController
@@ -37,9 +39,6 @@ namespace Presentation.Controllers
             IGenericRepository<Chart> chartRepository,
 
             IGenericRepository<Log> logRepository,
-
-            IGenericRepository<PhotoItem> photoRepository,
-
             IGenericRepository<TtcUser> userGenericRepo,
             IGenericRepository<SubscribersEmail> subscribers,
             IGenericRepository<ChartHighlight> chartHighlightRepo
@@ -60,6 +59,7 @@ namespace Presentation.Controllers
         }
 
         #region charts
+        [Authorize(Roles = "Author, Writer")]
         [HttpPost("chart/upload")]
         public async Task<IActionResult> UploadChart([FromForm] ChartVM input)
         {
@@ -134,6 +134,7 @@ namespace Presentation.Controllers
 
         }
 
+        [Authorize(Roles = "Admin, Author")]
         [HttpDelete("chart/delete/{id}/{userEmail}")]
         public IActionResult DeleteChart([FromRoute] int id, [FromRoute] string userEmail)
         {

@@ -52,22 +52,22 @@ namespace Presentation.Controllers {
             return Ok (user);
         }
 
-        [HttpDelete ("users/delete/{id}")]
-        public async Task<IActionResult> DeleteUser ([FromRoute] int id) {
-            var user = _userGenericRepo.GetById (id);
-            _userGenericRepo.Delete (user);
+        // [HttpDelete ("users/delete/{id}")]
+        // public async Task<IActionResult> DeleteUser ([FromRoute] int id) {
+        //     var user = _userGenericRepo.GetById (id);
+        //     _userGenericRepo.Delete (user);
 
-            var login = await _userManager.FindByEmailAsync (user.Email);
-            var rolesForUser = await _userManager.GetRolesAsync (login);
+        //     var login = await _userManager.FindByEmailAsync (user.Email);
+        //     var rolesForUser = await _userManager.GetRolesAsync (login);
 
-            var result = await _userManager.DeleteAsync(login);
-            if (result.Succeeded)
-            {
-                await _userManager.RemoveFromRolesAsync(login, rolesForUser);
-                return Ok("sucessfully deleted");
-            }
-            return Ok("deleted on ttc data but still present in database");
-        }
+        //     var result = await _userManager.DeleteAsync(login);
+        //     if (result.Succeeded)
+        //     {
+        //         await _userManager.RemoveFromRolesAsync(login, rolesForUser);
+        //         return Ok("sucessfully deleted");
+        //     }
+        //     return Ok("deleted on ttc data but still present in database");
+        // }
 
         [HttpGet ("logs")]
         public IActionResult GetLog () {

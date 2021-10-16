@@ -17,23 +17,24 @@ using Presentation.ViewModels;
 namespace Presentation.Controllers
 {
     [ApiController]
+    [Authorize]
     [Route("api/author")]
     public class NewsController : ControllerBase
     {
 
         private readonly IGenericRepository<Log> _logRepository;
-        private readonly IGenericRepository<NewsData> _newsDataRepo;
+        private readonly IGenericRepository<News> _newsDataRepo;
 
-        private readonly IGenericRepository<NewsCategoryData> _newsCateogryDataRepo;
+        private readonly IGenericRepository<NewsCategory> _newsCateogryDataRepo;
 
         private IGenericRepository<TtcUser> _userGenericRepo;
         private readonly UserManager<IdentityUser> _userManager;
         private IHttpContextAccessor _httpContextAccessor;
         public NewsController(
             IGenericRepository<Log> logRepository,
-            IGenericRepository<NewsData> newsDataRepo,
+            IGenericRepository<News> newsDataRepo,
             UserManager<IdentityUser> userManager,
-            IGenericRepository<NewsCategoryData> newsCateogryDataRepo,
+            IGenericRepository<NewsCategory> newsCateogryDataRepo,
             IHttpContextAccessor httpContextAccessor,
             IGenericRepository<TtcUser> userGenericRepo)
         {
@@ -47,7 +48,6 @@ namespace Presentation.Controllers
         }
 
         #region news
-        [AllowAnonymous]
         [HttpPost("news/add")]
         public async Task<ActionResult> AddNews([FromBody] NewsItemVM news)
         {
@@ -55,7 +55,7 @@ namespace Presentation.Controllers
             {
                 return BadRequest(ModelState);
             }
-            news.IsToDelete = false;
+            news.IsDeleted = false;
             news.DateCreated = DateTime.Now;
 
             var user = _userGenericRepo.GetWithInclude(m => m.Email == news.Email, string.Empty).FirstOrDefault();
@@ -68,7 +68,7 @@ namespace Presentation.Controllers
 
             if (newsCategory == null)
             {
-                var createdCategory = await _newsCateogryDataRepo.AddAsync(new NewsCategoryData
+                var createdCategory = await _newsCateogryDataRepo.AddAsync(new NewsCategory
                 {
                     Name = news.Category
                 });
@@ -80,7 +80,7 @@ namespace Presentation.Controllers
                 categoryId = newsCategory.Id;
             }
 
-            news.NewsCategoryDataId = categoryId;
+            news.NewsCategoryId = categoryId;
 
             await _newsDataRepo.AddAsync(news);
             return Ok(news);
@@ -98,11 +98,21 @@ namespace Presentation.Controllers
             int pageSize = 10;
             int skipSize = ((int)pageNumber - 1) * pageSize;
 
-            var news = _newsCateogryDataRepo.GetWithInclude(m => m.Name == category, "NewsDatas")
-                .FirstOrDefault()
-                .NewsDatas
-                .OrderByDescending(m => m.DateCreated)
-                .Skip(skipSize).Take(pageSize).ToList();
+            // var news = _newsCateogryDataRepo.GetWithInclude(m => m.Name == category, "NewsList")
+            //     .FirstOrDefault()
+            //     .NewsList (m => m.)
+            //     .OrderByDescending(m => m.DateCreated)
+            //     .Skip(skipSize).Take(pageSize).ToList();
+
+            var categoryDetails = _newsCateogryDataRepo.GetWithInclude(m => m.Name== category, "").FirstOrDefault();
+            if(categoryDetails == null)
+            {
+                return NotFound();
+            }
+            var news = _newsDataRepo.GetWithInclude(m => m.NewsCategoryId == categoryDetails.Id && m.IsDeleted == false, "")
+                    .OrderByDescending(m => m.DateCreated)
+                    .Skip(skipSize).Take(pageSize).ToList();
+
 
             // if(news.Count() < pageSize)
             // {
@@ -121,9 +131,9 @@ namespace Presentation.Controllers
         [HttpGet("news/all")]
         public async Task<ActionResult> GetAllNews([FromQuery] int? pageNumber)
         {
-            var news = _newsDataRepo.GetAll().OrderByDescending(m => m.DateCreated);
+            var news = _newsDataRepo.GetAll().Where(m => m.IsDeleted == false).OrderByDescending(m => m.DateCreated);
             int pageSize = 10;
-            return Ok(await PaginatedList<NewsData>.CreateAsync(news, pageNumber ?? 1, pageSize));
+            return Ok(await PaginatedList<News>.CreateAsync(news, pageNumber ?? 1, pageSize));
         }
 
         [AllowAnonymous]
@@ -136,7 +146,7 @@ namespace Presentation.Controllers
         }
 
         [HttpPut("news/edit/{id}/{userEmail}")]
-        public IActionResult EditNews([FromRoute] int id, [FromBody] NewsData news, [FromRoute] string userEmail)
+        public IActionResult EditNews([FromRoute] int id, [FromBody] News news, [FromRoute] string userEmail)
         {
             if (!ModelState.IsValid) { return BadRequest(ModelState); }
 
@@ -148,7 +158,7 @@ namespace Presentation.Controllers
 
             if (newsCategory == null)
             {
-                var createdCategory = _newsCateogryDataRepo.AddAsync(new NewsCategoryData
+                var createdCategory = _newsCateogryDataRepo.AddAsync(new NewsCategory
                 {
                     Name = news.Category
                 });
@@ -160,7 +170,7 @@ namespace Presentation.Controllers
                 categoryId = newsCategory.Id;
             }
 
-            news.NewsCategoryDataId = categoryId;
+            news.NewsCategoryId = categoryId;
 
             var updatedNews = _newsDataRepo.UpdateAsync(news);
 
@@ -175,14 +185,18 @@ namespace Presentation.Controllers
             return Ok(updatedNews);
         }
 
+        [Authorize]
         [HttpDelete("news/delete/{id}/{userEmail}")]
-        public IActionResult DeleteNews([FromRoute] int id, [FromRoute] string userEmail)
+        public  async Task<IActionResult> DeleteNews([FromRoute] int id, [FromRoute] string userEmail)
         {
             try
             {
-                _newsDataRepo.Delete(_newsDataRepo.GetById(id));
+                var newsToDelete = _newsDataRepo.GetById(id);
+                newsToDelete.IsDeleted = true;
 
-                _logRepository.AddAsync(new Log
+                _ =  _newsDataRepo.UpdateAsync(newsToDelete);
+
+                await _logRepository.AddAsync(new Log
                 {
                     Name = userEmail,
                     Event = "Deleted News, id: " + id,
@@ -213,7 +227,7 @@ namespace Presentation.Controllers
                 });
             }
 
-            var newsByUser = _newsDataRepo.GetWithInclude(m => m.TtcUserId == authorId && m.IsToDelete == false, string.Empty)
+            var newsByUser = _newsDataRepo.GetWithInclude(m => m.TtcUserId == authorId && m.IsDeleted == false, string.Empty)
                 .Select(m => new
                 {
                     Id = m.Id,

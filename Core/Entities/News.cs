@@ -2,7 +2,7 @@ using System;
 
 namespace Core.Entities
 {
-    public class NewsData
+    public class News
     {
         public int Id { get; set; }
         public DateTime DateCreated { get; set; }
@@ -12,9 +12,9 @@ namespace Core.Entities
         public string NewsContent { get; set; }
         public string Category { get; set; }
 
-        public int NewsCategoryDataId { get; set; }
+        public int NewsCategoryId { get; set; }
 
         public string Title { get; set; }
-        public bool IsToDelete{ get; set; }
+        public bool IsDeleted{ get; set; }
     }
 }

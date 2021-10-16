@@ -11,36 +11,39 @@ using Presentation.ViewModels;
 
 namespace Presentation.Controllers
 {
-      [ApiController]
-    [Route ("api/author")]
+    [Authorize]
+    [ApiController]
+    [Route("api/author")]
 
     public class PhotoController : ControllerBase
     {
         private readonly IGenericRepository<Log> _logRepository;
-        private readonly IGenericRepository<PhotoData> _photoDataRepository;
-        private readonly IGenericRepository<PhotoCategoryData> _photoCategoryDataRepo;
+        private readonly IGenericRepository<Photo> _photoDataRepository;
+        private readonly IGenericRepository<PhotoCategory> _photoCategoryDataRepo;
         private IGenericRepository<TtcUser> _userGenericRepo;
         public PhotoController(
             IGenericRepository<Log> logRepository,
-            IGenericRepository<PhotoCategoryData> photoCategoryDataRepo, 
-            IGenericRepository<PhotoData> photoDataRepository,
+            IGenericRepository<PhotoCategory> photoCategoryDataRepo,
+            IGenericRepository<Photo> photoDataRepository,
             IGenericRepository<TtcUser> userGenericRepo)
         {
             _userGenericRepo = userGenericRepo;
-           
+
             _logRepository = logRepository;
             _photoCategoryDataRepo = photoCategoryDataRepo;
             _photoDataRepository = photoDataRepository;
         }
-         #region photo
-        [HttpPost ("photo/add")]
-        public async Task<IActionResult> AddPhoto ([FromBody] PhotoItemVM item) {
-            if (!ModelState.IsValid) {
-                BadRequest (ModelState);
+        #region photo
+        [HttpPost("photo/add")]
+        public async Task<IActionResult> AddPhoto([FromBody] PhotoItemVM item)
+        {
+            if (!ModelState.IsValid)
+            {
+                BadRequest(ModelState);
             }
             item.DateCreated = DateTime.Now;
 
-            var user = _userGenericRepo.GetWithInclude (m => m.Email == item.Email, string.Empty).FirstOrDefault ();
+            var user = _userGenericRepo.GetWithInclude(m => m.Email == item.Email, string.Empty).FirstOrDefault();
 
             item.TtcUserId = user.Id;
 
@@ -48,44 +51,48 @@ namespace Presentation.Controllers
 
             var photoCategory = _photoCategoryDataRepo.GetWithInclude(m => m.Name == item.Category, string.Empty).FirstOrDefault();
 
-            if(photoCategory == null)
+            if (photoCategory == null)
             {
-                var createdCategory = await _photoCategoryDataRepo.AddAsync(new PhotoCategoryData
+                var createdCategory = await _photoCategoryDataRepo.AddAsync(new PhotoCategory
                 {
                     Name = item.Category
                 });
 
                 categoryId = createdCategory.Id;
             }
-            else{
+            else
+            {
                 categoryId = photoCategory.Id;
             }
 
-            item.PhotoCategoryDataId = categoryId;
+            item.PhotoCategoryId = categoryId;
 
-            var photo = await _photoDataRepository.AddAsync (item);
+            var photo = await _photoDataRepository.AddAsync(item);
 
-            return Ok (photo);
+            return Ok(photo);
         }
 
         [AllowAnonymous]
-        [HttpGet ("photo/all")]
-        public async Task<IActionResult> GetAllPhoto ([FromQuery] int? pageNumber) {
+        [HttpGet("photo/all")]
+        public async Task<IActionResult> GetAllPhoto([FromQuery] int? pageNumber)
+        {
             int pageSize = 10;
-            var photos = _photoDataRepository.GetAll ().OrderByDescending (m => m.DateCreated);
+            var photos = _photoDataRepository.GetAll().Where(m => m.IsDeleted == false).OrderByDescending(m => m.DateCreated);
 
-            return Ok (await PaginatedList<PhotoData>.CreateAsync (photos, pageNumber ?? 1, pageSize));
+            return Ok(await PaginatedList<Photo>.CreateAsync(photos, pageNumber ?? 1, pageSize));
 
         }
 
         [AllowAnonymous]
-        [HttpGet ("photo/{id}")]
-        public IActionResult GetOnePhoto ([FromRoute] int id) {
-            var photo = _photoDataRepository.GetById (id);
-            if (photo == null) {
-                return NotFound ();
+        [HttpGet("photo/{id}")]
+        public IActionResult GetOnePhoto([FromRoute] int id)
+        {
+            var photo = _photoDataRepository.GetById(id);
+            if (photo == null)
+            {
+                return NotFound();
             }
-            return Ok (photo);
+            return Ok(photo);
         }
 
         [AllowAnonymous]
@@ -100,9 +107,18 @@ namespace Presentation.Controllers
             int pageSize = 10;
             int skipSize = ((int)pageNumber - 1) * pageSize;
 
-            var photos = _photoCategoryDataRepo.GetWithInclude(m => m.Name == category, "PhotoDatas")
-                .FirstOrDefault()
-                .PhotoDatas
+            // var photos = _photoCategoryDataRepo.GetWithInclude(m => m.Name == category, "Photos")
+            //     .FirstOrDefault()
+            //     .Photos
+            //     .OrderByDescending(m => m.DateCreated)
+            //     .Skip(skipSize).Take(pageSize).ToList();
+
+            var photoCategory = _photoCategoryDataRepo.GetWithInclude(m => m.Name == category, "").FirstOrDefault();
+            if(photoCategory == null)
+            {
+                return NotFound();
+            }
+            var photos = _photoDataRepository.GetWithInclude(m => m.IsDeleted == false && m.PhotoCategoryId == photoCategory.Id, "" )
                 .OrderByDescending(m => m.DateCreated)
                 .Skip(skipSize).Take(pageSize).ToList();
 
@@ -111,62 +127,75 @@ namespace Presentation.Controllers
 
         }
 
-        [HttpPut ("photo/edit/{id}/{userEmail}")]
-        public IActionResult EditPhoto ([FromRoute] int id, [FromBody] PhotoData item, [FromRoute] string userEmail) {
-            if (!ModelState.IsValid) {
-                return BadRequest (ModelState);
+        [HttpPut("photo/edit/{id}/{userEmail}")]
+        public IActionResult EditPhoto([FromRoute] int id, [FromBody] Photo item, [FromRoute] string userEmail)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
             }
             item.Id = id;
             int categoryId;
 
             var photoCategory = _photoCategoryDataRepo.GetWithInclude(m => m.Name == item.Category, string.Empty).FirstOrDefault();
 
-            if(photoCategory == null)
+            if (photoCategory == null)
             {
-                var createdCategory = _photoCategoryDataRepo.AddAsync(new PhotoCategoryData
+                var createdCategory = _photoCategoryDataRepo.AddAsync(new PhotoCategory
                 {
                     Name = item.Category
                 });
 
                 categoryId = createdCategory.Id;
             }
-            else{
+            else
+            {
                 categoryId = photoCategory.Id;
             }
 
-            item.PhotoCategoryDataId = categoryId;
+            item.PhotoCategoryId = categoryId;
 
-            var editedPhoto = _photoDataRepository.UpdateAsync (item);
-            if (editedPhoto == null) {
-                return NotFound ();
+            var editedPhoto = _photoDataRepository.UpdateAsync(item);
+            if (editedPhoto == null)
+            {
+                return NotFound();
             }
-            _logRepository.AddAsync (new Log {
+            _logRepository.AddAsync(new Log
+            {
                 Name = userEmail,
-                    EventDate = DateTime.Now,
-                    Event = "Edited Video, title: " + editedPhoto.Title
+                EventDate = DateTime.Now,
+                Event = "Edited Video, title: " + editedPhoto.Title
             });
-            return Ok (editedPhoto);
+            return Ok(editedPhoto);
         }
 
-        [HttpDelete ("photo/delete/{id}/{userEmail}")]
-        public IActionResult DeletePhoto ([FromRoute] int id, [FromRoute] string userEmail) {
-            try {
+        [HttpDelete("photo/delete/{id}/{userEmail}")]
+        public IActionResult DeletePhoto([FromRoute] int id, [FromRoute] string userEmail)
+        {
+            try
+            {
+                var photoToDelete = _photoDataRepository.GetById(id);
+                photoToDelete.IsDeleted = true;
 
-                _photoDataRepository.Delete (_photoDataRepository.GetById (id));
+              //  _ =  _newsDataRepo.UpdateAsync(newsToDelete);
+                _photoDataRepository.UpdateAsync(photoToDelete);
 
-                _logRepository.AddAsync (new Log {
+                _logRepository.AddAsync(new Log
+                {
                     Name = userEmail,
-                        Event = "Deleted Photo, Id: " + id,
-                        EventDate = DateTime.Now
+                    Event = "Deleted Photo, Id: " + id,
+                    EventDate = DateTime.Now
                 });
-                return Ok ("Successfully deleted");
-            } catch (NullReferenceException) {
-                return NotFound ();
+                return Ok("Successfully deleted");
+            }
+            catch (NullReferenceException)
+            {
+                return NotFound();
             }
         }
 
 
-      
+
         #endregion
     }
 }

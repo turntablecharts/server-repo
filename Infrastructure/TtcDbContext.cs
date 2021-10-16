@@ -12,14 +12,11 @@ namespace Infrastructure
 
         public DbSet<TtcUser> TtcUsers {get; set;}
         public DbSet<ChartItem> ChartItems {get; set;}
-        public DbSet<NewsItem> NewsItems {get; set;}
-        public DbSet<PhotoItem> PhotoItems {get; set;}
-        public DbSet<VideoItem> VideoItems {get; set;}
-        public DbSet<MediaItem> MediaItems {get; set;}
+  
         public DbSet<Chart> Charts {get; set;}
         public DbSet<Log> Logs {get; set;}
         public DbSet<SubscribersEmail> SubscribersEmails { get; set; }
-        public DbSet<MagazineItem> MagazineItems { get; set; }
+      
 
 
 
@@ -32,12 +29,12 @@ namespace Infrastructure
         public DbSet<MagazineEditionData> MagazineEditionDatas { get; set; }
 
 
-        public DbSet<NewsData> NewsDatas { get; set; }
-        public DbSet<NewsCategoryData>  NewsCategoryDatas { get; set; }
+        public DbSet<News> News { get; set; }
+        public DbSet<NewsCategory>  NewsCategories { get; set; }
 
 
-        public DbSet<PhotoData> PhotoDatas { get; set; }
-        public DbSet<PhotoCategoryData> PhotoCategoryDatas { get; set; }
+        public DbSet<Photo> Photos { get; set; }
+        public DbSet<PhotoCategory> PhotoCategories { get; set; }
 
 
         public DbSet<ChartHighlight> ChartHighlights { get; set; }

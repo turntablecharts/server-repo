@@ -11,7 +11,7 @@ namespace Core.Entities {
         public string Genre { get; set; }
         public string HeaderVideoUrl{ get; set; }
         public virtual ICollection<ChartItem> ChartItems { get; set; }
-        public bool IsToDelete{ get; set; }
+        public bool IsDeleted { get; set; }
 
     }
 }

@@ -15,6 +15,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Presentation.Areas.Identity.Data;
+using Presentation.Enums;
 
 namespace Presentation
 {
@@ -30,6 +31,20 @@ namespace Presentation
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices (IServiceCollection services)
         {
+            services.AddDbContext<PresentationIdentityDbContext> (options =>
+                options.UseSqlServer (
+                    Configuration.GetConnectionString ("ProductionDbString")));
+
+            services.AddDefaultIdentity<IdentityUser> (options => options.SignIn.RequireConfirmedAccount = false)
+                .AddRoles<IdentityRole> ()
+                .AddEntityFrameworkStores<PresentationIdentityDbContext> ();
+
+            services.AddDbContext<TtcDbContext> (options =>
+            {
+                options.UseSqlServer (Configuration.GetConnectionString ("ProductionDbString"),
+                    optionsBuilder =>
+                    optionsBuilder.MigrationsAssembly ("Presentation"));
+            }, ServiceLifetime.Transient);
 
             services.AddAuthentication (JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer (options =>
@@ -50,20 +65,7 @@ namespace Presentation
             //         optionsBuilder =>
             //         optionsBuilder.MigrationsAssembly ("Presentation"));
             // });
-            services.AddDbContext<PresentationIdentityDbContext> (options =>
-                options.UseSqlServer (
-                    Configuration.GetConnectionString ("ProductionDbString")));
-
-            services.AddDefaultIdentity<IdentityUser> (options => options.SignIn.RequireConfirmedAccount = false)
-                .AddRoles<IdentityRole> ()
-                .AddEntityFrameworkStores<PresentationIdentityDbContext> ();
-
-            services.AddDbContext<TtcDbContext> (options =>
-            {
-                options.UseSqlServer (Configuration.GetConnectionString ("ProductionDbString"),
-                    optionsBuilder =>
-                    optionsBuilder.MigrationsAssembly ("Presentation"));
-            }, ServiceLifetime.Transient);
+          
 
             //services.AddDbContext<ApplicationDbContext>(options => options.UseSqlite("Data Source=conferences.db"), ServiceLifetime.Transient);
 
@@ -80,7 +82,7 @@ namespace Presentation
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor> ();
 
             //custom services 
-            services.AddScoped<IMediaRepo, MediaRepo> ();
+          //  services.AddScoped<IMediaRepo, MediaRepo> ();
             services.AddScoped<IBlobRepo, BlobRepo> ();
             services.AddTransient (typeof (IGenericRepository<>), typeof (GenericRepository<>));
 
@@ -90,7 +92,7 @@ namespace Presentation
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure (IApplicationBuilder app, IWebHostEnvironment env, IServiceProvider service)
         {
-            UpdateDatabase (app);
+           // UpdateDatabase (app);
             if (env.IsDevelopment ())
             {
                 app.UseDeveloperExceptionPage ();
@@ -124,23 +126,23 @@ namespace Presentation
             CreateRoles (service).Wait ();
         }
 
-        private void UpdateDatabase (IApplicationBuilder app)
-        {
-            using (var serviceScope = app.ApplicationServices
-                .GetRequiredService<IServiceScopeFactory> ()
-                .CreateScope ())
-            {
-                using (var context = serviceScope.ServiceProvider.GetService<TtcDbContext> ())
-                {
-                    context.Database.Migrate ();
-                }
+        // private void UpdateDatabase (IApplicationBuilder app)
+        // {
+        //     using (var serviceScope = app.ApplicationServices
+        //         .GetRequiredService<IServiceScopeFactory> ()
+        //         .CreateScope ())
+        //     {
+        //         using (var context = serviceScope.ServiceProvider.GetService<TtcDbContext> ())
+        //         {
+        //             context.Database.Migrate ();
+        //         }
 
-                using (var context = serviceScope.ServiceProvider.GetService<PresentationIdentityDbContext> ())
-                {
-                    context.Database.Migrate ();
-                }
-            }
-        }
+        //         using (var context = serviceScope.ServiceProvider.GetService<PresentationIdentityDbContext> ())
+        //         {
+        //             context.Database.Migrate ();
+        //         }
+        //     }
+        // }
 
         private async Task CreateRoles (IServiceProvider serviceProvider)
         {
@@ -149,7 +151,11 @@ namespace Presentation
 
             IdentityResult roleResult;
 
-            string[] roles = new string[] { "Admin", "Author" };
+            string[] roles = new string[] { AppUserRoles.Admin.ToString(), 
+                        AppUserRoles.Author.ToString(), 
+                        AppUserRoles.Contributor.ToString(), 
+                        AppUserRoles.Writer.ToString()};
+                        
             foreach (var item in roles)
             {
                 var roleCheck = await roleManager.RoleExistsAsync (item);
