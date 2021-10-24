@@ -55,7 +55,6 @@ C:\Users\hp\Documents\ttc-app\v1\server\Infrastructure\obj\Release\netstandard2.
 C:\Users\hp\Documents\ttc-app\v1\server\Infrastructure\obj\Release\netstandard2.0\Infrastructure.AssemblyInfoInputs.cache
 C:\Users\hp\Documents\ttc-app\v1\server\Infrastructure\obj\Release\netstandard2.0\Infrastructure.AssemblyInfo.cs
 C:\Users\hp\Documents\ttc-app\v1\server\Infrastructure\obj\Release\netstandard2.0\Infrastructure.csproj.CoreCompileInputs.cache
-C:\Users\hp\Documents\ttc-app\v1\server\Infrastructure\obj\Release\netstandard2.0\Infrastructure.csproj.CopyComplete
 C:\Users\hp\Documents\ttc-app\v1\server\Infrastructure\obj\Release\netstandard2.0\Infrastructure.dll
 C:\Users\hp\Documents\ttc-app\v1\server\Infrastructure\obj\Release\netstandard2.0\Infrastructure.pdb
 C:\Users\hp\Documents\ttc-app\v1\server\Infrastructure\obj\Release\netstandard2.0\Infrastructure.GeneratedMSBuildEditorConfig.editorconfig

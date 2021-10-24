@@ -1,7 +1,7 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\hp\\Documents\\ttc-app\\v1\\server\\Presentation\\Presentation.csproj": {}
+    "C:\\Users\\hp\\Documents\\ttc-app\\v1\\server\\presentation\\Presentation.csproj": {}
   },
   "projects": {
     "C:\\Users\\hp\\Documents\\ttc-app\\v1\\server\\Core\\Core.csproj": {
@@ -154,14 +154,14 @@
         }
       }
     },
-    "C:\\Users\\hp\\Documents\\ttc-app\\v1\\server\\Presentation\\Presentation.csproj": {
+    "C:\\Users\\hp\\Documents\\ttc-app\\v1\\server\\presentation\\Presentation.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\hp\\Documents\\ttc-app\\v1\\server\\Presentation\\Presentation.csproj",
+        "projectUniqueName": "C:\\Users\\hp\\Documents\\ttc-app\\v1\\server\\presentation\\Presentation.csproj",
         "projectName": "Presentation",
-        "projectPath": "C:\\Users\\hp\\Documents\\ttc-app\\v1\\server\\Presentation\\Presentation.csproj",
+        "projectPath": "C:\\Users\\hp\\Documents\\ttc-app\\v1\\server\\presentation\\Presentation.csproj",
         "packagesPath": "C:\\Users\\hp\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\hp\\Documents\\ttc-app\\v1\\server\\Presentation\\obj\\",
+        "outputPath": "C:\\Users\\hp\\Documents\\ttc-app\\v1\\server\\presentation\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
