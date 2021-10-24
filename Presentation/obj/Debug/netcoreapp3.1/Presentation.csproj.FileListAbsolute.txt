@@ -1372,3 +1372,9 @@ C:\Users\hp\Documents\ttc-app\v1\server\Presentation\bin\Debug\netcoreapp3.1\pub
 C:\Users\hp\Documents\ttc-app\v1\server\Presentation\bin\Debug\netcoreapp3.1\publish\publish\publish\publish\publish\publish\publish\Presentation.deps.json
 C:\Users\hp\Documents\ttc-app\v1\server\Presentation\bin\Debug\netcoreapp3.1\publish\publish\publish\publish\publish\publish\publish\Presentation.runtimeconfig.json
 C:\Users\hp\Documents\ttc-app\v1\server\presentation\obj\Debug\netcoreapp3.1\Presentation.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\hp\Documents\ttc-app\v1\server\presentation\bin\Debug\netcoreapp3.1\publish\publish\publish\publish\publish\publish\publish\publish\web.config
+C:\Users\hp\Documents\ttc-app\v1\server\presentation\bin\Debug\netcoreapp3.1\publish\publish\publish\._appsettings.json
+C:\Users\hp\Documents\ttc-app\v1\server\presentation\bin\Debug\netcoreapp3.1\publish\publish\publish\publish\publish\publish\publish\publish\appsettings.Development.json
+C:\Users\hp\Documents\ttc-app\v1\server\presentation\bin\Debug\netcoreapp3.1\publish\publish\publish\publish\publish\publish\publish\publish\appsettings.json
+C:\Users\hp\Documents\ttc-app\v1\server\presentation\bin\Debug\netcoreapp3.1\publish\publish\publish\publish\publish\publish\publish\publish\Presentation.deps.json
+C:\Users\hp\Documents\ttc-app\v1\server\presentation\bin\Debug\netcoreapp3.1\publish\publish\publish\publish\publish\publish\publish\publish\Presentation.runtimeconfig.json

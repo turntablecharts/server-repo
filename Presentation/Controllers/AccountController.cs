@@ -81,10 +81,20 @@ namespace Presentation.Controllers
             return BadRequest(ModelState);
         }
 
+        [HttpPost("add-user-role")]
+        public async Task<IActionResult> AddUserRole([FromQuery]string email)
+        {
+            var roleUser = await _userManager.FindByEmailAsync(email);
+            await _userManager.AddToRoleAsync(roleUser, "Author");
+
+            return Ok();
+        }
+
         [HttpPost("login")]
         [AllowAnonymous]
         public async Task<ActionResult> Login([FromBody] LoginModel loginDetails)
         {
+            
             if (ModelState.IsValid)
             {
                 var result = await _signInManager.PasswordSignInAsync(loginDetails.Email, loginDetails.Password, true, false);

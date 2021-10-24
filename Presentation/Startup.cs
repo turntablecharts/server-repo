@@ -14,6 +14,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 using Presentation.Areas.Identity.Data;
 using Presentation.Enums;
 
@@ -77,6 +78,7 @@ namespace Presentation
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc(name: "v1", new Microsoft.OpenApi.Models.OpenApiInfo { Title = "TTC web api", Version = "v1" });
+               
             });
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor> ();

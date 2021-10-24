@@ -22,8 +22,8 @@ using Presentation.ViewModels;
 namespace Presentation.Controllers
 {
 
-    [Authorize]
     [ApiController]
+    [Authorize]
     [Route("api/author")]
     public class AuthorController : BaseController
     {
@@ -59,8 +59,9 @@ namespace Presentation.Controllers
         }
 
         #region charts
-        [Authorize(Roles = "Author, Writer")]
-        [HttpPost("chart/upload")]
+        [Authorize(Roles = "Author")]
+        [HttpPost()]
+        [Route("chart/upload")]
         public async Task<IActionResult> UploadChart([FromForm] ChartVM input)
         {
             if (!ModelState.IsValid)
@@ -134,7 +135,7 @@ namespace Presentation.Controllers
 
         }
 
-        [Authorize(Roles = "Admin, Author")]
+        [Authorize(Roles = "Author")]
         [HttpDelete("chart/delete/{id}/{userEmail}")]
         public IActionResult DeleteChart([FromRoute] int id, [FromRoute] string userEmail)
         {

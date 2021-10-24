@@ -20,6 +20,7 @@ C:\Users\hp\Documents\ttc-app\v1\server\presentation\publish\wwwroot\lib\jquery\
 C:\Users\hp\Documents\ttc-app\v1\server\presentation\publish\wwwroot\lib\jquery\dist\jquery.min.js
 C:\Users\hp\Documents\ttc-app\v1\server\presentation\publish\wwwroot\lib\jquery\dist\jquery.min.map
 C:\Users\hp\Documents\ttc-app\v1\server\presentation\publish\wwwroot\lib\jquery\LICENSE.txt
+C:\Users\hp\Documents\ttc-app\v1\server\presentation\publish\publish\publish\publish\publish\publish\publish\publish\web.config
 C:\Users\hp\Documents\ttc-app\v1\server\presentation\publish\publish\publish\publish\publish\publish\publish\web.config
 C:\Users\hp\Documents\ttc-app\v1\server\presentation\publish\publish\publish\publish\publish\publish\web.config
 C:\Users\hp\Documents\ttc-app\v1\server\presentation\publish\publish\publish\publish\publish\web.config
@@ -33,6 +34,7 @@ C:\Users\hp\Documents\ttc-app\v1\server\presentation\publish\publish\appsettings
 C:\Users\hp\Documents\ttc-app\v1\server\presentation\publish\publish\appsettings.json
 C:\Users\hp\Documents\ttc-app\v1\server\presentation\publish\publish\Presentation.deps.json
 C:\Users\hp\Documents\ttc-app\v1\server\presentation\publish\publish\Presentation.runtimeconfig.json
+C:\Users\hp\Documents\ttc-app\v1\server\presentation\publish\publish\publish\._appsettings.json
 C:\Users\hp\Documents\ttc-app\v1\server\presentation\publish\publish\publish\appsettings.Development.json
 C:\Users\hp\Documents\ttc-app\v1\server\presentation\publish\publish\publish\appsettings.json
 C:\Users\hp\Documents\ttc-app\v1\server\presentation\publish\publish\publish\Presentation.deps.json
@@ -53,6 +55,10 @@ C:\Users\hp\Documents\ttc-app\v1\server\presentation\publish\publish\publish\pub
 C:\Users\hp\Documents\ttc-app\v1\server\presentation\publish\publish\publish\publish\publish\publish\publish\appsettings.json
 C:\Users\hp\Documents\ttc-app\v1\server\presentation\publish\publish\publish\publish\publish\publish\publish\Presentation.deps.json
 C:\Users\hp\Documents\ttc-app\v1\server\presentation\publish\publish\publish\publish\publish\publish\publish\Presentation.runtimeconfig.json
+C:\Users\hp\Documents\ttc-app\v1\server\presentation\publish\publish\publish\publish\publish\publish\publish\publish\appsettings.Development.json
+C:\Users\hp\Documents\ttc-app\v1\server\presentation\publish\publish\publish\publish\publish\publish\publish\publish\appsettings.json
+C:\Users\hp\Documents\ttc-app\v1\server\presentation\publish\publish\publish\publish\publish\publish\publish\publish\Presentation.deps.json
+C:\Users\hp\Documents\ttc-app\v1\server\presentation\publish\publish\publish\publish\publish\publish\publish\publish\Presentation.runtimeconfig.json
 C:\Users\hp\Documents\ttc-app\v1\server\presentation\publish\Presentation.dll
 C:\Users\hp\Documents\ttc-app\v1\server\presentation\publish\Presentation.runtimeconfig.json
 C:\Users\hp\Documents\ttc-app\v1\server\presentation\publish\Presentation.pdb
@@ -212,6 +218,8 @@ C:\Users\hp\Documents\ttc-app\v1\server\presentation\publish\Core.dll
 C:\Users\hp\Documents\ttc-app\v1\server\presentation\publish\Infrastructure.dll
 C:\Users\hp\Documents\ttc-app\v1\server\presentation\publish\Core.pdb
 C:\Users\hp\Documents\ttc-app\v1\server\presentation\publish\Infrastructure.pdb
+C:\Users\hp\Documents\ttc-app\v1\server\presentation\publish\Presentation.Views.dll
+C:\Users\hp\Documents\ttc-app\v1\server\presentation\publish\Presentation.Views.pdb
 C:\Users\hp\Documents\ttc-app\v1\server\presentation\publish\wwwroot\Identity\css\site.css
 C:\Users\hp\Documents\ttc-app\v1\server\presentation\publish\wwwroot\Identity\favicon.ico
 C:\Users\hp\Documents\ttc-app\v1\server\presentation\publish\wwwroot\Identity\js\site.js
@@ -248,6 +256,4 @@ C:\Users\hp\Documents\ttc-app\v1\server\presentation\publish\wwwroot\Identity\li
 C:\Users\hp\Documents\ttc-app\v1\server\presentation\publish\wwwroot\Identity\lib\jquery\dist\jquery.min.js
 C:\Users\hp\Documents\ttc-app\v1\server\presentation\publish\wwwroot\Identity\lib\jquery\dist\jquery.min.map
 C:\Users\hp\Documents\ttc-app\v1\server\presentation\publish\wwwroot\Identity\lib\jquery\LICENSE.txt
-C:\Users\hp\Documents\ttc-app\v1\server\presentation\publish\Presentation.Views.dll
-C:\Users\hp\Documents\ttc-app\v1\server\presentation\publish\Presentation.Views.pdb
 C:\Users\hp\Documents\ttc-app\v1\server\presentation\publish\Presentation.deps.json
