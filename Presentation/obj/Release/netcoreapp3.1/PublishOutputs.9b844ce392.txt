@@ -20,8 +20,13 @@ C:\Users\hp\Documents\ttc-app\v1\server\presentation\publish\wwwroot\lib\jquery\
 C:\Users\hp\Documents\ttc-app\v1\server\presentation\publish\wwwroot\lib\jquery\dist\jquery.min.js
 C:\Users\hp\Documents\ttc-app\v1\server\presentation\publish\wwwroot\lib\jquery\dist\jquery.min.map
 C:\Users\hp\Documents\ttc-app\v1\server\presentation\publish\wwwroot\lib\jquery\LICENSE.txt
+C:\Users\hp\Documents\ttc-app\v1\server\presentation\publish\publish\web.config
 C:\Users\hp\Documents\ttc-app\v1\server\presentation\publish\appsettings.Development.json
 C:\Users\hp\Documents\ttc-app\v1\server\presentation\publish\appsettings.json
+C:\Users\hp\Documents\ttc-app\v1\server\presentation\publish\publish\appsettings.Development.json
+C:\Users\hp\Documents\ttc-app\v1\server\presentation\publish\publish\appsettings.json
+C:\Users\hp\Documents\ttc-app\v1\server\presentation\publish\publish\Presentation.deps.json
+C:\Users\hp\Documents\ttc-app\v1\server\presentation\publish\publish\Presentation.runtimeconfig.json
 C:\Users\hp\Documents\ttc-app\v1\server\presentation\publish\Presentation.dll
 C:\Users\hp\Documents\ttc-app\v1\server\presentation\publish\Presentation.runtimeconfig.json
 C:\Users\hp\Documents\ttc-app\v1\server\presentation\publish\Presentation.pdb

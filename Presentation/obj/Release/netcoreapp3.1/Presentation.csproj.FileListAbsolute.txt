@@ -1181,3 +1181,8 @@ C:\Users\hp\Documents\ttc-app\v1\server\presentation\obj\Release\netcoreapp3.1\P
 C:\Users\hp\Documents\ttc-app\v1\server\presentation\obj\Release\netcoreapp3.1\Presentation.pdb
 C:\Users\hp\Documents\ttc-app\v1\server\presentation\obj\Release\netcoreapp3.1\Presentation.genruntimeconfig.cache
 C:\Users\hp\Documents\ttc-app\v1\server\presentation\obj\Release\netcoreapp3.1\Presentation.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\hp\Documents\ttc-app\v1\server\presentation\bin\Release\netcoreapp3.1\publish\web.config
+C:\Users\hp\Documents\ttc-app\v1\server\presentation\bin\Release\netcoreapp3.1\publish\appsettings.Development.json
+C:\Users\hp\Documents\ttc-app\v1\server\presentation\bin\Release\netcoreapp3.1\publish\appsettings.json
+C:\Users\hp\Documents\ttc-app\v1\server\presentation\bin\Release\netcoreapp3.1\publish\Presentation.deps.json
+C:\Users\hp\Documents\ttc-app\v1\server\presentation\bin\Release\netcoreapp3.1\publish\Presentation.runtimeconfig.json

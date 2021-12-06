@@ -241,7 +241,7 @@ namespace Presentation.Controllers
             var resObj = new AuthorResponse
             {
                 News = newsByUser,
-                UserDetails = user.Select(m => new { Name = m.LastName.ToUpper() + " , " + m.FirstName, Bio = m.Bio }).FirstOrDefault()
+                UserDetails = user.Select(m => new { Name = m.LastName.ToUpper() + " , " + m.FirstName, Bio = m.Bio, Id = m.Id }).FirstOrDefault()
             };
             var response = new ResponseDto<object>
             {

@@ -213,6 +213,48 @@ namespace Presentation.Controllers
         }
 
         [AllowAnonymous]
+        [HttpGet("chart/category/lite/{category}")]
+        public IActionResult GetChartsLite([FromRoute] string category)
+        {
+            var result = _chartRepository.GetWithInclude(m => m.Category.Contains(category), "ChartItems").OrderByDescending(m => m.DateCreated).FirstOrDefault();
+            var chartDates = _chartRepository.GetWithInclude(m => m.Category.Contains(category.Trim()), "").OrderByDescending(m => m.DateCreated).Select(m => new { m.Id, m.DateCreated, m.Category}).ToList();
+            
+            var chartToFrontend = new Chart
+            {
+                Id = result.Id,
+                DateCreated = result.DateCreated,
+                Week = result.Week,
+                ChartItems = result.ChartItems.OrderBy(m => m.Rank).ToList(),
+                Category = result.Category,
+                Genre = result.Genre,
+                HeaderVideoUrl = result.HeaderVideoUrl
+            };
+
+            return Ok(new {chartDates, result});
+        }
+
+        [AllowAnonymous]
+        [HttpGet("chart/category/lite/{chartId}/{category}")]
+        public IActionResult GetChartsLiteById([FromRoute] int chartId, [FromRoute]string category)
+        {
+            var result = _chartRepository.GetWithInclude(m => m.Id == chartId, "ChartItems").OrderByDescending(m => m.DateCreated).FirstOrDefault();
+            var chartDates = _chartRepository.GetWithInclude(m => m.Category.Contains(category.Trim()), "").OrderByDescending(m => m.DateCreated).Select(m => new { m.Id, m.DateCreated, m.Category}).ToList();
+            
+            var chartToFrontend = new Chart
+            {
+                Id = result.Id,
+                DateCreated = result.DateCreated,
+                Week = result.Week,
+                ChartItems = result.ChartItems.OrderBy(m => m.Rank).ToList(),
+                Category = result.Category,
+                Genre = result.Genre,
+                HeaderVideoUrl = result.HeaderVideoUrl
+            };
+
+            return Ok(new {chartDates, result});
+        }
+
+        [AllowAnonymous]
         [HttpGet("chart/category/top50")]
         public IActionResult GetTop50Charts()
         {

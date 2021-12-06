@@ -117,7 +117,8 @@ namespace Presentation.Controllers
                             LastName = ttcUser.LastName, 
                             Bio = ttcUser.Bio, 
                             Token = token, 
-                            Role = roles.FirstOrDefault()
+                            Role = roles.FirstOrDefault(),
+                            Id = ttcUser.Id
                         }
                     };
                     return Ok(loginReponse);

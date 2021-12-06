@@ -38,14 +38,14 @@ namespace Presentation.Controllers
 
             var photos = _photoRepo.GetWithInclude(m => m.Name == photoCategory, "Photos")
                 .FirstOrDefault()
-                .Photos
+                .Photos.Where(m => m.IsDeleted == false)
                 .OrderByDescending(m => m.DateCreated)
                 .Skip(skipSize).Take(pageSize).ToList();
 
             //load news
             var news = _newsRepo.GetWithInclude(m => m.Name == newsCategory, "NewsList")
                 .FirstOrDefault()
-                .NewsList
+                .NewsList.Where(m => m.IsDeleted == false)
                 .OrderByDescending(m => m.DateCreated)
                 .Skip(skipSize).Take(pageSize).ToList();
 
