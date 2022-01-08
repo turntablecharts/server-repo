@@ -6,12 +6,13 @@ using Core.Entities;
 using Core.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Presentation.DTO;
 using Presentation.Utilities;
 using Presentation.ViewModels;
 
 namespace Presentation.Controllers
 {
-    [Authorize]
+    [AllowAnonymous]
     [ApiController]
     [Route("api/author")]
     public class MagazineController : ControllerBase
@@ -78,7 +79,7 @@ namespace Presentation.Controllers
         [HttpGet("magazine/all")]
         public async Task<IActionResult> GetAllMagazine([FromQuery] int? pageNumber)
         {
-            int pageSize = 10;
+            int pageSize = 20;
             var magazines = _magazineRepository.GetAll().OrderByDescending(m => m.DateCreated);
             return Ok(await PaginatedList<MagazineData>.CreateAsync(magazines, pageNumber ?? 1, pageSize));
         }
@@ -92,7 +93,45 @@ namespace Presentation.Controllers
             {
                 return NotFound();
             }
-            return Ok(magazine);
+
+            var result = new MagazineContentDto
+            {
+                Id = magazine.Id, 
+                DateCreated = magazine.DateCreated, 
+                TtcUser = magazine.TtcUser, 
+                TtcUserId = magazine.TtcUserId, 
+                Title = magazine.Title, 
+                Description = magazine.Description, 
+                Content = magazine.Content, 
+                HeaderImage = magazine.HeaderImage, 
+                MagazineEditionDataId = magazine.MagazineEditionDataId, 
+                ArticlePosition = magazine.ArticlePosition, 
+                NextArticle = new MagazineData()
+            };
+
+            var magazines = _magEditionRepository.GetWithInclude(m => m.Id == magazine.MagazineEditionDataId, "MagazineDatas").FirstOrDefault();           
+
+           var outputOthers = magazines.MagazineDatas.OrderBy(m => m.ArticlePosition)
+                .ToList();
+
+            var currentIndex = outputOthers.FindIndex(m => m.Id == magazine.Id);
+
+            if(currentIndex == 0)
+            {
+                result.NextArticle = outputOthers[currentIndex+1];
+            }
+            if(currentIndex == outputOthers.Count() -1)
+            {
+                result.NextArticle = outputOthers[0];
+            }
+            else 
+            {
+                result.NextArticle = outputOthers[currentIndex+1];
+            }
+
+            result.NextArticle.Content = null;
+
+            return Ok(result);
         }
 
         [Authorize(Roles = "Admin, Author, Writer")]
@@ -143,7 +182,7 @@ namespace Presentation.Controllers
             }
         }
 
-
+        [AllowAnonymous]
         [HttpGet("magazine/edition/{editionName}")]
         public IActionResult GetMagazineByEdition([FromRoute] string editionName)
         {
@@ -154,6 +193,27 @@ namespace Presentation.Controllers
             output.Id = magazines.Id;
             output.Name = magazines.Name;
             output.MagazineDatas = magazines.MagazineDatas.OrderBy(m => m.ArticlePosition).ToList();
+
+            return Ok(output);
+        }
+
+        [AllowAnonymous]
+        [HttpGet("magazine/pages/{editionName}")]
+        public IActionResult GetMagazinePages([FromRoute] string editionName)
+        {
+            var magazines = _magEditionRepository.GetWithInclude(m => m.Name.ToLower() == editionName.ToLower(), "MagazineDatas").FirstOrDefault();
+            foreach (var item in magazines.MagazineDatas)
+            {
+                item.Content = null;
+            }
+
+            MagazineEditionData output = new MagazineEditionData();
+
+            output.Id = magazines.Id;
+            output.Name = magazines.Name;
+            
+            output.MagazineDatas = magazines.MagazineDatas.OrderBy(m => m.ArticlePosition)
+                .ToList();
 
             return Ok(output);
         }

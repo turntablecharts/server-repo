@@ -43,3 +43,4 @@ C:\Users\hp\Documents\ttc-app\v1\server\Core\obj\Release\netstandard2.0\Core.csp
 C:\Users\hp\Documents\ttc-app\v1\server\Core\obj\Release\netstandard2.0\Core.dll
 C:\Users\hp\Documents\ttc-app\v1\server\Core\obj\Release\netstandard2.0\Core.pdb
 C:\Users\hp\Documents\ttc-app\v1\server\Core\obj\Release\netstandard2.0\Core.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\hp\Documents\ttc-app\v1\server\Core\obj\Release\netstandard2.0\Core.csproj.AssemblyReference.cache
