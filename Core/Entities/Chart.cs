@@ -13,5 +13,7 @@ namespace Core.Entities {
         public virtual ICollection<ChartItem> ChartItems { get; set; }
         public bool IsDeleted { get; set; }
 
+        public int ChartCategoryId {get; set;}
+
     }
 }

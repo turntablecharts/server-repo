@@ -125,7 +125,7 @@ namespace Presentation
                 //  endpoints.MapRazorPages ();
                 endpoints.MapControllers ();
             });
-            CreateRoles (service).Wait ();
+            //CreateRoles (service).Wait ();
         }
 
         // private void UpdateDatabase (IApplicationBuilder app)
@@ -146,38 +146,38 @@ namespace Presentation
         //     }
         // }
 
-        private async Task CreateRoles (IServiceProvider serviceProvider)
-        {
-            var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>> ();
-            var userManager = serviceProvider.GetRequiredService<UserManager<IdentityUser>> ();
+        // private async Task CreateRoles (IServiceProvider serviceProvider)
+        // {
+        //     var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>> ();
+        //     var userManager = serviceProvider.GetRequiredService<UserManager<IdentityUser>> ();
 
-            IdentityResult roleResult;
+        //     IdentityResult roleResult;
 
-            string[] roles = new string[] { AppUserRoles.Admin.ToString(), 
-                        AppUserRoles.Author.ToString(), 
-                        AppUserRoles.Contributor.ToString(), 
-                        AppUserRoles.Writer.ToString()};
+        //     string[] roles = new string[] { AppUserRoles.Admin.ToString(), 
+        //                 AppUserRoles.Author.ToString(), 
+        //                 AppUserRoles.Contributor.ToString(), 
+        //                 AppUserRoles.Writer.ToString()};
                         
-            foreach (var item in roles)
-            {
-                var roleCheck = await roleManager.RoleExistsAsync (item);
-                if (!roleCheck)
-                {
-                    roleResult = await roleManager.CreateAsync (new IdentityRole (item));
-                }
-            }
+        //     foreach (var item in roles)
+        //     {
+        //         var roleCheck = await roleManager.RoleExistsAsync (item);
+        //         if (!roleCheck)
+        //         {
+        //             roleResult = await roleManager.CreateAsync (new IdentityRole (item));
+        //         }
+        //     }
 
-            var user = new IdentityUser { Email = "admin@ttc", UserName = "admin@ttc", EmailConfirmed = true };
-            var isPresent = await userManager.FindByEmailAsync (user.Email);
-            if (isPresent == null)
-            {
-                var result = await userManager.CreateAsync (user, "1089Tgh007$");
-                if (result.Succeeded)
-                {
-                    await userManager.AddToRoleAsync (user, "Admin");
-                }
-            }
+        //     var user = new IdentityUser { Email = "admin@ttc", UserName = "admin@ttc", EmailConfirmed = true };
+        //     var isPresent = await userManager.FindByEmailAsync (user.Email);
+        //     if (isPresent == null)
+        //     {
+        //         var result = await userManager.CreateAsync (user, "1089Tgh007$");
+        //         if (result.Succeeded)
+        //         {
+        //             await userManager.AddToRoleAsync (user, "Admin");
+        //         }
+        //     }
 
-        }
+        // }
     }
 }

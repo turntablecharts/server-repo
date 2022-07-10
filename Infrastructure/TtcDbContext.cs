@@ -38,5 +38,7 @@ namespace Infrastructure
 
 
         public DbSet<ChartHighlight> ChartHighlights { get; set; }
+
+        public DbSet<ChartCategory> ChartCategories {get; set;}
     }
 }

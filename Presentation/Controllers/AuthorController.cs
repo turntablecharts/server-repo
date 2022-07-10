@@ -33,16 +33,15 @@ namespace Presentation.Controllers
         private IGenericRepository<SubscribersEmail> _subscribers;
         private IGenericRepository<ChartHighlight> _chartHighlightRepo;
 
+        private IGenericRepository<ChartCategory> _chartCategoryRepo;
+
         public AuthorController(
-
-
             IGenericRepository<Chart> chartRepository,
-
             IGenericRepository<Log> logRepository,
             IGenericRepository<TtcUser> userGenericRepo,
             IGenericRepository<SubscribersEmail> subscribers,
-            IGenericRepository<ChartHighlight> chartHighlightRepo
-
+            IGenericRepository<ChartHighlight> chartHighlightRepo,
+            IGenericRepository<ChartCategory> chartCategoryRepo
         )
         {
 
@@ -55,6 +54,8 @@ namespace Presentation.Controllers
 
             _subscribers = subscribers;
             _chartHighlightRepo = chartHighlightRepo;
+
+            _chartCategoryRepo = chartCategoryRepo;
 
         }
 
@@ -338,6 +339,16 @@ namespace Presentation.Controllers
             //result.ChartItems.OrderBy(m => m.Rank).ToList();
 
             return Ok(chartToFrontend);
+        }
+
+
+        [AllowAnonymous]
+        [HttpGet("chart/categories")]
+        public IActionResult GetChartCategories()
+        {
+            var categories = _chartCategoryRepo.GetAll();
+
+            return Ok(categories);
         }
         #endregion
 
