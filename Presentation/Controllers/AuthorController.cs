@@ -8,10 +8,12 @@ using System.Threading.Tasks;
 using Core.Entities;
 using Core.Interfaces;
 using CsvHelper;
+using Infrastructure;
 using Infrastructure.Constants;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Presentation.Base;
 using Presentation.DTO;
@@ -35,17 +37,20 @@ namespace Presentation.Controllers
 
         private IGenericRepository<ChartCategory> _chartCategoryRepo;
 
+        private TtcDbContext _db;
+
         public AuthorController(
             IGenericRepository<Chart> chartRepository,
             IGenericRepository<Log> logRepository,
             IGenericRepository<TtcUser> userGenericRepo,
             IGenericRepository<SubscribersEmail> subscribers,
             IGenericRepository<ChartHighlight> chartHighlightRepo,
-            IGenericRepository<ChartCategory> chartCategoryRepo
+            IGenericRepository<ChartCategory> chartCategoryRepo,
+
+            TtcDbContext db
         )
         {
-
-
+            _db = db;
             _userGenericRepo = userGenericRepo;
 
             _chartRepository = chartRepository;
@@ -59,7 +64,7 @@ namespace Presentation.Controllers
 
         }
 
-        #region charts
+        //#region charts
         [Authorize(Roles = "Author")]
         [HttpPost()]
         [Route("chart/upload")]
@@ -100,34 +105,33 @@ namespace Presentation.Controllers
                 Week = input.Week == null ? "Week of" : input.Week,
                 ChartItems = (List<ChartItem>)chartList,
                 Category = input.ChartCategory,
-                Genre = input.ChartGenre,
                 HeaderVideoUrl = input.HeaderVideoUrl
             };
 
             await _chartRepository.AddAsync(chartToAdd);
             //await _chartRepo.AddChart (chartToAdd);
 
-            string[] highlightsToCheck = new string[]{ChartCategoryConst.TOP_50, ChartCategoryConst.AIRPLAY, ChartCategoryConst.STREAMING, ChartCategoryConst.TV};
+            // string[] highlightsToCheck = new string[]{ChartCategoryConst.TOP_50, ChartCategoryConst.AIRPLAY, ChartCategoryConst.STREAMING, ChartCategoryConst.TV};
 
-            if(highlightsToCheck.Contains(input.ChartCategory))
-            {
-                if(input.ChartCategory == ChartCategoryConst.TOP_50)
-                {
-                    var biggestDebut = BiggestDebut(chartToAdd);
-                    var biggestMover = GetChartHighlight(chartToAdd, ChartCategoryConst.TOP_50);
+            // if(highlightsToCheck.Contains(input.ChartCategory))
+            // {
+            //     if(input.ChartCategory == ChartCategoryConst.TOP_50)
+            //     {
+            //         var biggestDebut = BiggestDebut(chartToAdd);
+            //         var biggestMover = GetChartHighlight(chartToAdd, ChartCategoryConst.TOP_50);
 
-                    var highlight = new List<ChartHighlight>();
-                    highlight.Add(biggestDebut);
-                    highlight.Add(biggestMover);
+            //         var highlight = new List<ChartHighlight>();
+            //         highlight.Add(biggestDebut);
+            //         highlight.Add(biggestMover);
 
-                    await _chartHighlightRepo.AddRange(highlight);
-                }
-                else
-                {
-                    var biggestMover = GetChartHighlight(chartToAdd, input.ChartCategory);
-                    await _chartHighlightRepo.AddAsync(biggestMover);
-                }
-            }
+            //         await _chartHighlightRepo.AddRange(highlight);
+            //     }
+            //     else
+            //     {
+            //         var biggestMover = GetChartHighlight(chartToAdd, input.ChartCategory);
+            //         await _chartHighlightRepo.AddAsync(biggestMover);
+            //     }
+            // }
 
 
            
@@ -136,221 +140,222 @@ namespace Presentation.Controllers
 
         }
 
-        [Authorize(Roles = "Author")]
-        [HttpDelete("chart/delete/{id}/{userEmail}")]
-        public IActionResult DeleteChart([FromRoute] int id, [FromRoute] string userEmail)
-        {
-            try
-            {
-                var chartToDelete = _chartRepository.GetWithInclude(m => m.Id == id, "ChartItems").FirstOrDefault();
-                _chartRepository.Delete(chartToDelete);
+        //[Authorize(Roles = "Author")]
+        // [HttpDelete("chart/delete/{id}/{userEmail}")]
+        // public IActionResult DeleteChart([FromRoute] int id, [FromRoute] string userEmail)
+        // {
+        //     try
+        //     {
+        //         var chartToDelete = _chartRepository.GetWithInclude(m => m.Id == id, "ChartItems").FirstOrDefault();
+        //         _chartRepository.Delete(chartToDelete);
 
-                _logRepository.AddAsync(new Log
-                {
-                    Name = userEmail,
-                    Event = "Deleted chart with id: " + id,
-                    EventDate = DateTime.Now
-                });
-                return Ok("Successfully deleted");
-            }
-            catch (NullReferenceException)
-            {
-                return NotFound();
-            }
-        }
+        //         _logRepository.AddAsync(new Log
+        //         {
+        //             Name = userEmail,
+        //             Event = "Deleted chart with id: " + id,
+        //             EventDate = DateTime.Now
+        //         });
+        //         return Ok("Successfully deleted");
+        //     }
+        //     catch (NullReferenceException)
+        //     {
+        //         return NotFound();
+        //     }
+        // }
 
-        [AllowAnonymous]
-        [HttpGet("chart/{id}")]
+        // [AllowAnonymous]
+        // [HttpGet("chart/{id}")]
 
-        public IActionResult GetOnechart([FromRoute] int id)
-        {
-            var result = _chartRepository.GetWithInclude(m => m.Id == id, "ChartItems").FirstOrDefault();
-            if (result != null)
-            {
-                return Ok(result);
-            }
-            else
-            {
-                return NotFound();
-            }
-        }
+        // public IActionResult GetOnechart([FromRoute] int id)
+        // {
+        //     var result = _chartRepository.GetWithInclude(m => m.Id == id, "ChartItems").FirstOrDefault();
+        //     if (result != null)
+        //     {
+        //         return Ok(result);
+        //     }
+        //     else
+        //     {
+        //         return NotFound();
+        //     }
+        // }
 
-        [AllowAnonymous]
-        [HttpGet("chart/all")]
-        public async Task<IActionResult> GetCharts([FromQuery] int? pageNumber)
-        {
-            var charts = _chartRepository.GetWithInclude(null, "ChartItems").OrderByDescending(m => m.DateCreated).AsQueryable();
-            int pageSize = 10;
-            return Ok(await PaginatedList<Chart>.CreateAsync(charts, pageNumber ?? 1, pageSize));
-        }
+        // [AllowAnonymous]
+        // [HttpGet("chart/all")]
+        // public async Task<IActionResult> GetCharts([FromQuery] int? pageNumber)
+        // {
+        //     var charts = _chartRepository.GetWithInclude(null, "ChartItems").OrderByDescending(m => m.DateCreated).AsQueryable();
+        //     int pageSize = 10;
+        //     return Ok(await PaginatedList<Chart>.CreateAsync(charts, pageNumber ?? 1, pageSize));
+        // }
 
-        [AllowAnonymous]
-        [HttpGet("chart/category/{category}")]
-        public IActionResult GetCharts([FromRoute] string category)
-        {
-            var result = _chartRepository.GetWithInclude(m => m.Category.Contains(category), "ChartItems").OrderByDescending(m => m.DateCreated);
-            List<Chart> charts = new List<Chart>();
-            foreach (var item in result)
-            {
+        // [AllowAnonymous]
+        // [HttpGet("chart/category/{category}")]
+        // public IActionResult GetCharts([FromRoute] string category)
+        // {
+        //     var result = _chartRepository.GetWithInclude(m => m.Category.Contains(category), "ChartItems").OrderByDescending(m => m.DateCreated);
+        //     List<Chart> charts = new List<Chart>();
+        //     foreach (var item in result)
+        //     {
 
-                var chartToFrontend = new Chart
-                {
-                    Id = item.Id,
-                    DateCreated = item.DateCreated,
-                    Week = item.Week,
-                    ChartItems = item.ChartItems.OrderBy(m => m.Rank).ToList(),
-                    Category = item.Category,
-                    Genre = item.Genre,
-                    HeaderVideoUrl = item.HeaderVideoUrl
-                };
+        //         var chartToFrontend = new Chart
+        //         {
+        //             Id = item.Id,
+        //             DateCreated = item.DateCreated,
+        //             Week = item.Week,
+        //             ChartItems = item.ChartItems.OrderBy(m => m.Rank).ToList(),
+        //             Category = item.Category,
+        //             Genre = item.Genre,
+        //             HeaderVideoUrl = item.HeaderVideoUrl
+        //         };
 
-                charts.Add(chartToFrontend);
-            }
+        //         charts.Add(chartToFrontend);
+        //     }
 
-            //int pageSize = 10;
-            //return Ok (await PaginatedList<Chart>.CreateAsync (charts.AsQueryable (), pageNumber ?? 1, pageSize));
+        //     //int pageSize = 10;
+        //     //return Ok (await PaginatedList<Chart>.CreateAsync (charts.AsQueryable (), pageNumber ?? 1, pageSize));
 
-            return Ok(charts);
-        }
+        //     return Ok(charts);
+        // }
 
-        [AllowAnonymous]
-        [HttpGet("chart/category/lite/{category}")]
-        public IActionResult GetChartsLite([FromRoute] string category)
-        {
-            var result = _chartRepository.GetWithInclude(m => m.Category.Contains(category), "ChartItems").OrderByDescending(m => m.DateCreated).FirstOrDefault();
-            var chartDates = _chartRepository.GetWithInclude(m => m.Category.Contains(category.Trim()), "").OrderByDescending(m => m.DateCreated).Select(m => new { m.Id, m.DateCreated, m.Category}).ToList();
+        // [AllowAnonymous]
+        // [HttpGet("chart/category/lite/{category}")]
+        // public async Task<IActionResult> GetChartsLite([FromRoute] int id=3)
+        // {
+        //     //var result = _chartRepository.GetWithInclude(m => m.Category.Contains(category), "ChartItems").OrderByDescending(m => m.DateCreated).FirstOrDefault();
+        //     var result = await _db.Charts.Where(m => m.ChartCategoryId == id).ToListAsync();
+        //    // var chartDates = _chartRepository.GetWithInclude(m => m.Category.Contains(category.Trim()), "").OrderByDescending(m => m.DateCreated).Select(m => new { m.Id, m.DateCreated, m.Category}).ToList();
             
-            var chartToFrontend = new Chart
-            {
-                Id = result.Id,
-                DateCreated = result.DateCreated,
-                Week = result.Week,
-                ChartItems = result.ChartItems.OrderBy(m => m.Rank).ToList(),
-                Category = result.Category,
-                Genre = result.Genre,
-                HeaderVideoUrl = result.HeaderVideoUrl
-            };
+        //     // var chartToFrontend = new Chart
+        //     // {
+        //     //     Id = result.Id,
+        //     //     DateCreated = result.DateCreated,
+        //     //     Week = result.Week,
+        //     //     ChartItems = result.ChartItems.OrderBy(m => m.Rank).ToList(),
+        //     //     Category = result.Category,
+        //     //     Genre = result.Genre,
+        //     //     HeaderVideoUrl = result.HeaderVideoUrl
+        //     // };
 
-            return Ok(new {chartDates, result});
-        }
+        //     return Ok(result);
+        // }
 
-        [AllowAnonymous]
-        [HttpGet("chart/category/lite/{chartId}/{category}")]
-        public IActionResult GetChartsLiteById([FromRoute] int chartId, [FromRoute]string category)
-        {
-            var result = _chartRepository.GetWithInclude(m => m.Id == chartId, "ChartItems").OrderByDescending(m => m.DateCreated).FirstOrDefault();
-            var chartDates = _chartRepository.GetWithInclude(m => m.Category.Contains(category.Trim()), "").OrderByDescending(m => m.DateCreated).Select(m => new { m.Id, m.DateCreated, m.Category}).ToList();
+        // [AllowAnonymous]
+        // [HttpGet("chart/category/lite/{chartId}/{category}")]
+        // public IActionResult GetChartsLiteById([FromRoute] int chartId, [FromRoute]string category)
+        // {
+        //     var result = _chartRepository.GetWithInclude(m => m.Id == chartId, "ChartItems").OrderByDescending(m => m.DateCreated).FirstOrDefault();
+        //     var chartDates = _chartRepository.GetWithInclude(m => m.Category.Contains(category.Trim()), "").OrderByDescending(m => m.DateCreated).Select(m => new { m.Id, m.DateCreated, m.Category}).ToList();
             
-            var chartToFrontend = new Chart
-            {
-                Id = result.Id,
-                DateCreated = result.DateCreated,
-                Week = result.Week,
-                ChartItems = result.ChartItems.OrderBy(m => m.Rank).ToList(),
-                Category = result.Category,
-                Genre = result.Genre,
-                HeaderVideoUrl = result.HeaderVideoUrl
-            };
+        //     var chartToFrontend = new Chart
+        //     {
+        //         Id = result.Id,
+        //         DateCreated = result.DateCreated,
+        //         Week = result.Week,
+        //         ChartItems = result.ChartItems.OrderBy(m => m.Rank).ToList(),
+        //         Category = result.Category,
+        //         Genre = result.Genre,
+        //         HeaderVideoUrl = result.HeaderVideoUrl
+        //     };
 
-            return Ok(new {chartDates, result});
-        }
+        //     return Ok(new {chartDates, result});
+        // }
 
-        [AllowAnonymous]
-        [HttpGet("chart/category/top50")]
-        public IActionResult GetTop50Charts()
-        {
-            string category = ChartCategoryConst.TOP_50;
-            var result = _chartRepository.GetWithInclude(m => m.Category.Contains(category), "ChartItems").OrderByDescending(m => m.DateCreated);
-            List<ChartWithHighlightDto> charts = new List<ChartWithHighlightDto>();
-            foreach (var item in result)
-            {
+        // [AllowAnonymous]
+        // [HttpGet("chart/category/top50")]
+        // public IActionResult GetTop50Charts()
+        // {
+        //     string category = ChartCategoryConst.TOP_50;
+        //     var result = _chartRepository.GetWithInclude(m => m.Category.Contains(category), "ChartItems").OrderByDescending(m => m.DateCreated);
+        //     List<ChartWithHighlightDto> charts = new List<ChartWithHighlightDto>();
+        //     foreach (var item in result)
+        //     {
 
-                var chartToFrontend = new Chart
-                {
-                    Id = item.Id,
-                    DateCreated = item.DateCreated,
-                    Week = item.Week,
-                    ChartItems = item.ChartItems.OrderBy(m => m.Rank).ToList(),
-                    Category = item.Category,
-                    Genre = item.Genre,
-                    HeaderVideoUrl = item.HeaderVideoUrl
-                };
+        //         var chartToFrontend = new Chart
+        //         {
+        //             Id = item.Id,
+        //             DateCreated = item.DateCreated,
+        //             Week = item.Week,
+        //             ChartItems = item.ChartItems.OrderBy(m => m.Rank).ToList(),
+        //             Category = item.Category,
+        //             Genre = item.Genre,
+        //             HeaderVideoUrl = item.HeaderVideoUrl
+        //         };
 
-                var highlights = GetTotalHightLights(item.DateCreated, _chartHighlightRepo);
+        //         var highlights = GetTotalHightLights(item.DateCreated, _chartHighlightRepo);
 
-                charts.Add(new ChartWithHighlightDto
-                {
-                    Chart = chartToFrontend,
-                    ChartHighlights = highlights, 
-                    ChartId = item.Id
-                });
-            }
+        //         charts.Add(new ChartWithHighlightDto
+        //         {
+        //             Chart = chartToFrontend,
+        //             ChartHighlights = highlights, 
+        //             ChartId = item.Id
+        //         });
+        //     }
 
-            //int pageSize = 10;
-            //return Ok (await PaginatedList<Chart>.CreateAsync (charts.AsQueryable (), pageNumber ?? 1, pageSize));
+        //     //int pageSize = 10;
+        //     //return Ok (await PaginatedList<Chart>.CreateAsync (charts.AsQueryable (), pageNumber ?? 1, pageSize));
 
-            return Ok(charts);
-        }
+        //     return Ok(charts);
+        // }
 
-        [AllowAnonymous]
-        [HttpGet("chart/categoryv2/{category}")]
-        public IActionResult GetChartByCategory([FromRoute] string category)
-        {
-            var latest = _chartRepository.GetAll().OrderByDescending(m => m.DateCreated).Where(m => m.Category.Contains(category)).FirstOrDefault();
+        // [AllowAnonymous]
+        // [HttpGet("chart/categoryv2/{category}")]
+        // public IActionResult GetChartByCategory([FromRoute] string category)
+        // {
+        //     var latest = _chartRepository.GetAll().OrderByDescending(m => m.DateCreated).Where(m => m.Category.Contains(category)).FirstOrDefault();
 
-            var result = _chartRepository.GetWithInclude(m => m.Id == latest.Id, "ChartItems").FirstOrDefault();
+        //     var result = _chartRepository.GetWithInclude(m => m.Id == latest.Id, "ChartItems").FirstOrDefault();
 
-            var chartToFrontend = new Chart
-            {
-                Id = result.Id,
-                DateCreated = result.DateCreated,
-                Week = result.Week,
-                ChartItems = result.ChartItems.OrderBy(m => m.Rank).Take(10).ToList(),
-                Category = result.Category,
-                Genre = result.Genre,
-                HeaderVideoUrl = result.HeaderVideoUrl
-            };
+        //     var chartToFrontend = new Chart
+        //     {
+        //         Id = result.Id,
+        //         DateCreated = result.DateCreated,
+        //         Week = result.Week,
+        //         ChartItems = result.ChartItems.OrderBy(m => m.Rank).Take(10).ToList(),
+        //         Category = result.Category,
+        //         Genre = result.Genre,
+        //         HeaderVideoUrl = result.HeaderVideoUrl
+        //     };
 
-            var charts = GetChartResponseDto(chartToFrontend);
-            //int pageSize = 10;
-            //return Ok (await PaginatedList<Chart>.CreateAsync (charts.AsQueryable (), pageNumber ?? 1, pageSize));
+        //     var charts = GetChartResponseDto(chartToFrontend);
+        //     //int pageSize = 10;
+        //     //return Ok (await PaginatedList<Chart>.CreateAsync (charts.AsQueryable (), pageNumber ?? 1, pageSize));
 
-            return Ok(charts);
-        }
+        //     return Ok(charts);
+        // }
 
-        [AllowAnonymous]
-        [HttpGet("chart/latest")]
-        public IActionResult GetLatestChart([FromQuery] string category)
-        {
-            var latest = _chartRepository.GetAll().OrderByDescending(m => m.DateCreated).Where(m => m.Category.Contains(category ?? "Turntable Top 50")).FirstOrDefault();
+        // [AllowAnonymous]
+        // [HttpGet("chart/latest")]
+        // public IActionResult GetLatestChart([FromQuery] string category)
+        // {
+        //     var latest = _chartRepository.GetAll().OrderByDescending(m => m.DateCreated).Where(m => m.Category.Contains(category ?? "Turntable Top 50")).FirstOrDefault();
 
-            var result = _chartRepository.GetWithInclude(m => m.Id == latest.Id, "ChartItems").FirstOrDefault();
+        //     var result = _chartRepository.GetWithInclude(m => m.Id == latest.Id, "ChartItems").FirstOrDefault();
 
-            var chartToFrontend = new Chart
-            {
-                Id = result.Id,
-                DateCreated = result.DateCreated,
-                Week = result.Week,
-                ChartItems = result.ChartItems.OrderBy(m => m.Rank).Take(10).ToList(),
-                Category = result.Category,
-                Genre = result.Genre,
-                HeaderVideoUrl = result.HeaderVideoUrl
-            };
-            //result.ChartItems.OrderBy(m => m.Rank).ToList();
+        //     var chartToFrontend = new Chart
+        //     {
+        //         Id = result.Id,
+        //         DateCreated = result.DateCreated,
+        //         Week = result.Week,
+        //         ChartItems = result.ChartItems.OrderBy(m => m.Rank).Take(10).ToList(),
+        //         Category = result.Category,
+        //         Genre = result.Genre,
+        //         HeaderVideoUrl = result.HeaderVideoUrl
+        //     };
+        //     //result.ChartItems.OrderBy(m => m.Rank).ToList();
 
-            return Ok(chartToFrontend);
-        }
+        //     return Ok(chartToFrontend);
+        // }
 
 
-        [AllowAnonymous]
-        [HttpGet("chart/categories")]
-        public IActionResult GetChartCategories()
-        {
-            var categories = _chartCategoryRepo.GetAll();
+        // [AllowAnonymous]
+        // [HttpGet("chart/categories")]
+        // public IActionResult GetChartCategories()
+        // {
+        //     var categories = _chartCategoryRepo.GetAll();
 
-            return Ok(categories);
-        }
-        #endregion
+        //     return Ok(categories);
+        // }
+        // #endregion
 
 
 

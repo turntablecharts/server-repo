@@ -10,7 +10,7 @@ namespace Presentation.ViewModels
         public DateTime DateCreated { get; set; }
         public IFormFile DataCSVFile { get; set; }
         public String  ChartCategory { get; set; }
-        public String ChartGenre { get; set; }
         public string HeaderVideoUrl { get; set; }
+        public int ChartCategoryId {get; set;}
     }
 }

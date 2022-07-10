@@ -16,5 +16,7 @@ namespace Core.Interfaces {
         TEntity UpdateAsync (TEntity entity);
 
         IQueryable<TEntity> GetWithInclude (Expression<Func<TEntity, bool>> filter, string includeProperties);
+
+      
     }
 }
