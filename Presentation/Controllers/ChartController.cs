@@ -158,12 +158,14 @@ namespace Presentation.Controllers
                     ProducedBy = item.ProducedBy
                 });
             }
+
+            var chartCategoryName = _db.ChartCategories.FirstOrDefault(m => m.Id == input.ChartCategoryId).Name;
             var chartToAdd = new Chart
             {
                 DateCreated = input.DateCreated.Year != DateTime.Now.Year ? DateTime.Now: input.DateCreated,
                 Week = input.Week == null ? "Week of" : input.Week,
                 ChartItems = (List<ChartItem>)chartList,
-                Category = input.ChartCategory,
+                Category = chartCategoryName,
                 ChartCategoryId = input.ChartCategoryId,
                 HeaderVideoUrl = input.HeaderVideoUrl
             };

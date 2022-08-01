@@ -80,8 +80,12 @@ namespace Presentation.Controllers
             int toSkip = (pageNumber-1) * pageSize;
             long totalitems = _db.News.Count();
             var results = await _db.News.OrderByDescending(m => m.DateCreated).Skip(toSkip).Take(pageSize)
-                .Select(m => new {Id = m.Id, Title = m.Title, DateCreated=m.DateCreated, HeaderImageUri=m.HeaderImageUri, 
-                Description = Regex.Replace(m.NewsContent.Substring(0, 255)+"..", @"[^0-9a-zA-Z:,.']+", " ")  })
+                .Select(m => new {
+                        Id = m.Id, 
+                        Title = m.Title, 
+                        DateCreated=m.DateCreated, 
+                        HeaderImageUri=m.HeaderImageUri, 
+                        Description = Regex.Replace(m.NewsContent.Substring(0, 255)+"..", @"[^0-9a-zA-Z:,.']+", " ")})
                 .ToListAsync();
 
             return Ok(new {news = results, totalItems = totalitems, currentPage = pageNumber, pageSize = pageSize});
@@ -92,8 +96,16 @@ namespace Presentation.Controllers
         public IActionResult GetById(int id)
         {
             var news = _newsDataRepo.GetWithInclude(m => m.Id == id, "ttcUser")
-                .Select(m => new {Id = m.Id, Title = m.Title, DateCreated=m.DateCreated, 
-                    HeaderImageUri=m.HeaderImageUri, Description =Regex.Replace(m.NewsContent.Substring(0, 255)+"..", @"[^0-9a-zA-Z:,.']+", " ") , NewsContent = m.NewsContent})
+                .Select(m => new {
+                        Id = m.Id, 
+                        Title = m.Title, 
+                        DateCreated=m.DateCreated, 
+                        HeaderImageUri=m.HeaderImageUri, 
+                        Description =Regex.Replace(m.NewsContent.Substring(0, 255)+"..", @"[^0-9a-zA-Z:,.']+", " ") , 
+                        NewsContent = m.NewsContent, 
+                        TtcUser = m.ttcUser, 
+                        Category = m.Category, 
+                        NewsCategoryId = m.NewsCategoryId})
                 .FirstOrDefault();
             if (news == null) { return NotFound(); }
             return Ok(news);
