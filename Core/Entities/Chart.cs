@@ -14,6 +14,7 @@ namespace Core.Entities {
         public bool IsDeleted { get; set; }
 
         public int ChartCategoryId {get; set;}
+        public int? WeekNumber {get; set;}
 
     }
 }

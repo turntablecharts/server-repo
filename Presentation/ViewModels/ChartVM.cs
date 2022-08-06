@@ -12,5 +12,6 @@ namespace Presentation.ViewModels
         public String  ChartCategory { get; set; }
         public string HeaderVideoUrl { get; set; }
         public int ChartCategoryId {get; set;}
+        public int? WeekNumber {get; set;}
     }
 }

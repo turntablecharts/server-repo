@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "UdL+dspcy8bLFIn1jzS8GunXYN0kT/QNYHOMC8+ls9mjfID8nmmGz3gZ+5WPwSkXHMTXRwP+BSGS76ZV9B1STw==",
+  "dgSpecHash": "RyaUN68F0TKIWFFYyEm6GFMVWW9nprVL4HZx8dDwM7WWMbBuyYj2skdVFknZz3Q/iI2bLG47y4CTEGhQNQRYog==",
   "success": true,
   "projectFilePath": "/Users/simi/Documents/ttc/apps/server-repo/Infrastructure/Infrastructure.csproj",
   "expectedPackageFiles": [
@@ -9,9 +9,9 @@
     "/Users/simi/.nuget/packages/microsoft.aspnetcore.http.features/2.2.0/microsoft.aspnetcore.http.features.2.2.0.nupkg.sha512",
     "/Users/simi/.nuget/packages/microsoft.aspnetcore.webutilities/2.2.0/microsoft.aspnetcore.webutilities.2.2.0.nupkg.sha512",
     "/Users/simi/.nuget/packages/microsoft.csharp/4.3.0/microsoft.csharp.4.3.0.nupkg.sha512",
-    "/Users/simi/.nuget/packages/microsoft.entityframeworkcore/6.0.6/microsoft.entityframeworkcore.6.0.6.nupkg.sha512",
-    "/Users/simi/.nuget/packages/microsoft.entityframeworkcore.abstractions/6.0.6/microsoft.entityframeworkcore.abstractions.6.0.6.nupkg.sha512",
-    "/Users/simi/.nuget/packages/microsoft.entityframeworkcore.analyzers/6.0.6/microsoft.entityframeworkcore.analyzers.6.0.6.nupkg.sha512",
+    "/Users/simi/.nuget/packages/microsoft.entityframeworkcore/6.0.7/microsoft.entityframeworkcore.6.0.7.nupkg.sha512",
+    "/Users/simi/.nuget/packages/microsoft.entityframeworkcore.abstractions/6.0.7/microsoft.entityframeworkcore.abstractions.6.0.7.nupkg.sha512",
+    "/Users/simi/.nuget/packages/microsoft.entityframeworkcore.analyzers/6.0.7/microsoft.entityframeworkcore.analyzers.6.0.7.nupkg.sha512",
     "/Users/simi/.nuget/packages/microsoft.extensions.caching.abstractions/6.0.0/microsoft.extensions.caching.abstractions.6.0.0.nupkg.sha512",
     "/Users/simi/.nuget/packages/microsoft.extensions.caching.memory/6.0.1/microsoft.extensions.caching.memory.6.0.1.nupkg.sha512",
     "/Users/simi/.nuget/packages/microsoft.extensions.dependencyinjection/6.0.0/microsoft.extensions.dependencyinjection.6.0.0.nupkg.sha512",

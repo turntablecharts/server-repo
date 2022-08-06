@@ -1,0 +1,12 @@
+/Users/simi/Documents/ttc/apps/server-repo/pub/Core.dll
+/Users/simi/Documents/ttc/apps/server-repo/pub/Core.deps.json
+/Users/simi/Documents/ttc/apps/server-repo/pub/Core.pdb
+/Users/simi/Documents/ttc/apps/server-repo/pub/Microsoft.AspNetCore.Http.dll
+/Users/simi/Documents/ttc/apps/server-repo/pub/Microsoft.AspNetCore.Http.Abstractions.dll
+/Users/simi/Documents/ttc/apps/server-repo/pub/Microsoft.AspNetCore.Http.Features.dll
+/Users/simi/Documents/ttc/apps/server-repo/pub/Microsoft.AspNetCore.WebUtilities.dll
+/Users/simi/Documents/ttc/apps/server-repo/pub/Microsoft.Extensions.DependencyInjection.Abstractions.dll
+/Users/simi/Documents/ttc/apps/server-repo/pub/Microsoft.Extensions.ObjectPool.dll
+/Users/simi/Documents/ttc/apps/server-repo/pub/Microsoft.Extensions.Options.dll
+/Users/simi/Documents/ttc/apps/server-repo/pub/Microsoft.Extensions.Primitives.dll
+/Users/simi/Documents/ttc/apps/server-repo/pub/Microsoft.Net.Http.Headers.dll

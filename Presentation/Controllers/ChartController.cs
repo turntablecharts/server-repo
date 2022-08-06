@@ -125,6 +125,46 @@ namespace Presentation.Controllers
           
         }
 
+        [HttpGet("single-chart/{chartId}")]
+        public async Task<IActionResult> GetSingleChart([FromRoute]int chartId)
+        {
+            try
+            {
+                var result = await _db.Charts.FirstOrDefaultAsync(m => m.Id == chartId);
+                return Ok(result);   
+            }
+            catch (System.Exception)
+            {
+                return StatusCode(500, "Internal Error");
+            }
+        }
+
+        [HttpPut("edit-chart/{chartId}")]
+        public async Task<IActionResult> EditChart([FromRoute]int chartId, [FromBody]Chart chart)
+        {
+            try
+            {
+                var chartToUpdate = await _db.Charts.FirstOrDefaultAsync(m => m.Id == chartId);
+                if(chartToUpdate == null)
+                {
+                    return StatusCode(404, "Chart not found");
+                }
+
+                chartToUpdate.DateCreated = chart.DateCreated;
+                chartToUpdate.WeekNumber = chart.WeekNumber; 
+                chartToUpdate.HeaderVideoUrl = chart.HeaderVideoUrl;
+
+                _db.Charts.Update(chartToUpdate);
+                await _db.SaveChangesAsync();
+
+                return Ok();
+            }
+            catch (System.Exception)
+            {
+                return StatusCode(500, "Internal Error");
+            }
+        }
+
         [HttpPost("upload")]
         public async Task<IActionResult> UploadChart([FromForm] ChartVM input)
         {
@@ -167,7 +207,8 @@ namespace Presentation.Controllers
                 ChartItems = (List<ChartItem>)chartList,
                 Category = chartCategoryName,
                 ChartCategoryId = input.ChartCategoryId,
-                HeaderVideoUrl = input.HeaderVideoUrl
+                HeaderVideoUrl = input.HeaderVideoUrl, 
+                WeekNumber = input.WeekNumber
             };
 
             await _db.Charts.AddAsync(chartToAdd);
