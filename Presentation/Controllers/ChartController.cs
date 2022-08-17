@@ -86,18 +86,26 @@ namespace Presentation.Controllers
         {
             try
             {
-                var result = ISOWeek.ToDateTime(DateTime.Now.Year, week, DayOfWeek.Sunday);
+                // var result = ISOWeek.ToDateTime(DateTime.Now.Year, week, DayOfWeek.Sunday);
 
-                var dates = new List<DateTime>{result};
-                for (int i = 1; i < 7; i++)
-                {
-                    dates.Add(result.AddDays(i).Date);
-                }
+                // var dates = new List<DateTime>{result};
+                // for (int i = 1; i < 7; i++)
+                // {
+                //     dates.Add(result.AddDays(i).Date);
+                // }
 
-                var response = await _db.Charts.Where(m => m.ChartCategoryId == chartCategoryId && 
-                            dates.Contains(m.DateCreated.Date))
+                var response = await _db.Charts.Where(m => m.ChartCategoryId == chartCategoryId && m.WeekNumber == week)
                             .Include(m => m.ChartItems)
                             .FirstOrDefaultAsync();
+
+                if(response == null)
+                {
+                    var result = await _db.Charts.Where(m => m.ChartCategoryId == chartCategoryId)
+                    .Include(m => m.ChartItems)
+                    .FirstOrDefaultAsync();
+
+                    return Ok(result);
+                }
 
                 return Ok(response);
             }
@@ -114,7 +122,7 @@ namespace Presentation.Controllers
             {
                 var result = await _db.Charts.Where(m => m.ChartCategoryId == chartCategoryId)
                             .OrderByDescending(p => p.DateCreated)
-                            .Take(10).ToListAsync();
+                            .Take(52).ToListAsync();
 
                 return Ok(result);
             }

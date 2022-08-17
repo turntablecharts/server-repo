@@ -1,6 +1,7 @@
 using System;
 using System.Globalization;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Core.Entities;
 using Core.Interfaces;
@@ -189,12 +190,25 @@ namespace Presentation.Controllers
             var magazines = _magEditionRepository.GetWithInclude(m => m.Name.ToLower() == editionName.ToLower(), "MagazineDatas").FirstOrDefault();
 
             MagazineEditionData output = new MagazineEditionData();
+            var magazineData = magazines.MagazineDatas.Select(m => new {
+                Id = m.Id, 
+                DateCreated = m.DateCreated,
+                Title = m.Title, 
+                Writer = m.Description, 
+                HeaderImage = m.HeaderImage, 
+                magazineEditionDataId = m.MagazineEditionDataId, 
+                articlePosition = m.ArticlePosition,
+                Description = Regex.Replace(m.Content.Substring(0, 255)+"..", @"[^0-9a-zA-Z:,.']+", " ")})
+                .OrderBy(m => m.articlePosition)
+                .ToList();
 
-            output.Id = magazines.Id;
-            output.Name = magazines.Name;
-            output.MagazineDatas = magazines.MagazineDatas.OrderBy(m => m.ArticlePosition).ToList();
+            // output.Id = magazines.Id;
+            // output.Name = magazines.Name;
+            // output.MagazineDatas = magazineData;
 
-            return Ok(output);
+            var result = new {Id = magazines.Id, Name = magazines.Name, magazineData = magazineData};
+
+            return Ok(result);
         }
 
         [AllowAnonymous]
@@ -216,6 +230,14 @@ namespace Presentation.Controllers
                 .ToList();
 
             return Ok(output);
+        }
+
+        [AllowAnonymous]
+        [HttpGet("magazine/editions")]
+        public IActionResult GetMagazineEditions()
+        {
+            var editions = _magEditionRepository.GetAll();
+            return Ok(editions);
         }
         #endregion
 

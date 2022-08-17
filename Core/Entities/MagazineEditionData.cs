@@ -7,5 +7,6 @@ namespace Core.Entities
         public int Id { get; set; }
         public string Name { get; set; }
         public virtual ICollection<MagazineData> MagazineDatas { get; set; }
+        public string CoverImageUrl {get; set;}
     }
 }
