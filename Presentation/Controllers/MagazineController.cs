@@ -36,7 +36,7 @@ namespace Presentation.Controllers
         }
 
         #region magazine
-        [Authorize(Roles = "Admin, Author, Writer")]
+
         [HttpPost("magazine/add")]
         public async Task<IActionResult> AddMagazine([FromBody] MagazineVM item)
         {
@@ -49,27 +49,6 @@ namespace Presentation.Controllers
             var user = _userGenericRepo.GetWithInclude(m => m.Email == item.Email, string.Empty).FirstOrDefault();
 
             item.TtcUserId = user.Id;
-
-            int magEditionId;
-
-            var edition = _magEditionRepository.GetWithInclude(m => m.Name.ToUpper() == item.Edition.ToUpper(), string.Empty).FirstOrDefault();
-
-            if (edition == null)
-            {
-                var createdEdition = await _magEditionRepository.AddAsync(new MagazineEditionData
-                {
-                    Name = item.Edition
-                });
-
-                magEditionId = createdEdition.Id;
-            }
-            else
-            {
-                magEditionId = edition.Id;
-            }
-
-
-            item.MagazineEditionDataId = magEditionId;
 
             var magazine = await _magazineRepository.AddAsync(item);
 
@@ -135,7 +114,6 @@ namespace Presentation.Controllers
             return Ok(result);
         }
 
-        [Authorize(Roles = "Admin, Author, Writer")]
 
         [HttpPut("magazine/edit/{id}/{userEmail}")]
         public async Task<IActionResult> EditMagazine([FromRoute] int id, [FromBody] MagazineData item, [FromRoute] string userEmail)
@@ -160,7 +138,6 @@ namespace Presentation.Controllers
             return Ok(editedMagazine);
         }
 
-        [Authorize(Roles = "Admin, Author")]
         [HttpDelete("magazine/delete/{id}/{userEmail}")]
         public IActionResult DeleteMagazine([FromRoute] int id, [FromRoute] string userEmail)
         {
