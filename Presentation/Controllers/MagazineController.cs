@@ -96,20 +96,24 @@ namespace Presentation.Controllers
 
             var currentIndex = outputOthers.FindIndex(m => m.Id == magazine.Id);
 
-            if(currentIndex == 0)
-            {
-                result.NextArticle = outputOthers[currentIndex+1];
-            }
-            if(currentIndex == outputOthers.Count() -1)
-            {
-                result.NextArticle = outputOthers[0];
-            }
-            else 
-            {
-                result.NextArticle = outputOthers[currentIndex+1];
-            }
+            // if(outputOthers.Count() > 1)
+            // {
 
-            result.NextArticle.Content = null;
+            //     if(currentIndex == 0)
+            //     {
+            //         result.NextArticle = outputOthers[currentIndex+1];
+            //     }
+            //     if(currentIndex == outputOthers.Count() -1)
+            //     {
+            //         result.NextArticle = outputOthers[0];
+            //     }
+            //     else 
+            //     {
+            //         result.NextArticle = outputOthers[currentIndex+1];
+            //     }
+            // }
+
+            // result.NextArticle.Content = null;
 
             return Ok(result);
         }
