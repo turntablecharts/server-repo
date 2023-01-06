@@ -1,0 +1,8 @@
+bin
+obj
+Properties
+*.db
+.vscode
+publish
+pub
+PublishProfile
