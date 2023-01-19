@@ -16,12 +16,8 @@ namespace Infrastructure
         public DbSet<Chart> Charts {get; set;}
         public DbSet<Log> Logs {get; set;}
         public DbSet<SubscribersEmail> SubscribersEmails { get; set; }
-      
-
-
-
-
-
+    
+        
 
 
         /// new datas
@@ -40,5 +36,9 @@ namespace Infrastructure
         public DbSet<ChartHighlight> ChartHighlights { get; set; }
 
         public DbSet<ChartCategory> ChartCategories {get; set;}
+
+
+        public DbSet<CertifiedSong> CertifiedSongs {get; set;}
+
     }
 }
