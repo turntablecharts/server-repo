@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "40l7nAWt1i/eaRx52lSh+ya99wKX1c9txBVFBiG6/bGOE+u7fYr4/L7TBZP1G0bgMzWq8pl7xIco0euYpU6qew==",
+  "dgSpecHash": "y5eAZMGGSa5PjtLfKuEvP/Zu9Q1ZsTbI/NPD1JpmF1PuP3zLKGji3jyqcEluyF2xwwiOu4r0uoguScrCYe4XwA==",
   "success": true,
-  "projectFilePath": "/Users/simi/Documents/ttc/server-repo/Core/Core.csproj",
+  "projectFilePath": "/Volumes/FatherStreetSSD/Work/ttc/server-repo/Core/Core.csproj",
   "expectedPackageFiles": [
     "/Users/simi/.nuget/packages/microsoft.aspnetcore.http/2.2.2/microsoft.aspnetcore.http.2.2.2.nupkg.sha512",
     "/Users/simi/.nuget/packages/microsoft.aspnetcore.http.abstractions/2.2.0/microsoft.aspnetcore.http.abstractions.2.2.0.nupkg.sha512",

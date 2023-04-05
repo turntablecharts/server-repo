@@ -168,8 +168,8 @@ namespace Presentation.Controllers
         [HttpGet("magazine/edition/{editionName}")]
         public IActionResult GetMagazineByEdition([FromRoute] string editionName)
         {
+            //var magazines = _magEditionRepository.GetWithInclude(m => m.Name.ToLower() == editionName.ToLower(), "MagazineDatas").FirstOrDefault();
             var magazines = _magEditionRepository.GetWithInclude(m => m.Name.ToLower() == editionName.ToLower(), "MagazineDatas").FirstOrDefault();
-
             MagazineEditionData output = new MagazineEditionData();
             var magazineData = magazines.MagazineDatas.Select(m => new {
                 Id = m.Id, 
@@ -178,8 +178,10 @@ namespace Presentation.Controllers
                 Writer = m.Description, 
                 HeaderImage = m.HeaderImage, 
                 magazineEditionDataId = m.MagazineEditionDataId, 
-                articlePosition = m.ArticlePosition,
-                Description = Regex.Replace(m.Content.Substring(0, 255)+"..", @"[^0-9a-zA-Z:,.']+", " ")})
+                articlePosition = m.ArticlePosition
+                //Description = Regex.Replace(m.Content.Substring(0, 255)+"..", @"[^0-9a-zA-Z:,.']+", " ")
+                
+                })
                 .OrderBy(m => m.articlePosition)
                 .ToList();
 
