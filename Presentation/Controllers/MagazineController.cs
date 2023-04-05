@@ -219,7 +219,7 @@ namespace Presentation.Controllers
         [HttpGet("magazine/editions")]
         public IActionResult GetMagazineEditions()
         {
-            var editions = _magEditionRepository.GetAll();
+            var editions = _magEditionRepository.GetAll().Where(m => m.IsDelete == false);
             return Ok(editions);
         }
         #endregion
