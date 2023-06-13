@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/Volumes/FatherStreetSSD/Work/ttc/server-repo/Infrastructure/Infrastructure.csproj": {}
+    "/Users/simi/Documents/ttc/server-repo/Infrastructure/Infrastructure.csproj": {}
   },
   "projects": {
-    "/Volumes/FatherStreetSSD/Work/ttc/server-repo/Core/Core.csproj": {
+    "/Users/simi/Documents/ttc/server-repo/Core/Core.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Volumes/FatherStreetSSD/Work/ttc/server-repo/Core/Core.csproj",
+        "projectUniqueName": "/Users/simi/Documents/ttc/server-repo/Core/Core.csproj",
         "projectName": "Core",
-        "projectPath": "/Volumes/FatherStreetSSD/Work/ttc/server-repo/Core/Core.csproj",
+        "projectPath": "/Users/simi/Documents/ttc/server-repo/Core/Core.csproj",
         "packagesPath": "/Users/simi/.nuget/packages/",
-        "outputPath": "/Volumes/FatherStreetSSD/Work/ttc/server-repo/Core/obj/",
+        "outputPath": "/Users/simi/Documents/ttc/server-repo/Core/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/Users/simi/.nuget/NuGet/NuGet.Config"
@@ -64,14 +64,14 @@
         }
       }
     },
-    "/Volumes/FatherStreetSSD/Work/ttc/server-repo/Infrastructure/Infrastructure.csproj": {
+    "/Users/simi/Documents/ttc/server-repo/Infrastructure/Infrastructure.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Volumes/FatherStreetSSD/Work/ttc/server-repo/Infrastructure/Infrastructure.csproj",
+        "projectUniqueName": "/Users/simi/Documents/ttc/server-repo/Infrastructure/Infrastructure.csproj",
         "projectName": "Infrastructure",
-        "projectPath": "/Volumes/FatherStreetSSD/Work/ttc/server-repo/Infrastructure/Infrastructure.csproj",
+        "projectPath": "/Users/simi/Documents/ttc/server-repo/Infrastructure/Infrastructure.csproj",
         "packagesPath": "/Users/simi/.nuget/packages/",
-        "outputPath": "/Volumes/FatherStreetSSD/Work/ttc/server-repo/Infrastructure/obj/",
+        "outputPath": "/Users/simi/Documents/ttc/server-repo/Infrastructure/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/Users/simi/.nuget/NuGet/NuGet.Config"
@@ -87,8 +87,8 @@
           "net7.0": {
             "targetAlias": "net7.0",
             "projectReferences": {
-              "/Volumes/FatherStreetSSD/Work/ttc/server-repo/Core/Core.csproj": {
-                "projectPath": "/Volumes/FatherStreetSSD/Work/ttc/server-repo/Core/Core.csproj"
+              "/Users/simi/Documents/ttc/server-repo/Core/Core.csproj": {
+                "projectPath": "/Users/simi/Documents/ttc/server-repo/Core/Core.csproj"
               }
             }
           }

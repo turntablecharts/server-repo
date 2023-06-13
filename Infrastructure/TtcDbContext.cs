@@ -17,13 +17,11 @@ namespace Infrastructure
         public DbSet<Log> Logs {get; set;}
         public DbSet<SubscribersEmail> SubscribersEmails { get; set; }
     
-        
-
+        public DbSet<PowerListNomination> PowerListNominations {get; set;}
 
         /// new datas
         public DbSet<MagazineData> MagazineDatas { get; set; }
         public DbSet<MagazineEditionData> MagazineEditionDatas { get; set; }
-
 
         public DbSet<News> News { get; set; }
         public DbSet<NewsCategory>  NewsCategories { get; set; }

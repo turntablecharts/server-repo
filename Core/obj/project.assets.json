@@ -522,11 +522,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Volumes/FatherStreetSSD/Work/ttc/server-repo/Core/Core.csproj",
+      "projectUniqueName": "/Users/simi/Documents/ttc/server-repo/Core/Core.csproj",
       "projectName": "Core",
-      "projectPath": "/Volumes/FatherStreetSSD/Work/ttc/server-repo/Core/Core.csproj",
+      "projectPath": "/Users/simi/Documents/ttc/server-repo/Core/Core.csproj",
       "packagesPath": "/Users/simi/.nuget/packages/",
-      "outputPath": "/Volumes/FatherStreetSSD/Work/ttc/server-repo/Core/obj/",
+      "outputPath": "/Users/simi/Documents/ttc/server-repo/Core/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/Users/simi/.nuget/NuGet/NuGet.Config"
