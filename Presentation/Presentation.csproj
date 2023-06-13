@@ -21,6 +21,7 @@
     <PackageReference Include="Swashbuckle" Version="*" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="*" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="*" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Core\Core.csproj" />

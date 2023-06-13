@@ -14,14 +14,26 @@ namespace Presentation.Controllers
         private readonly IGenericRepository<NewsCategory> _newsRepo;
         private readonly IGenericRepository<Chart> _chartRepo;
         private readonly IGenericRepository<PhotoCategory> _photoRepo;
+        private readonly IGenericRepository<PowerListNomination> _powerListNomination;
 
         public PublicController( IGenericRepository<NewsCategory> newsRepo,
           IGenericRepository<Chart> chartRepo,
-          IGenericRepository<PhotoCategory> photoRepo)
+          IGenericRepository<PhotoCategory> photoRepo, 
+          IGenericRepository<PowerListNomination> powerListNomination)
         {
             _newsRepo = newsRepo;
             _chartRepo = chartRepo;
             _photoRepo = photoRepo;
+            _powerListNomination = powerListNomination;
+        }
+
+        [HttpPost("powerList")]
+        public async Task<IActionResult> AddToPowerList([FromBody]PowerListNomination power)
+        {
+            power.Id = System.Guid.NewGuid();
+            power.DateAdded = System.DateTime.Now;
+            var result = await _powerListNomination.AddAsync(power);
+            return Ok(new {StatusCode = 200, Message= "Data Successfully saved"});
         }
 
         [HttpGet("homepage")]
