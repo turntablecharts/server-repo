@@ -48,11 +48,11 @@ namespace Presentation.Controllers
                     var response = new ResponseDto<string> { Data = "Invalid Email. Kindly Check your input", StatusCode = 400 };
                     return StatusCode(response.StatusCode, response);
                 }
-                string alreadyExists = null; // _subscribers.GetWithInclude(m => m.Email == subscriberInfo.Email, string.Empty).FirstOrDefault();
+                var alreadyExists = _subscribers.GetWithInclude(m => m.Email == subscriberInfo.Email, string.Empty).FirstOrDefault();
                 if (alreadyExists == null)
                 {
                     subscriberInfo.SignUpDate = DateTime.UtcNow;
-                    //var subscriber = await _subscribers.AddAsync(subscriberInfo);
+                    var subscriber = await _subscribers.AddAsync(subscriberInfo);
                     var response = new ResponseDto<string> { Data = "Subscription Successful\n. A welcome email has being sent to you", StatusCode = 200 };
 
                     await SendEmailResend(subscriberInfo.Name, subscriberInfo.Email, "Welcome To TurnTable Charts");
