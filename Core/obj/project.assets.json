@@ -202,6 +202,16 @@
             "related": ".xml"
           }
         }
+      },
+      "Common/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v7.0",
+        "compile": {
+          "bin/placeholder/Common.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Common.dll": {}
+        }
       }
     }
   },
@@ -509,10 +519,16 @@
         "useSharedDesignerContext.txt",
         "version.txt"
       ]
+    },
+    "Common/1.0.0": {
+      "type": "project",
+      "path": "../Common/Common.csproj",
+      "msbuildProject": "../Common/Common.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net7.0": [
+      "Common >= 1.0.0",
       "Microsoft.AspNetCore.Http >= 2.2.2"
     ]
   },
@@ -522,11 +538,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/simi/Documents/ttc/server-repo/Core/Core.csproj",
+      "projectUniqueName": "/Users/simi/Documents/startups/turntablecharts/server-repo/Core/Core.csproj",
       "projectName": "Core",
-      "projectPath": "/Users/simi/Documents/ttc/server-repo/Core/Core.csproj",
+      "projectPath": "/Users/simi/Documents/startups/turntablecharts/server-repo/Core/Core.csproj",
       "packagesPath": "/Users/simi/.nuget/packages/",
-      "outputPath": "/Users/simi/Documents/ttc/server-repo/Core/obj/",
+      "outputPath": "/Users/simi/Documents/startups/turntablecharts/server-repo/Core/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/Users/simi/.nuget/NuGet/NuGet.Config"
@@ -535,13 +551,16 @@
         "net7.0"
       ],
       "sources": {
-        "/usr/local/share/dotnet/library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
         "net7.0": {
           "targetAlias": "net7.0",
-          "projectReferences": {}
+          "projectReferences": {
+            "/Users/simi/Documents/startups/turntablecharts/server-repo/Common/Common.csproj": {
+              "projectPath": "/Users/simi/Documents/startups/turntablecharts/server-repo/Common/Common.csproj"
+            }
+          }
         }
       },
       "warningProperties": {
@@ -575,7 +594,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/7.0.101/RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/7.0.307/RuntimeIdentifierGraph.json"
       }
     }
   }
