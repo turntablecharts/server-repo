@@ -62,7 +62,7 @@ namespace Presentation.Controllers
                 .Skip(skipSize).Take(pageSize).ToList();
 
             //load charts
-            var latest = _chartRepo.GetAll().OrderByDescending(m => m.DateCreated).Where(m => m.Category.Contains(chartCategory ?? "Turntable Top 50")).FirstOrDefault();
+            var latest = _chartRepo.GetAsync(m => m.ChartCategoryId == 1, orderBy: m=> m.OrderByDescending(m => m.DateCreated)).Result;
 
             var result = _chartRepo.GetWithInclude(m => m.Id == latest.Id, "ChartItems").FirstOrDefault();
 

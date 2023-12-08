@@ -14,6 +14,10 @@ namespace Core.Interfaces {
 
         IQueryable<TEntity> GetAll ();
         TEntity UpdateAsync (TEntity entity);
+        Task<TEntity> GetAsync(
+           Expression<Func<TEntity, bool>> predicate,
+           Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>>? orderBy = null,
+           params Expression<Func<TEntity, object>>[] includes);
 
         IQueryable<TEntity> GetWithInclude (Expression<Func<TEntity, bool>> filter, string includeProperties);
 

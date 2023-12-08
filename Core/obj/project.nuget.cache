@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "Cz2b7VqJL0a+obpqOWXVd7w5OGiBA9Eej5yAEQu3rAHBvX9uBGLWlPQOKp27vSeUhSDjrjSPVkyEiqCaRlrF+Q==",
+  "dgSpecHash": "gXUTbwEywhUfxhsWG00XtkZnp3LwPEOzfo0YmqoU6sRhAjUumgJCgeUe1w0oK80jnUrcMVmK3Bs86sv0O21rjw==",
   "success": true,
   "projectFilePath": "/Users/simi/Documents/startups/turntablecharts/server-repo/Core/Core.csproj",
   "expectedPackageFiles": [
@@ -17,7 +17,9 @@
     "/Users/simi/.nuget/packages/system.componentmodel.annotations/4.5.0/system.componentmodel.annotations.4.5.0.nupkg.sha512",
     "/Users/simi/.nuget/packages/system.memory/4.5.1/system.memory.4.5.1.nupkg.sha512",
     "/Users/simi/.nuget/packages/system.runtime.compilerservices.unsafe/4.5.1/system.runtime.compilerservices.unsafe.4.5.1.nupkg.sha512",
-    "/Users/simi/.nuget/packages/system.text.encodings.web/4.5.0/system.text.encodings.web.4.5.0.nupkg.sha512"
+    "/Users/simi/.nuget/packages/system.text.encodings.web/4.5.0/system.text.encodings.web.4.5.0.nupkg.sha512",
+    "/Users/simi/.nuget/packages/microsoft.netcore.app.ref/7.0.8/microsoft.netcore.app.ref.7.0.8.nupkg.sha512",
+    "/Users/simi/.nuget/packages/microsoft.aspnetcore.app.ref/7.0.8/microsoft.aspnetcore.app.ref.7.0.8.nupkg.sha512"
   ],
   "logs": []
 }
