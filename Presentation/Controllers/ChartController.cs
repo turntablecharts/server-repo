@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 using Core.Entities;
 using CsvHelper;
@@ -259,9 +260,33 @@ namespace Presentation.Controllers
 
             await _db.Charts.AddAsync(chartToAdd);
             await _db.SaveChangesAsync();
+            if(input.ChartCategoryId == 3){
+                await CallUpdatePointsApi(chartToAdd.WeekNumber.GetValueOrDefault());
+            }
 
             return Ok(chartToAdd);
 
+        }
+
+        static async Task CallUpdatePointsApi(int weekNumber)
+        {
+            try
+            {
+                string exch = "NfLGgo6vDwU6n7CNaVMK";
+                string apiUrl = $"https://turntableapp.azurewebsites.net/api/Fantasy/UpdatePoints?weekNumber={weekNumber}&Exch={exch}";
+                using (HttpClient client = new HttpClient())
+                {
+                    HttpResponseMessage response = await client.PutAsync(apiUrl, null);
+                    if (response.IsSuccessStatusCode)
+                        Console.WriteLine("API call successful!");
+                    else
+                        Console.WriteLine($"API call failed with status code: {response.StatusCode}");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred: {ex.Message}");
+            }
         }
 
         [HttpDelete("{chartId}")]
