@@ -118,7 +118,8 @@ namespace Presentation.Controllers
                             Bio = ttcUser.Bio, 
                             Token = token, 
                             Role = roles.FirstOrDefault(),
-                            Id = ttcUser.Id
+                            Id = ttcUser.Id, 
+                            Email = loginDetails.Email
                         }
                     };
                     return Ok(loginReponse);

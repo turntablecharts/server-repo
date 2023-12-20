@@ -8,5 +8,6 @@ namespace Presentation.DTO
         public string Bio { get; set; }
         public string Token {get; set;} 
         public string Role {get; set;}
+        public string Email { get; set; }
     }
 }
