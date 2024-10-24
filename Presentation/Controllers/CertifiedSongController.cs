@@ -22,7 +22,7 @@ namespace Presentation.Controllers
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            var response =await _certifiedSongsRepo.GetAll().ToListAsync();
+            var response =await _certifiedSongsRepo.GetAllAsync(m => m.IsClaimed == false, orderBy: m=> m.OrderByDescending(m => m.CertifiedDate));
             return Ok(response);
         }
     }
