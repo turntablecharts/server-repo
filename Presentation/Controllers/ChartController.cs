@@ -222,6 +222,7 @@ namespace Presentation.Controllers
             }
             List<ChartItemVM> chartListVM = new List<ChartItemVM>();
 
+            //if it's streaming extract market share from it.
 
             using (var reader = new StreamReader(input.DataCSVFile.OpenReadStream()))
             using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
