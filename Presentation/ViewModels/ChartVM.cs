@@ -1,4 +1,5 @@
 using System;
+using System.ComponentModel.DataAnnotations;
 using Core.Entities;
 using Microsoft.AspNetCore.Http;
 

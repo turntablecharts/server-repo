@@ -204,6 +204,20 @@ namespace Presentation.Controllers
                 _db.Charts.Update(chartToUpdate);
                 await _db.SaveChangesAsync();
 
+                if(chartToUpdate.ChartCategoryId == 3 || chartToUpdate.ChartCategoryId == 18){
+                //verify that the week exist for artiste chart and producer chart
+                    // if(chartToUpdate.ChartCategoryId == 3){
+                    //     if(_db.Charts.Any(m => m.ChartCategoryId == 18 && m.WeekNumber == chart.WeekNumber)){
+                    //         await CallUpdatePointsApi(chartToUpdate.WeekNumber.GetValueOrDefault());
+                    //     }
+                    // }
+                    // else if(chartToUpdate.ChartCategoryId == 18){
+                    //     if(_db.Charts.Any(m => m.ChartCategoryId == 3 && m.WeekNumber == chart.WeekNumber)){
+                    //         await CallUpdatePointsApi(chartToUpdate.WeekNumber.GetValueOrDefault());
+                    //     }
+                    // }    
+                }
+
                 return Ok();
             }
             catch (System.Exception)
@@ -223,7 +237,6 @@ namespace Presentation.Controllers
             List<ChartItemVM> chartListVM = new List<ChartItemVM>();
 
             //if it's streaming extract market share from it.
-
             using (var reader = new StreamReader(input.DataCSVFile.OpenReadStream()))
             using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
             {
@@ -261,11 +274,10 @@ namespace Presentation.Controllers
 
             await _db.Charts.AddAsync(chartToAdd);
             await _db.SaveChangesAsync();
-            if(input.ChartCategoryId == 3){
-                await CallUpdatePointsApi(chartToAdd.WeekNumber.GetValueOrDefault());
-            }
+            
+            
 
-            return Ok(chartToAdd);
+            return Ok("Chart uploaded successfully");
 
         }
 
