@@ -13,6 +13,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Presentation.Areas.Identity.Data;
@@ -44,7 +45,9 @@ namespace Presentation
             {
                 options.UseSqlServer (Configuration.GetConnectionString ("ProductionDbString"),
                     optionsBuilder =>
-                    optionsBuilder.MigrationsAssembly ("Presentation"));
+                    optionsBuilder.MigrationsAssembly ("Presentation"))
+                    .EnableSensitiveDataLogging() // shows parameter values
+                    .LogTo(Console.WriteLine, LogLevel.Information);
             }, ServiceLifetime.Transient);
 
             services.AddAuthentication (JwtBearerDefaults.AuthenticationScheme)
@@ -61,12 +64,14 @@ namespace Presentation
                     };
                 });
 
+            services.AddMemoryCache();
+
             // services.AddDbContext<TtcDbContext> (options => {
             //     options.UseSqlite (Configuration.GetConnectionString ("AppConectionString"),
             //         optionsBuilder =>
             //         optionsBuilder.MigrationsAssembly ("Presentation"));
             // });
-          
+
 
             //services.AddDbContext<ApplicationDbContext>(options => options.UseSqlite("Data Source=conferences.db"), ServiceLifetime.Transient);
 

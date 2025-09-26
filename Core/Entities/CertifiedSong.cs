@@ -13,7 +13,7 @@ namespace Core.Entities
         public string Artiste {get; set;}
         public string Format {get; set;}
         public string Label {get; set;}
-        public DateTime CertifiedDate {get; set;}
+        public DateTime? CertifiedDate {get; set;}
         public bool IsClaimed {get; set;}
     }
 }

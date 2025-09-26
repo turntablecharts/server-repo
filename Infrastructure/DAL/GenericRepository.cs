@@ -55,20 +55,32 @@ namespace Infrastructure.DAL {
             return query;
         }
 
-        public async Task<IQueryable<TEntity>> GetAllAsync(Expression<Func<TEntity, bool>> predicate, 
-            Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null, params Expression<Func<TEntity, object>>[] includes)
+        public async Task<List<TEntity>> GetAllAsync(
+            Expression<Func<TEntity, bool>> predicate, 
+            Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
+            params Expression<Func<TEntity, object>>[] includes)
         {
             IQueryable<TEntity> query = dbSet.AsNoTracking();
-            if (predicate == null) throw new ArgumentNullException(nameof(predicate));
-            if (includes != null)
-            {
-                foreach (var property in includes)
-                {
-                    query = query.Include(property);
-                }
-            }
-            if (orderBy != null) query = orderBy(query);
-            return query;
+
+    if (predicate != null)
+    {
+        query = query.Where(predicate);
+    }
+
+    if (includes != null)
+    {
+        foreach (var property in includes)
+        {
+            query = query.Include(property);
+        }
+    }
+
+    if (orderBy != null)
+    {
+        query = orderBy(query);
+    }
+
+    return await query.ToListAsync();
         }
 
         public async Task<TEntity> GetAsync(
