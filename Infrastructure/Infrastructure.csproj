@@ -6,6 +6,8 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.14"/>
     <PackageReference Include="WindowsAzure.Storage" Version="9.3.3"/>
     <PackageReference Include="Microsoft.AspNetCore.Http" Version="2.2.2"/>
+    <PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="7.0.0"/>
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="7.0.0"/>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Core\Core.csproj"/>

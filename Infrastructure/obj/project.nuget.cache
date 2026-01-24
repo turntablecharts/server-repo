@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "6UyJ6P2M0h0bIgyy9RACu5dweACT2RwmpW3H+Z5IovIzJzOjvvCb0jjm6VgKYXi8q1n9FL+SK5889S7zPjvGuw==",
+  "dgSpecHash": "qLcy3eBEPeU=",
   "success": true,
-  "projectFilePath": "/Users/simi/Documents/startups/turntablecharts/server-repo/Infrastructure/Infrastructure.csproj",
+  "projectFilePath": "/Users/simi/Documents/Documents - Miro/startups/turntablecharts/server-repo/Infrastructure/Infrastructure.csproj",
   "expectedPackageFiles": [
     "/Users/simi/.nuget/packages/microsoft.aspnetcore.http/2.2.2/microsoft.aspnetcore.http.2.2.2.nupkg.sha512",
     "/Users/simi/.nuget/packages/microsoft.aspnetcore.http.abstractions/2.2.0/microsoft.aspnetcore.http.abstractions.2.2.0.nupkg.sha512",
@@ -107,8 +107,8 @@
     "/Users/simi/.nuget/packages/system.xml.xdocument/4.3.0/system.xml.xdocument.4.3.0.nupkg.sha512",
     "/Users/simi/.nuget/packages/system.xml.xmldocument/4.3.0/system.xml.xmldocument.4.3.0.nupkg.sha512",
     "/Users/simi/.nuget/packages/windowsazure.storage/9.3.3/windowsazure.storage.9.3.3.nupkg.sha512",
-    "/Users/simi/.nuget/packages/microsoft.netcore.app.ref/7.0.18/microsoft.netcore.app.ref.7.0.18.nupkg.sha512",
-    "/Users/simi/.nuget/packages/microsoft.aspnetcore.app.ref/7.0.18/microsoft.aspnetcore.app.ref.7.0.18.nupkg.sha512"
+    "/Users/simi/.nuget/packages/microsoft.netcore.app.ref/7.0.20/microsoft.netcore.app.ref.7.0.20.nupkg.sha512",
+    "/Users/simi/.nuget/packages/microsoft.aspnetcore.app.ref/7.0.20/microsoft.aspnetcore.app.ref.7.0.20.nupkg.sha512"
   ],
   "logs": []
 }

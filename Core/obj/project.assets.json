@@ -538,11 +538,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/simi/Documents/startups/turntablecharts/server-repo/Core/Core.csproj",
+      "projectUniqueName": "/Users/simi/Documents/Documents - Miro/startups/turntablecharts/server-repo/Core/Core.csproj",
       "projectName": "Core",
-      "projectPath": "/Users/simi/Documents/startups/turntablecharts/server-repo/Core/Core.csproj",
+      "projectPath": "/Users/simi/Documents/Documents - Miro/startups/turntablecharts/server-repo/Core/Core.csproj",
       "packagesPath": "/Users/simi/.nuget/packages/",
-      "outputPath": "/Users/simi/Documents/startups/turntablecharts/server-repo/Core/obj/",
+      "outputPath": "/Users/simi/Documents/Documents - Miro/startups/turntablecharts/server-repo/Core/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/Users/simi/.nuget/NuGet/NuGet.Config"
@@ -551,14 +551,16 @@
         "net7.0"
       ],
       "sources": {
-        "https://api.nuget.org/v3/index.json": {}
+        "https://api.nuget.org/v3/index.json": {},
+        "https://pkgs.dev.azure.com/samantharoth23/_packaging/kuda.packages/nuget/v3/index.json": {},
+        "https://pkgs.dev.azure.com/samantharoth23/kuda.retail/_packaging/kuda.packages.mod/nuget/v3/index.json": {}
       },
       "frameworks": {
         "net7.0": {
           "targetAlias": "net7.0",
           "projectReferences": {
-            "/Users/simi/Documents/startups/turntablecharts/server-repo/Common/Common.csproj": {
-              "projectPath": "/Users/simi/Documents/startups/turntablecharts/server-repo/Common/Common.csproj"
+            "/Users/simi/Documents/Documents - Miro/startups/turntablecharts/server-repo/Common/Common.csproj": {
+              "projectPath": "/Users/simi/Documents/Documents - Miro/startups/turntablecharts/server-repo/Common/Common.csproj"
             }
           }
         }
@@ -572,7 +574,8 @@
         "enableAudit": "true",
         "auditLevel": "low",
         "auditMode": "direct"
-      }
+      },
+      "SdkAnalysisLevel": "10.0.100"
     },
     "frameworks": {
       "net7.0": {
@@ -597,11 +600,11 @@
         "downloadDependencies": [
           {
             "name": "Microsoft.AspNetCore.App.Ref",
-            "version": "[7.0.18, 7.0.18]"
+            "version": "[7.0.20, 7.0.20]"
           },
           {
             "name": "Microsoft.NETCore.App.Ref",
-            "version": "[7.0.18, 7.0.18]"
+            "version": "[7.0.20, 7.0.20]"
           }
         ],
         "frameworkReferences": {
@@ -609,7 +612,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.204/RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/10.0.100/RuntimeIdentifierGraph.json"
       }
     }
   }

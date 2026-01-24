@@ -6119,6 +6119,8 @@
       "Core >= 1.0.0",
       "Microsoft.AspNetCore.Http >= 2.2.2",
       "Microsoft.EntityFrameworkCore >= 7.0.14",
+      "Microsoft.Extensions.Caching.Memory >= 7.0.0",
+      "Microsoft.Extensions.Logging.Abstractions >= 7.0.0",
       "WindowsAzure.Storage >= 9.3.3"
     ]
   },
@@ -6128,11 +6130,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/simi/Documents/startups/turntablecharts/server-repo/Infrastructure/Infrastructure.csproj",
+      "projectUniqueName": "/Users/simi/Documents/Documents - Miro/startups/turntablecharts/server-repo/Infrastructure/Infrastructure.csproj",
       "projectName": "Infrastructure",
-      "projectPath": "/Users/simi/Documents/startups/turntablecharts/server-repo/Infrastructure/Infrastructure.csproj",
+      "projectPath": "/Users/simi/Documents/Documents - Miro/startups/turntablecharts/server-repo/Infrastructure/Infrastructure.csproj",
       "packagesPath": "/Users/simi/.nuget/packages/",
-      "outputPath": "/Users/simi/Documents/startups/turntablecharts/server-repo/Infrastructure/obj/",
+      "outputPath": "/Users/simi/Documents/Documents - Miro/startups/turntablecharts/server-repo/Infrastructure/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/Users/simi/.nuget/NuGet/NuGet.Config"
@@ -6141,17 +6143,19 @@
         "net7.0"
       ],
       "sources": {
-        "https://api.nuget.org/v3/index.json": {}
+        "https://api.nuget.org/v3/index.json": {},
+        "https://pkgs.dev.azure.com/samantharoth23/_packaging/kuda.packages/nuget/v3/index.json": {},
+        "https://pkgs.dev.azure.com/samantharoth23/kuda.retail/_packaging/kuda.packages.mod/nuget/v3/index.json": {}
       },
       "frameworks": {
         "net7.0": {
           "targetAlias": "net7.0",
           "projectReferences": {
-            "/Users/simi/Documents/startups/turntablecharts/server-repo/Common/Common.csproj": {
-              "projectPath": "/Users/simi/Documents/startups/turntablecharts/server-repo/Common/Common.csproj"
+            "/Users/simi/Documents/Documents - Miro/startups/turntablecharts/server-repo/Common/Common.csproj": {
+              "projectPath": "/Users/simi/Documents/Documents - Miro/startups/turntablecharts/server-repo/Common/Common.csproj"
             },
-            "/Users/simi/Documents/startups/turntablecharts/server-repo/Core/Core.csproj": {
-              "projectPath": "/Users/simi/Documents/startups/turntablecharts/server-repo/Core/Core.csproj"
+            "/Users/simi/Documents/Documents - Miro/startups/turntablecharts/server-repo/Core/Core.csproj": {
+              "projectPath": "/Users/simi/Documents/Documents - Miro/startups/turntablecharts/server-repo/Core/Core.csproj"
             }
           }
         }
@@ -6165,7 +6169,8 @@
         "enableAudit": "true",
         "auditLevel": "low",
         "auditMode": "direct"
-      }
+      },
+      "SdkAnalysisLevel": "10.0.100"
     },
     "frameworks": {
       "net7.0": {
@@ -6178,6 +6183,14 @@
           "Microsoft.EntityFrameworkCore": {
             "target": "Package",
             "version": "[7.0.14, )"
+          },
+          "Microsoft.Extensions.Caching.Memory": {
+            "target": "Package",
+            "version": "[7.0.0, )"
+          },
+          "Microsoft.Extensions.Logging.Abstractions": {
+            "target": "Package",
+            "version": "[7.0.0, )"
           },
           "WindowsAzure.Storage": {
             "target": "Package",
@@ -6198,11 +6211,11 @@
         "downloadDependencies": [
           {
             "name": "Microsoft.AspNetCore.App.Ref",
-            "version": "[7.0.18, 7.0.18]"
+            "version": "[7.0.20, 7.0.20]"
           },
           {
             "name": "Microsoft.NETCore.App.Ref",
-            "version": "[7.0.18, 7.0.18]"
+            "version": "[7.0.20, 7.0.20]"
           }
         ],
         "frameworkReferences": {
@@ -6210,7 +6223,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.204/RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/10.0.100/RuntimeIdentifierGraph.json"
       }
     }
   }

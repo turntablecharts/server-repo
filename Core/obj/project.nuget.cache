@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "2/ALpEdt1d4IysFti8eGI1pYGfd2lzR7uwBo1M+dzuWAc7ip4HOlokGGD5ITx30S27+pGNoIGWP9Rfh8O1UyEQ==",
+  "dgSpecHash": "IxJSmkH1WN8=",
   "success": true,
-  "projectFilePath": "/Users/simi/Documents/startups/turntablecharts/server-repo/Core/Core.csproj",
+  "projectFilePath": "/Users/simi/Documents/Documents - Miro/startups/turntablecharts/server-repo/Core/Core.csproj",
   "expectedPackageFiles": [
     "/Users/simi/.nuget/packages/microsoft.aspnetcore.http/2.2.2/microsoft.aspnetcore.http.2.2.2.nupkg.sha512",
     "/Users/simi/.nuget/packages/microsoft.aspnetcore.http.abstractions/2.2.0/microsoft.aspnetcore.http.abstractions.2.2.0.nupkg.sha512",
@@ -18,8 +18,8 @@
     "/Users/simi/.nuget/packages/system.memory/4.5.1/system.memory.4.5.1.nupkg.sha512",
     "/Users/simi/.nuget/packages/system.runtime.compilerservices.unsafe/4.5.1/system.runtime.compilerservices.unsafe.4.5.1.nupkg.sha512",
     "/Users/simi/.nuget/packages/system.text.encodings.web/4.5.0/system.text.encodings.web.4.5.0.nupkg.sha512",
-    "/Users/simi/.nuget/packages/microsoft.netcore.app.ref/7.0.18/microsoft.netcore.app.ref.7.0.18.nupkg.sha512",
-    "/Users/simi/.nuget/packages/microsoft.aspnetcore.app.ref/7.0.18/microsoft.aspnetcore.app.ref.7.0.18.nupkg.sha512"
+    "/Users/simi/.nuget/packages/microsoft.netcore.app.ref/7.0.20/microsoft.netcore.app.ref.7.0.20.nupkg.sha512",
+    "/Users/simi/.nuget/packages/microsoft.aspnetcore.app.ref/7.0.20/microsoft.aspnetcore.app.ref.7.0.20.nupkg.sha512"
   ],
   "logs": []
 }
