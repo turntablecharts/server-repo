@@ -61,7 +61,7 @@ namespace Presentation.Controllers
                             .OrderByDescending(p => p.DateCreated)
                             .Include(m => m.ChartItems)
                             .FirstOrDefaultAsync();
-                        var topSong = chartEntry != null ? chartEntry.ChartItems.FirstOrDefault() : null;
+                        var topSong = chartEntry != null ? chartEntry.ChartItems.FirstOrDefault(m => m.Rank == 1) : null;
 
                         results.Add(
                             new ChartCategoryVM
