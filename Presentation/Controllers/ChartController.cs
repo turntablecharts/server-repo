@@ -110,6 +110,7 @@ namespace Presentation.Controllers
                         .FirstOrDefaultAsync()
                 );
 
+                result.ChartItems = result.ChartItems.OrderBy(m => m.Rank).ToList();
                 return Ok(result);
             }
             catch (System.Exception)
@@ -143,6 +144,7 @@ namespace Presentation.Controllers
                                 .Charts.Where(m => m.ChartCategoryId == chartCategoryId)
                                 .Include(m => m.ChartItems)
                                 .FirstOrDefaultAsync();
+                            result.ChartItems = result.ChartItems.OrderBy(m => m.Rank).ToList();
                         }
                         return result;
                     }
@@ -187,6 +189,8 @@ namespace Presentation.Controllers
                                 .Charts.Where(m => m.ChartCategoryId == chartCategoryId)
                                 .Include(m => m.ChartItems)
                                 .FirstOrDefaultAsync();
+
+                            result.ChartItems = result.ChartItems.OrderBy(m => m.Rank).ToList();
                         }
                         return result;
                     }
