@@ -41,6 +41,7 @@ namespace Presentation.Controllers
                 _cache.Set(cacheKey, response,
                     new MemoryCacheEntryOptions
                     {
+                        Size = 1,
                         AbsoluteExpirationRelativeToNow = TimeSpan.FromDays(1)
                     });
             }
