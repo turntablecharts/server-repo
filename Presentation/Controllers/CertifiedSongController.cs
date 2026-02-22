@@ -16,8 +16,11 @@ namespace Presentation.Controllers
     {
         private IGenericRepository<CertifiedSong> _certifiedSongsRepo;
         private readonly IMemoryCache _cache;
-        public CertifiedSongController(IGenericRepository<CertifiedSong> certifiedSongsRepo,
-            IMemoryCache cache)
+
+        public CertifiedSongController(
+            IGenericRepository<CertifiedSong> certifiedSongsRepo,
+            IMemoryCache cache
+        )
         {
             _certifiedSongsRepo = certifiedSongsRepo;
             _cache = cache;
@@ -38,17 +41,19 @@ namespace Presentation.Controllers
                 // 👇 force query execution now
                 response = data.ToList();
 
-                _cache.Set(cacheKey, response,
+                _cache.Set(
+                    cacheKey,
+                    response,
                     new MemoryCacheEntryOptions
                     {
                         Size = 1,
-                        AbsoluteExpirationRelativeToNow = TimeSpan.FromDays(1)
-                    });
+                        AbsoluteExpirationRelativeToNow = TimeSpan.FromDays(1),
+                    }
+                );
             }
 
             return Ok(response);
         }
-
 
         [HttpGet("search")]
         public async Task<IActionResult> Get([FromQuery] string? query)
@@ -59,11 +64,16 @@ namespace Presentation.Controllers
             query = query.Trim().ToLower();
 
             var response = await _certifiedSongsRepo.GetAllAsync(
-                    m => m.IsClaimed == false
-                        && (EF.Functions.Like(m.Title, $"%{query}%")
-                            || EF.Functions.Like(m.Artiste, $"%{query}%")),
-                    orderBy: m => m.OrderByDescending(m => m.CertifiedDate));
-            if (response == null) return Ok(new List<CertifiedSong>());
+                m =>
+                    m.IsClaimed == false
+                    && (
+                        EF.Functions.Like(m.Title, $"%{query}%")
+                        || EF.Functions.Like(m.Artiste, $"%{query}%")
+                    ),
+                orderBy: m => m.OrderByDescending(m => m.CertifiedDate)
+            );
+            if (response == null)
+                return Ok(new List<CertifiedSong>());
             return Ok(response);
         }
     }
