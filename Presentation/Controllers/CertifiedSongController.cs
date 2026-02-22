@@ -29,7 +29,7 @@ namespace Presentation.Controllers
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            var cacheKey = "certified_songs";
+            var cacheKey = "certified_songs_unclaimed";
 
             if (!_cache.TryGetValue(cacheKey, out List<CertifiedSong> response))
             {
