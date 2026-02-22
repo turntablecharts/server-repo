@@ -39,7 +39,7 @@ namespace Presentation.Controllers
                 );
 
                 // 👇 force query execution now
-                response = data.ToList();
+                response = data.Take(100).ToList();
 
                 _cache.Set(
                     cacheKey,
