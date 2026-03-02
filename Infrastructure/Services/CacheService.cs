@@ -10,7 +10,7 @@ namespace Infrastructure.Services
     {
         private readonly IMemoryCache _memoryCache;
         private readonly ILogger<CacheService> _logger;
-        private const int DEFAULT_EXPIRATION_MINUTES = 30;
+        private const int DEFAULT_EXPIRATION_MINUTES = 60 *24;
 
         public CacheService(IMemoryCache memoryCache, ILogger<CacheService> logger)
         {

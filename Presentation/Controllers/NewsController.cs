@@ -25,7 +25,6 @@ namespace Presentation.Controllers
     [Route("api/news")]
     public class NewsController : ControllerBase
     {
-
         private readonly IGenericRepository<Log> _logRepository;
         private readonly IGenericRepository<News> _newsDataRepo;
 
@@ -52,7 +51,8 @@ namespace Presentation.Controllers
             IHttpContextAccessor httpContextAccessor,
             IGenericRepository<TtcUser> userGenericRepo,
             TtcDbContext db,
-            ICacheService cacheService)
+            ICacheService cacheService
+        )
         {
             _userGenericRepo = userGenericRepo;
             _userManager = userManager;
@@ -75,7 +75,9 @@ namespace Presentation.Controllers
             news.IsDeleted = false;
             news.DateCreated = DateTime.Now;
 
-            var user = _userGenericRepo.GetWithInclude(m => m.Email == news.Email, string.Empty).FirstOrDefault();
+            var user = _userGenericRepo
+                .GetWithInclude(m => m.Email == news.Email, string.Empty)
+                .FirstOrDefault();
             news.TtcUserId = user.Id;
 
             await _newsDataRepo.AddAsync(news);
@@ -86,11 +88,12 @@ namespace Presentation.Controllers
             return Ok(news);
         }
 
-
-
         [AllowAnonymous]
         [HttpGet("")]
-        public async Task<ActionResult> GetAllNews([FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 10)
+        public async Task<ActionResult> GetAllNews(
+            [FromQuery] int pageNumber = 1,
+            [FromQuery] int pageSize = 10
+        )
         {
             // Create cache key based on page number and size
             string cacheKey = $"{ALL_NEWS_CACHE_KEY_PREFIX}{pageNumber}_{pageSize}";
@@ -101,18 +104,31 @@ namespace Presentation.Controllers
                 {
                     int toSkip = (pageNumber - 1) * pageSize;
                     long totalitems = _db.News.Count();
-                    var results = await _db.News.OrderByDescending(m => m.DateCreated).Skip(toSkip).Take(pageSize)
+                    var results = await _db
+                        .News.OrderByDescending(m => m.DateCreated)
+                        .Skip(toSkip)
+                        .Take(pageSize)
                         .Select(m => new
                         {
-                            Id = m.Id,
-                            Title = m.Title,
-                            DateCreated = m.DateCreated,
-                            HeaderImageUri = m.HeaderImageUri,
-                            Description = Regex.Replace(m.NewsContent.Substring(0, 255) + "..", @"[^0-9a-zA-Z:,.']+", " ")
+                            m.Id,
+                            m.Title,
+                            m.DateCreated,
+                            m.HeaderImageUri,
+                            Description = Regex.Replace(
+                                m.NewsContent.Substring(0, 255) + "..",
+                                @"[^0-9a-zA-Z:,.']+",
+                                " "
+                            ),
                         })
                         .ToListAsync();
 
-                    return new { news = results, totalItems = totalitems, currentPage = pageNumber, pageSize = pageSize };
+                    return new
+                    {
+                        news = results,
+                        totalItems = totalitems,
+                        currentPage = pageNumber,
+                        pageSize,
+                    };
                 }
             );
 
@@ -126,25 +142,27 @@ namespace Presentation.Controllers
             // Create cache key
             string cacheKey = $"{NEWS_BY_ID_CACHE_KEY_PREFIX}{id}";
 
-            var news = await _cacheService.GetOrCreateAsync(
-                cacheKey,
-                async () => _newsDataRepo.GetWithInclude(m => m.Id == id, "ttcUser")
-                    .Select(m => new
-                    {
-                        Id = m.Id,
-                        Title = m.Title,
-                        DateCreated = m.DateCreated,
-                        HeaderImageUri = m.HeaderImageUri,
-                        Description = Regex.Replace(m.NewsContent.Substring(0, 255) + "..", @"[^0-9a-zA-Z:,.']+", " "),
-                        NewsContent = m.NewsContent,
-                        TtcUser = m.ttcUser,
-                        Category = m.Category,
-                        NewsCategoryId = m.NewsCategoryId
-                    })
-                    .FirstOrDefault()
-            );
-
-            if (news == null) { return NotFound(); }
+            var news = await _db
+                .News.AsNoTracking()
+                .Where(m => m.Id == id)
+                .Include(m => m.ttcUser)
+                .Select(m => new
+                {
+                    m.Id,
+                    m.Title,
+                    m.DateCreated,
+                    m.HeaderImageUri,
+                    Description = m.NewsContent.Substring(0, Math.Min(m.NewsContent.Length, 255)),
+                    m.NewsContent,
+                    TtcUser = m.ttcUser,
+                    m.Category,
+                    m.NewsCategoryId,
+                })
+                .FirstOrDefaultAsync();
+            if (news == null)
+            {
+                return NotFound();
+            }
 
             return Ok(news);
         }
@@ -152,13 +170,19 @@ namespace Presentation.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> EditNews([FromRoute] int id, [FromBody] News news)
         {
-            if (!ModelState.IsValid) { return BadRequest(ModelState); }
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
 
             news.Id = id;
 
             var updatedNews = _newsDataRepo.UpdateAsync(news);
 
-            if (updatedNews == null) { return NotFound(); }
+            if (updatedNews == null)
+            {
+                return NotFound();
+            }
 
             // Clear and repopulate caches
             InvalidateSingleNewsCacheAndRepopulate(id);
@@ -189,7 +213,6 @@ namespace Presentation.Controllers
             }
         }
 
-
         [AllowAnonymous]
         [HttpGet("{authorId}/news")]
         public async Task<IActionResult> GetNewsByAuthor([FromRoute] int authorId)
@@ -207,39 +230,52 @@ namespace Presentation.Controllers
                         return null; // Handle not found in controller
                     }
 
-                    var newsByUser = _newsDataRepo.GetWithInclude(m => m.TtcUserId == authorId && m.IsDeleted == false, string.Empty)
+                    var newsByUser = _newsDataRepo
+                        .GetWithInclude(
+                            m => m.TtcUserId == authorId && m.IsDeleted == false,
+                            string.Empty
+                        )
                         .Select(m => new
                         {
-                            Id = m.Id,
-                            Title = m.Title,
+                            m.Id,
+                            m.Title,
                             Description = m.NewsContent.Substring(0, 200) + "...",
                             HeaderImageUrl = m.HeaderImageUri,
-                            Category = m.Category,
-                            DateCreated = m.DateCreated
-                        }).ToList();
+                            m.Category,
+                            m.DateCreated,
+                        })
+                        .ToList();
 
                     var resObj = new AuthorResponse
                     {
                         News = newsByUser,
-                        UserDetails = user.Select(m => new { Name = m.LastName.ToUpper() + " , " + m.FirstName, Bio = m.Bio, Id = m.Id }).FirstOrDefault()
+                        UserDetails = user.Select(m => new
+                            {
+                                Name = m.LastName.ToUpper() + " , " + m.FirstName,
+                                m.Bio,
+                                m.Id,
+                            })
+                            .FirstOrDefault(),
                     };
                     return new ResponseDto<object>
                     {
                         Data = resObj,
                         StatusCode = (int)HttpStatusCode.OK,
-                        ResponseMessage = "Data Request Successful"
+                        ResponseMessage = "Data Request Successful",
                     };
                 }
             );
 
             if (response == null)
             {
-                return NotFound(new ResponseDto<string>
-                {
-                    Data = null,
-                    StatusCode = (int)HttpStatusCode.NotFound,
-                    ResponseMessage = "User not found"
-                });
+                return NotFound(
+                    new ResponseDto<string>
+                    {
+                        Data = null,
+                        StatusCode = (int)HttpStatusCode.NotFound,
+                        ResponseMessage = "User not found",
+                    }
+                );
             }
 
             return Ok(response);

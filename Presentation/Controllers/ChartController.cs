@@ -51,42 +51,34 @@ namespace Presentation.Controllers
                 CHART_CATEGORIES_CACHE_KEY,
                 async () =>
                 {
-                    List<ChartCategoryVM> results = new List<ChartCategoryVM>();
-                    var categories = await _db.ChartCategories.ToListAsync();
-                    foreach (var category in categories)
-                    {
-                        var chartEntry = await _db
-                            .Charts.Where(m => m.ChartCategoryId == category.Id)
-                            .AsNoTracking()
-                            .OrderByDescending(p => p.DateCreated)
-                            .Include(m => m.ChartItems)
-                            .FirstOrDefaultAsync();
-                        var topSong = chartEntry != null ? chartEntry.ChartItems.FirstOrDefault(m => m.Rank == 1) : null;
-
-                        results.Add(
-                            new ChartCategoryVM
-                            {
-                                Id = category.Id,
-                                Name = category.Name,
-                                Description = category.Description,
-                                Heading = category.Heading,
-                                TopSong =
-                                    topSong == null
-                                        ? null
-                                        : new ChartItemVM
-                                        {
-                                            Rank = topSong.Rank,
-                                            Title = topSong.Title,
-                                            Artiste = topSong.Artiste,
-                                            ImageUri = topSong.ImageUri,
-                                            MusicLink = topSong.MusicLink,
-                                            WeeksOnChart = topSong.WeeksOnChart,
-                                            LastPosition = topSong.LastPosition.ToString(),
-                                            ProducedBy = topSong.ProducedBy,
-                                        },
-                            }
-                        );
-                    }
+                    var results = await _db.ChartCategories
+                        .AsNoTracking()
+                        .Select(category => new ChartCategoryVM
+                        {
+                            Id = category.Id,
+                            Name = category.Name,
+                            Description = category.Description,
+                            Heading = category.Heading,
+                            TopSong = _db.Charts
+                                .Where(c => c.ChartCategoryId == category.Id)
+                                .OrderByDescending(c => c.DateCreated)
+                                .Take(1)
+                                .SelectMany(c => c.ChartItems)
+                                .Where(ci => ci.Rank == 1)
+                                .Select(ci => new ChartItemVM
+                                {
+                                    Rank = ci.Rank,
+                                    Title = ci.Title,
+                                    Artiste = ci.Artiste,
+                                    ImageUri = ci.ImageUri,
+                                    MusicLink = ci.MusicLink,
+                                    WeeksOnChart = ci.WeeksOnChart,
+                                    LastPosition = ci.LastPosition.ToString(),
+                                    ProducedBy = ci.ProducedBy,
+                                })
+                                .FirstOrDefault()
+                        })
+                        .ToListAsync();
                     return results;
                 }
             );

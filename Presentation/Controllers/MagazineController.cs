@@ -222,11 +222,11 @@ namespace Presentation.Controllers
                     var magazineData = magazines
                         .MagazineDatas.Select(m => new
                         {
-                            Id = m.Id,
-                            DateCreated = m.DateCreated,
-                            Title = m.Title,
+                            m.Id,
+                            m.DateCreated,
+                            m.Title,
                             Writer = m.Description,
-                            HeaderImage = m.HeaderImage,
+                            m.HeaderImage,
                             magazineEditionDataId = m.MagazineEditionDataId,
                             articlePosition = m.ArticlePosition,
                         })
@@ -235,9 +235,9 @@ namespace Presentation.Controllers
 
                     return new
                     {
-                        Id = magazines.Id,
-                        Name = magazines.Name,
-                        magazineData = magazineData,
+                        magazines.Id,
+                        magazines.Name,
+                        magazineData,
                     };
                 }
             );

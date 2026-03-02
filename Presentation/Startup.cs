@@ -67,8 +67,8 @@ namespace Presentation
 
             services.AddMemoryCache(options =>
             {
-                options.SizeLimit = 100 * 1024 * 1024; // 100MB limit
-                options.CompactionPercentage = 0.2; // Remove 20% of entries when over limit
+                options.SizeLimit = 10 * 1024 * 1024; // 100MB limit
+                options.CompactionPercentage = 0.5; // Remove 20% of entries when over limit
             });
 
             services.AddSingleton<ICacheService, CacheService>();
