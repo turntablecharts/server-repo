@@ -37,6 +37,7 @@ namespace Infrastructure
 
 
         public DbSet<CertifiedSong> CertifiedSongs {get; set;}
+        public DbSet<Gallery> Galleries { get; set; }
 
     }
 }
