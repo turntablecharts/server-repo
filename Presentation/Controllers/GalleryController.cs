@@ -37,26 +37,34 @@ public class GalleryController : ControllerBase
     }
 
     /// <summary>
-    /// Get paginated galleries from cache
+    /// Get paginated galleries from cache with optional galleryType filter
     /// </summary>
     [AllowAnonymous]
     [HttpGet]
     public async Task<IActionResult> GetGalleries(
         [FromQuery] int pageNumber = 1,
-        [FromQuery] int pageSize = 10
+        [FromQuery] int pageSize = 10,
+        [FromQuery] int? galleryType = null
     )
     {
-        // Create cache key based on page number and size
-        string cacheKey = $"{ALL_GALLERY_CACHE_KEY_PREFIX}{pageNumber}_{pageSize}";
+        // Create cache key based on page number, size, and galleryType filter
+        string cacheKey = $"{ALL_GALLERY_CACHE_KEY_PREFIX}{pageNumber}_{pageSize}_{galleryType ?? 0}";
 
         var response = await _cacheService.GetOrCreateAsync(
             cacheKey,
             async () =>
             {
                 int toSkip = (pageNumber - 1) * pageSize;
-                long totalItems = _db.Galleries.Count();
-                var results = await _db
-                    .Galleries
+                
+                // Build base query with optional galleryType filter
+                IQueryable<Gallery> query = _db.Galleries;
+                if (galleryType.HasValue)
+                {
+                    query = query.Where(g => (int)g.GalleryType == galleryType.Value);
+                }
+
+                long totalItems = await query.CountAsync();
+                var results = await query
                     .OrderBy(g => g.Title)
                     .Skip(toSkip)
                     .Take(pageSize)
@@ -75,6 +83,7 @@ public class GalleryController : ControllerBase
                     totalItems = totalItems,
                     currentPage = pageNumber,
                     pageSize,
+                    galleryType = galleryType,
                 };
             }
         );
