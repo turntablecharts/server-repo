@@ -158,6 +158,21 @@ namespace Presentation.Controllers
             });
         }
 
+        [HttpGet("categories")]
+        public IActionResult GetCategories()
+        {
+            var categories = _categoryRepo.GetAll()
+                .OrderBy(c => c.Name)
+                .Select(c => new PowerlistCategoryResponseDto
+                {
+                    Id = c.Id,
+                    Name = c.Name,
+                    IsActive = c.IsActive
+                })
+                .ToList();
+            return Ok(categories);
+        }
+
         #endregion
 
         #region Recognitions
