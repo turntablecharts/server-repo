@@ -68,8 +68,8 @@ namespace Presentation.Controllers
 
             var magazine = await _magazineRepository.AddAsync(item);
 
-            // Invalidate and repopulate related caches
-            //await InvalidateAndRepopulateMagazineCaches();
+            // Clear all magazine caches to ensure consistency
+            ClearCaches();
 
             return Ok(magazine);
         }
@@ -172,7 +172,7 @@ namespace Presentation.Controllers
             );
 
             // Invalidate and repopulate related caches
-            _cacheService.Remove($"{SINGLE_MAGAZINE_CACHE_KEY_PREFIX}{id}");
+            ClearCaches();
 
             return Ok(editedMagazine);
         }
@@ -193,7 +193,7 @@ namespace Presentation.Controllers
                     }
                 );
 
-                _cacheService.Remove($"{SINGLE_MAGAZINE_CACHE_KEY_PREFIX}{id}");
+                ClearCaches();
 
                 return Ok("Successfully deleted");
             }
@@ -278,6 +278,19 @@ namespace Presentation.Controllers
                 .Where(m => m.IsDelete == false)
                 .OrderByDescending(m => m.Id);
             return Ok(editions);
+        }
+        private void ClearCaches()
+        {
+            // We clear the main edition and editions list caches
+            _cacheService.Remove(MAGAZINE_EDITIONS_CACHE_KEY);
+            
+            // For paginated/prefixed keys, we typically remove the most critical ones 
+            // or use a versioning strategy if ICacheService supported it.
+            // Here we'll clear the first few pages of 'all' magazines.
+            for (int i = 1; i <= 5; i++)
+            {
+                _cacheService.Remove($"{ALL_MAGAZINES_CACHE_KEY_PREFIX}{i}");
+            }
         }
         #endregion
     }

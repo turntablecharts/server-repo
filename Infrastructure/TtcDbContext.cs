@@ -39,5 +39,12 @@ namespace Infrastructure
         public DbSet<CertifiedSong> CertifiedSongs {get; set;}
         public DbSet<Gallery> Galleries { get; set; }
 
+
+        public DbSet<PowerlistCategory> PowerlistCategories { get; set; }
+        
+        public DbSet<PowerlistEdition> PowerlistEditions { get; set; }
+
+        public DbSet<PowerlistRecognition> PowerlistRecognitions { get; set; }
+
     }
 }
