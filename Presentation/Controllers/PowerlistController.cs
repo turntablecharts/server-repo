@@ -276,16 +276,33 @@ namespace Presentation.Controllers
                     })
                     .ToList();
 
-                // 3. Get recognitions for the specified category or the first available one
-                int targetCategoryId = categoryId ?? (categories.Any() ? categories.First().Id : 0);
-                
                 var recognitions = new List<PowerlistRecognitionResponseDto>();
-                if (targetCategoryId > 0)
+                if(categoryId.HasValue && !categories.Any(c => c.Id == categoryId.Value))
+                {
+                   recognitions = _recognitionRepo.GetAll()
+                        .Where(r => r.PowerlistEditionId == latestEdition.Id && 
+                                    r.PowerlistCategoryId == categoryId.Value && 
+                                    r.IsActive)
+                        .OrderBy(r => r.Rank)
+                        .ThenBy(r => r.Name)
+                        .Select(r => new PowerlistRecognitionResponseDto
+                        {
+                            Id = r.Id,
+                            Name = r.Name,
+                            PowerlistEditionId = r.PowerlistEditionId,
+                            PowerlistCategoryId = r.PowerlistCategoryId,
+                            Office = r.Office,
+                            Remarks = r.Remarks,
+                            ImageUrl = r.ImageUrl,
+                            Rank = r.Rank,
+                            IsActive = r.IsActive
+                        })
+                        .ToList();
+                }
+                else
                 {
                     recognitions = _recognitionRepo.GetAll()
-                        .Where(r => r.PowerlistEditionId == latestEdition.Id && 
-                                    r.PowerlistCategoryId == targetCategoryId && 
-                                    r.IsActive)
+                        .Where(r => r.PowerlistEditionId == latestEdition.Id && r.IsActive)
                         .OrderBy(r => r.Rank)
                         .ThenBy(r => r.Name)
                         .Select(r => new PowerlistRecognitionResponseDto
