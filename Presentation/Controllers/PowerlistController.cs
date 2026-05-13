@@ -308,7 +308,7 @@ namespace Presentation.Controllers
                     var categories = _categoryRepo
                         .GetAll()
                         .Where(c => c.IsActive)
-                        .OrderBy(c => c.Name)
+                        .OrderBy(c => c.Id)
                         .Select(c => new PowerlistCategoryResponseDto
                         {
                             Id = c.Id,
