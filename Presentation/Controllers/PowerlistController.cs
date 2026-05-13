@@ -350,7 +350,8 @@ namespace Presentation.Controllers
                             .Where(r => r.PowerlistEditionId == latestEdition.Id && r.IsActive)
                             .OrderBy(r => r.Rank)
                             .ThenBy(r => r.Name)
-                            .Select(r => new PowerlistRecognitionResponseDto
+                            .ToList()
+                            .Select((r, index) => new PowerlistRecognitionResponseDto
                             {
                                 Id = r.Id,
                                 Name = r.Name,
@@ -359,7 +360,7 @@ namespace Presentation.Controllers
                                 Office = r.Office,
                                 Remarks = r.Remarks,
                                 ImageUrl = r.ImageUrl,
-                                Rank = r.Rank,
+                                Rank = index + 1,
                                 IsActive = r.IsActive,
                             })
                             .ToList();
