@@ -348,7 +348,8 @@ namespace Presentation.Controllers
                         recognitions = _recognitionRepo
                             .GetAll()
                             .Where(r => r.PowerlistEditionId == latestEdition.Id && r.IsActive)
-                            .OrderBy(r => r.Rank)
+                            .OrderBy(r => r.PowerlistCategoryId)
+                            .ThenBy(r => r.Rank)
                             .ThenBy(r => r.Name)
                             .ToList()
                             .Select((r, index) => new PowerlistRecognitionResponseDto
