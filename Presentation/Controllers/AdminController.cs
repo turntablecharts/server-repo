@@ -23,16 +23,19 @@ namespace Presentation.Controllers {
         private IGenericRepository<SubscribersEmail> _subscribers;
         private readonly UserManager<IdentityUser> _userManager;
         private readonly PresentationIdentityDbContext _context;
+        private readonly ICacheService _cacheService;
         public AdminController (
             IGenericRepository<Log> logRepo, IGenericRepository<TtcUser> userGenericRepo,
             UserManager<IdentityUser> userManager,
             IGenericRepository<SubscribersEmail> subscribers,
-            PresentationIdentityDbContext context) {
+            PresentationIdentityDbContext context,
+            ICacheService cacheService) {
             _logRepo = logRepo;
             _context = context;
             _userManager = userManager;
             _userGenericRepo = userGenericRepo;
             _subscribers = subscribers;
+            _cacheService = cacheService;
         }
 
         [HttpGet ("users/all")]
@@ -81,6 +84,25 @@ namespace Presentation.Controllers {
         {
             var subscribers = _subscribers.GetAll();
             return Ok(subscribers);
+        }
+
+        [AllowAnonymous]
+        [HttpPost("cache/clear")]
+        public IActionResult ClearCache([FromQuery] string secretKey)
+        {
+            try
+            {
+                if(secretKey != "Y1pY0Dhi16VfiE6sJG0Z2354Otsz7h4I")
+                {
+                    return Unauthorized(new { error = "Invalid secret key" });
+                }
+                _cacheService.ClearAll();
+                return Ok(new { message = "All cache entries have been successfully cleared" });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { error = "An error occurred while clearing cache", details = ex.Message });
+            }
         }
     }
 }

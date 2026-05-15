@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Core.Interfaces;
 using Microsoft.Extensions.Caching.Memory;
@@ -10,6 +11,7 @@ namespace Infrastructure.Services
     {
         private readonly IMemoryCache _memoryCache;
         private readonly ILogger<CacheService> _logger;
+        private readonly HashSet<string> _cacheKeys = new HashSet<string>();
         private const int DEFAULT_EXPIRATION_MINUTES = 60 *24;
 
         public CacheService(IMemoryCache memoryCache, ILogger<CacheService> logger)
@@ -37,6 +39,7 @@ namespace Infrastructure.Services
                     .SetPriority(CacheItemPriority.Normal);
 
                 _memoryCache.Set(cacheKey, item, cacheOptions);
+                _cacheKeys.Add(cacheKey);
             }
 
             return item;
@@ -46,13 +49,27 @@ namespace Infrastructure.Services
         {
             _logger.LogInformation($"Removing cache key: {cacheKey}");
             _memoryCache.Remove(cacheKey);
+            _cacheKeys.Remove(cacheKey);
         }
 
         public async Task InvalidateAndRepopulateAsync<T>(string cacheKey, Func<Task<T>> factory, TimeSpan? expiration = null)
         {
             _logger.LogInformation($"Invalidating and repopulating cache key: {cacheKey}");
             _memoryCache.Remove(cacheKey);
+            _cacheKeys.Remove(cacheKey);
             await GetOrCreateAsync(cacheKey, factory, expiration);
+        }
+
+        public void ClearAll()
+        {
+            _logger.LogInformation("Clearing all cache entries");
+            foreach (var cacheKey in _cacheKeys)
+            {
+                _memoryCache.Remove(cacheKey);
+                _logger.LogInformation($"Removed cache key: {cacheKey}");
+            }
+            _cacheKeys.Clear();
+            _logger.LogInformation("All cache entries cleared");
         }
     }
 }
