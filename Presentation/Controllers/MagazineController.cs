@@ -271,14 +271,25 @@ namespace Presentation.Controllers
 
         [AllowAnonymous]
         [HttpGet("magazine/editions")]
-        public IActionResult GetMagazineEditions()
+        public IActionResult GetMagazineEditions([FromQuery]bool? isMagazine)
         {
-            var editions = _magEditionRepository
+            IOrderedQueryable<MagazineEditionData> editions;
+            if(isMagazine == null)
+            {
+                editions = _magEditionRepository
+                    .GetAll()
+                    .Where(m => m.IsDelete == false)
+                    .OrderByDescending(m => m.Id);
+                return Ok(editions);
+            }
+            editions = _magEditionRepository
                 .GetAll()
-                .Where(m => m.IsDelete == false)
+                .Where(m => m.IsDelete == false && m.IsMagazine == isMagazine)
                 .OrderByDescending(m => m.Id);
             return Ok(editions);
         }
+
+        
         private void ClearCaches()
         {
             // We clear the main edition and editions list caches
