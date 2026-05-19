@@ -46,49 +46,49 @@ namespace Presentation.Controllers
             _httpContextAccessor = httpContextAccessor;
         }
 
-        [HttpPost("register")]
-        [AllowAnonymous]
-        public async Task<ActionResult> Register([FromBody] TtcUserVM input)
-        {
-            if (ModelState.IsValid)
-            {
-                var user = new IdentityUser { UserName = input.Email, Email = input.Email };
-                var result = await _userManager.CreateAsync(user, input.Password);
-                if (result.Succeeded)
-                {
-                    await _userManager.AddToRoleAsync(user, input.Role.ToString());
+        // [HttpPost("register")]
+        // [AllowAnonymous]
+        // public async Task<ActionResult> Register([FromBody] TtcUserVM input)
+        // {
+        //     if (ModelState.IsValid)
+        //     {
+        //         var user = new IdentityUser { UserName = input.Email, Email = input.Email };
+        //         var result = await _userManager.CreateAsync(user, input.Password);
+        //         if (result.Succeeded)
+        //         {
+        //             await _userManager.AddToRoleAsync(user, input.Role.ToString());
 
-                    await _userGenericRepo.AddAsync(new TtcUserVM
-                    {
-                        Email = input.Email,
-                        FirstName = input.FirstName,
-                        Bio = input.Bio,
-                        LastName = input.LastName
-                    });
-                    //later send a link for email confirmation 
-                    //now just return an OKobjectResult after which we return a token
+        //             await _userGenericRepo.AddAsync(new TtcUserVM
+        //             {
+        //                 Email = input.Email,
+        //                 FirstName = input.FirstName,
+        //                 Bio = input.Bio,
+        //                 LastName = input.LastName
+        //             });
+        //             //later send a link for email confirmation 
+        //             //now just return an OKobjectResult after which we return a token
 
 
                     
-                    return Ok("User Successfully created");
-                }
-                else
-                {
-                    return BadRequest(result.Errors);
-                }
-            }
+        //             return Ok("User Successfully created");
+        //         }
+        //         else
+        //         {
+        //             return BadRequest(result.Errors);
+        //         }
+        //     }
 
-            return BadRequest(ModelState);
-        }
+        //     return BadRequest(ModelState);
+        // }
 
-        [HttpPost("add-user-role")]
-        public async Task<IActionResult> AddUserRole([FromQuery]string email)
-        {
-            var roleUser = await _userManager.FindByEmailAsync(email);
-            await _userManager.AddToRoleAsync(roleUser, "Author");
+        // [HttpPost("add-user-role")]
+        // public async Task<IActionResult> AddUserRole([FromQuery]string email)
+        // {
+        //     var roleUser = await _userManager.FindByEmailAsync(email);
+        //     await _userManager.AddToRoleAsync(roleUser, "Author");
 
-            return Ok();
-        }
+        //     return Ok();
+        // }
 
         [HttpPost("login")]
         [AllowAnonymous]

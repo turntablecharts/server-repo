@@ -19,6 +19,7 @@ using Microsoft.OpenApi.Models;
 using Presentation.Areas.Identity.Data;
 using Presentation.Enums;
 using Infrastructure.Services;
+using Presentation.Middleware;
 
 namespace Presentation
 {
@@ -114,6 +115,11 @@ namespace Presentation
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+
+            // Add custom middleware for API key validation and rate limiting
+            app.UseMiddleware<ApiKeyValidationMiddleware>();
+            app.UseMiddleware<RateLimitingMiddleware>();
+            app.UseMiddleware<AuthorizationEnforcementMiddleware>();
 
             app.UseSwagger();
             app.UseSwaggerUI(c =>
