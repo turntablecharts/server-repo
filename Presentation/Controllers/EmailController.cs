@@ -55,7 +55,15 @@ namespace Presentation.Controllers
                     var subscriber = await _subscribers.AddAsync(subscriberInfo);
                     var response = new ResponseDto<string> { Data = "Subscription Successful\n. A welcome email has being sent to you", StatusCode = 200 };
 
-                    await SendEmailResend(subscriberInfo.Name, subscriberInfo.Email, "Welcome To TurnTable Charts");
+                    try
+                    {
+                        
+                       // await SendEmailResend(subscriberInfo.Name, subscriberInfo.Email, "Welcome To TurnTable Charts");
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine($"Failed to send email with ex {ex}");
+                    }
                     return StatusCode(response.StatusCode, response);
                 }
                 var res = new ResponseDto<string> { Data = "Seems like you have subscribed already. ", StatusCode = 200 };

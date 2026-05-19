@@ -478,3 +478,8 @@ $RECYCLE.BIN/
 
 # Vim temporary swap files
 *.swp
+appsettings.json
+appsettings.Development.json
+Core/obj/Core.csproj.nuget.dgspec.json
+Core/obj/Core.csproj.nuget.dgspec.json
+Core/obj/project.assets.json
