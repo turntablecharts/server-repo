@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Core.Interfaces;
 using Infrastructure;
 using Infrastructure.DAL;
+using Infrastructure.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -18,7 +19,6 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Presentation.Areas.Identity.Data;
 using Presentation.Enums;
-using Infrastructure.Services;
 using Presentation.Middleware;
 
 namespace Presentation
@@ -36,33 +36,44 @@ namespace Presentation
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<PresentationIdentityDbContext>(options =>
-                options.UseSqlServer(
-                    Configuration.GetConnectionString("ProductionDbString")));
+                options.UseSqlServer(Configuration.GetConnectionString("ProductionDbString"))
+            );
 
-            services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = false)
+            services
+                .AddDefaultIdentity<IdentityUser>(options =>
+                    options.SignIn.RequireConfirmedAccount = false
+                )
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<PresentationIdentityDbContext>();
 
-            services.AddDbContext<TtcDbContext>(options =>
-            {
-                options.UseSqlServer(Configuration.GetConnectionString("ProductionDbString"),
-                    optionsBuilder =>
-                    optionsBuilder.MigrationsAssembly("Presentation"))
-                    .EnableSensitiveDataLogging() // shows parameter values
-                    .LogTo(Console.WriteLine, LogLevel.Information);
-            }, ServiceLifetime.Transient);
+            services.AddDbContext<TtcDbContext>(
+                options =>
+                {
+                    options
+                        .UseSqlServer(
+                            Configuration.GetConnectionString("ProductionDbString"),
+                            optionsBuilder => optionsBuilder.MigrationsAssembly("Presentation")
+                        )
+                        .EnableSensitiveDataLogging() // shows parameter values
+                        .LogTo(Console.WriteLine, LogLevel.Information);
+                },
+                ServiceLifetime.Transient
+            );
 
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            services
+                .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
                 {
                     options.TokenValidationParameters = new TokenValidationParameters
                     {
                         ValidateIssuerSigningKey = true,
-                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(
-                        Configuration.GetSection("AppSettings:Token").Value
-                    )),
+                        IssuerSigningKey = new SymmetricSecurityKey(
+                            Encoding.ASCII.GetBytes(
+                                Configuration.GetSection("AppSettings:Token").Value
+                            )
+                        ),
                         ValidateIssuer = false,
-                        ValidateAudience = false
+                        ValidateAudience = false,
                     };
                 });
 
@@ -80,23 +91,33 @@ namespace Presentation
             //         optionsBuilder.MigrationsAssembly ("Presentation"));
             // });
 
-
             //services.AddDbContext<ApplicationDbContext>(options => options.UseSqlite("Data Source=conferences.db"), ServiceLifetime.Transient);
 
-            services.AddControllers().AddNewtonsoftJson(options =>
-                options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
-            );
+            services
+                .AddControllers()
+                .AddNewtonsoftJson(options =>
+                    options.SerializerSettings.ReferenceLoopHandling = Newtonsoft
+                        .Json
+                        .ReferenceLoopHandling
+                        .Ignore
+                );
             services.AddRazorPages();
 
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc(name: "v1", new Microsoft.OpenApi.Models.OpenApiInfo { Title = "TTC web api", Version = "v1" });
-
+                c.SwaggerDoc(
+                    name: "v1",
+                    new Microsoft.OpenApi.Models.OpenApiInfo
+                    {
+                        Title = "TTC web api",
+                        Version = "v1",
+                    }
+                );
             });
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
-            //custom services 
+            //custom services
             //  services.AddScoped<IMediaRepo, MediaRepo> ();
             services.AddScoped<IBlobRepo, BlobRepo>();
             services.AddTransient(typeof(IGenericRepository<>), typeof(GenericRepository<>));
@@ -105,12 +126,26 @@ namespace Presentation
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IServiceProvider service)
+        public void Configure(
+            IApplicationBuilder app,
+            IWebHostEnvironment env,
+            IServiceProvider service
+        )
         {
             // UpdateDatabase (app);
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                 app.UseSwagger();
+                app.UseSwaggerUI(c =>
+                {
+                    c.SwaggerEndpoint(url: "/swagger/v1/swagger.json", name: "TTC web api");
+                });
+            }
+            else 
+            {
+                app.UseExceptionHandler("/Error");
+                app.UseHsts();
             }
 
             app.UseHttpsRedirection();
@@ -121,19 +156,11 @@ namespace Presentation
             app.UseMiddleware<RateLimitingMiddleware>();
             app.UseMiddleware<AuthorizationEnforcementMiddleware>();
 
-            app.UseSwagger();
-            app.UseSwaggerUI(c =>
-            {
-                c.SwaggerEndpoint(url: "/swagger/v1/swagger.json", name: "TTC web api");
-            });
-
+           
             app.UseRouting();
 
             // global cors policy
-            app.UseCors(x => x
-                .AllowAnyOrigin()
-                .AllowAnyMethod()
-                .AllowAnyHeader());
+            app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
 
             app.UseAuthentication();
             app.UseAuthorization();
@@ -171,9 +198,9 @@ namespace Presentation
 
         //     IdentityResult roleResult;
 
-        //     string[] roles = new string[] { AppUserRoles.Admin.ToString(), 
-        //                 AppUserRoles.Author.ToString(), 
-        //                 AppUserRoles.Contributor.ToString(), 
+        //     string[] roles = new string[] { AppUserRoles.Admin.ToString(),
+        //                 AppUserRoles.Author.ToString(),
+        //                 AppUserRoles.Contributor.ToString(),
         //                 AppUserRoles.Writer.ToString()};
 
         //     foreach (var item in roles)
