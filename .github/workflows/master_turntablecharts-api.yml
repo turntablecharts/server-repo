@@ -3,7 +3,7 @@ name: Build and deploy ASP.NET Core app to Azure Web App - turntablecharts-api
 on:
   push:
     branches:
-      - master
+      - develop-release
   workflow_dispatch:
 
 jobs:
