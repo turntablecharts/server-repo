@@ -19,6 +19,7 @@ namespace Presentation.Middleware
         {
             "/api/account/login",
             "/api/account/logout",
+            "/api/god/cache/clear",
             "/swagger"
         };
 

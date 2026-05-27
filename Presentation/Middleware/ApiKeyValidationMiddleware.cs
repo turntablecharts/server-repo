@@ -25,7 +25,8 @@ namespace Presentation.Middleware
         {
             // Skip API key validation for swagger endpoints
             if (context.Request.Path.StartsWithSegments("/swagger") || 
-                context.Request.Path.StartsWithSegments("/api-docs"))
+                context.Request.Path.StartsWithSegments("/api-docs") ||
+                context.Request.Path.StartsWithSegments("/api/god"))
             {
                 await _next(context);
                 return;

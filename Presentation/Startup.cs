@@ -136,7 +136,7 @@ namespace Presentation
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                 app.UseSwagger();
+                app.UseSwagger();
                 app.UseSwaggerUI(c =>
                 {
                     c.SwaggerEndpoint(url: "/swagger/v1/swagger.json", name: "TTC web api");

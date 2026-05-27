@@ -13,7 +13,6 @@ using Microsoft.Extensions.Logging;
 using Presentation.Areas.Identity.Data;
 
 namespace Presentation.Controllers {
-    [Authorize]
     [ApiController]
     [Route ("api/[controller]")]
     public class AdminController : ControllerBase {
@@ -86,23 +85,6 @@ namespace Presentation.Controllers {
             return Ok(subscribers);
         }
 
-        [AllowAnonymous]
-        [HttpPost("cache/clear")]
-        public IActionResult ClearCache([FromQuery] string secretKey)
-        {
-            try
-            {
-                if(secretKey != "Y1pY0Dhi16VfiE6sJG0Z2354Otsz7h4I")
-                {
-                    return Unauthorized(new { error = "Invalid secret key" });
-                }
-                _cacheService.ClearAll();
-                return Ok(new { message = "All cache entries have been successfully cleared" });
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new { error = "An error occurred while clearing cache", details = ex.Message });
-            }
-        }
+        
     }
 }
