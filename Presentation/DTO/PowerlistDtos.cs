@@ -63,5 +63,7 @@ namespace Presentation.DTO
         public string ImageUrl { get; set; }
         public int Rank { get; set; }
         public bool IsActive { get; set; }
+        public string Comments { get; internal set; }
+        public string CommentWriter { get; internal set; }
     }
 }

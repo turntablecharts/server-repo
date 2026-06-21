@@ -340,6 +340,8 @@ namespace Presentation.Controllers
                                 ImageUrl = r.ImageUrl,
                                 Rank = r.Rank,
                                 IsActive = r.IsActive,
+                                Comments = r.Comments,
+                                CommentWriter = r.CommentWriter,
                             })
                             .ToList();
                     }
@@ -352,18 +354,23 @@ namespace Presentation.Controllers
                             .ThenBy(r => r.Rank)
                             .ThenBy(r => r.Name)
                             .ToList()
-                            .Select((r, index) => new PowerlistRecognitionResponseDto
-                            {
-                                Id = r.Id,
-                                Name = r.Name,
-                                PowerlistEditionId = r.PowerlistEditionId,
-                                PowerlistCategoryId = r.PowerlistCategoryId,
-                                Office = r.Office,
-                                Remarks = r.Remarks,
-                                ImageUrl = r.ImageUrl,
-                                Rank = index + 1,
-                                IsActive = r.IsActive,
-                            })
+                            .Select(
+                                (r, index) =>
+                                    new PowerlistRecognitionResponseDto
+                                    {
+                                        Id = r.Id,
+                                        Name = r.Name,
+                                        PowerlistEditionId = r.PowerlistEditionId,
+                                        PowerlistCategoryId = r.PowerlistCategoryId,
+                                        Office = r.Office,
+                                        Remarks = r.Remarks,
+                                        ImageUrl = r.ImageUrl,
+                                        Rank = index + 1,
+                                        IsActive = r.IsActive,
+                                        Comments = r.Comments,
+                                        CommentWriter = r.CommentWriter,
+                                    }
+                            )
                             .ToList();
                     }
 

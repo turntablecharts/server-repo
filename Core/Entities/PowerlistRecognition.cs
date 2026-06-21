@@ -31,4 +31,6 @@ public class PowerlistRecognition
     public string ImageUrl { get; set; }
 
     public int Rank {get; set;}
+    public string? Comments {get; set;}
+    public string? CommentWriter {get; set;}
 }

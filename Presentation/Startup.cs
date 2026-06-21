@@ -132,7 +132,6 @@ namespace Presentation
             IServiceProvider service
         )
         {
-            // UpdateDatabase (app);
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -142,7 +141,7 @@ namespace Presentation
                     c.SwaggerEndpoint(url: "/swagger/v1/swagger.json", name: "TTC web api");
                 });
             }
-            else 
+            else
             {
                 app.UseExceptionHandler("/Error");
                 app.UseHsts();
@@ -151,23 +150,21 @@ namespace Presentation
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
-            // Add custom middleware for API key validation and rate limiting
+            app.UseRouting(); // 1. figure out which endpoint matches
+
+            // global cors policy
+            app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()); // 2. CORS needs to be after UseRouting, before UseAuthorization
+
+            app.UseAuthentication(); // 3. who are you
+            app.UseAuthorization(); // 4. are you allowed (built-in [Authorize] checks)
+
+            // custom middleware that may depend on endpoint/auth info
             app.UseMiddleware<ApiKeyValidationMiddleware>();
             app.UseMiddleware<RateLimitingMiddleware>();
             app.UseMiddleware<AuthorizationEnforcementMiddleware>();
 
-           
-            app.UseRouting();
-
-            // global cors policy
-            app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
-
-            app.UseAuthentication();
-            app.UseAuthorization();
-
             app.UseEndpoints(endpoints =>
             {
-                //  endpoints.MapRazorPages ();
                 endpoints.MapControllers();
             });
             //CreateRoles (service).Wait ();
