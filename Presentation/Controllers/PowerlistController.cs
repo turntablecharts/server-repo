@@ -327,7 +327,7 @@ namespace Presentation.Controllers
                                 && r.PowerlistCategoryId == categoryId.Value
                                 && r.IsActive
                             )
-                            .OrderBy(r => r.Rank)
+                            .OrderBy(r => r.CategoryRanking)
                             .ThenBy(r => r.Name)
                             .Select(r => new PowerlistRecognitionResponseDto
                             {
@@ -338,7 +338,7 @@ namespace Presentation.Controllers
                                 Office = r.Office,
                                 Remarks = r.Remarks,
                                 ImageUrl = r.ImageUrl,
-                                Rank = r.Rank,
+                                Rank = r.CategoryRanking,
                                 IsActive = r.IsActive,
                                 Comments = r.Comments,
                                 CommentWriter = r.CommentWriter,
@@ -350,8 +350,7 @@ namespace Presentation.Controllers
                         recognitions = _recognitionRepo
                             .GetAll()
                             .Where(r => r.PowerlistEditionId == latestEdition.Id && r.IsActive)
-                            .OrderBy(r => r.PowerlistCategoryId)
-                            .ThenBy(r => r.Rank)
+                            .OrderBy(r => r.Rank)
                             .ThenBy(r => r.Name)
                             .ToList()
                             .Select(
@@ -365,7 +364,7 @@ namespace Presentation.Controllers
                                         Office = r.Office,
                                         Remarks = r.Remarks,
                                         ImageUrl = r.ImageUrl,
-                                        Rank = index + 1,
+                                        Rank = r.Rank,
                                         IsActive = r.IsActive,
                                         Comments = r.Comments,
                                         CommentWriter = r.CommentWriter,

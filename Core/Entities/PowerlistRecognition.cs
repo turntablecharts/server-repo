@@ -33,4 +33,5 @@ public class PowerlistRecognition
     public int Rank {get; set;}
     public string? Comments {get; set;}
     public string? CommentWriter {get; set;}
+    public int CategoryRanking {get; set;}
 }
