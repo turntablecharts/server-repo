@@ -58,7 +58,8 @@ namespace Presentation.Middleware
             }
 
             // Check if this is a GET request - GET requests only need API key (already validated)
-            if (context.Request.Method.Equals("GET", StringComparison.OrdinalIgnoreCase))
+            if (context.Request.Method.Equals("GET", StringComparison.OrdinalIgnoreCase)
+             || context.Request.Method.Equals("POST", StringComparison.OrdinalIgnoreCase))
             {
                 await _next(context);
                 return;

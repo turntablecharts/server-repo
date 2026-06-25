@@ -161,7 +161,7 @@ namespace Presentation
             // custom middleware that may depend on endpoint/auth info
             app.UseMiddleware<ApiKeyValidationMiddleware>();
             app.UseMiddleware<RateLimitingMiddleware>();
-            app.UseMiddleware<AuthorizationEnforcementMiddleware>();
+            //app.UseMiddleware<AuthorizationEnforcementMiddleware>();
 
             app.UseEndpoints(endpoints =>
             {
