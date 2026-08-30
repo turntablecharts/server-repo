@@ -46,5 +46,7 @@ namespace Infrastructure
 
         public DbSet<PowerlistRecognition> PowerlistRecognitions { get; set; }
 
+        public DbSet<UnderThirty> UnderThirties { get; set; }
+
     }
 }
